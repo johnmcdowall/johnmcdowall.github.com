@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2012-12-17T10:40:01-05:00</updated>
+ <updated>2012-12-17T16:40:22-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -26,15 +26,33 @@
    <link href="http://zachholman.com/posts/mcdowalls-conjecture-on-remote-working"/>
    <updated>2012-11-27T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/mcdowalls-conjecture-on-remote-working</id>
-   <content type="html">I've heard these excuses time and time again against remote working or working from home:
+   <content type="html">&lt;p&gt;I&amp;rsquo;ve heard these excuses time and time again against remote working or working from home:&lt;/p&gt;
 
-- _&quot;Remote teams don't work.&quot;_
-- &lt;em&gt;&quot;Working from home leads to decreases in quality.&quot;&lt;/em&gt;
-- &lt;em&gt;&quot;I think that collaboration is easier when done face to face.&quot; 
-- &quot;I don't know what people are doing if they aren't here.&quot;
-- &lt;em&gt;&quot;People just goof off if they work from home.&quot;&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;Remote teams don&amp;rsquo;t work.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;Working from home leads to decreases in quality.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;I think that collaboration is easier when done face to face.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;I don&amp;rsquo;t know what people are doing if they aren&amp;rsquo;t here.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;People just goof off if they work from home.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-David Heinemier Hanson, parter at 37Signals, &lt;a href=&quot;http://37signals.com/svn/posts/3336-cities-with-signals&quot; data-link-type=&quot;external&quot; target=&quot;_blank&quot;&gt;Just posted an article&lt;/a&gt; on the number of different places that people have worked from in their time with the company. Github are also known to have an _extremely_ geo-distributed team. There are others who manage very well with distributed teams, working remotely. I think it's no coincidence that the common thread amongst these successful geo-distributed companies are that their leaders believe it can work.&lt;/p&gt;&lt;p&gt;I've said many times that &lt;em&gt;culture is not imposed, it is made up of all of the individuals of a company; their beliefs and standards&lt;/em&gt;. So it is through long observation that I have come to the following rule of thumb:&lt;/p&gt;&lt;blockquote&gt;If remote working doesn't work at your company, it's your fault.&lt;/blockquote&gt;&lt;p&gt;The corollary to this rule of thumb is:&lt;/p&gt;&lt;blockquote&gt;The management and leadership elements in a company will reflect their own personal biases and previous failures at remote working&amp;nbsp;onto the notion of remote working;&amp;nbsp;they may also fear the power of a truly self-organizing, self-directed team on their own relevance, and will construct the necessary social cues or fear based mechanisms within the company to ensure its failure or otherwise.
+
+&lt;p&gt;David Heinemier Hanson, parter at 37Signals, &lt;a href=&quot;http://37signals.com/svn/posts/3336-cities-with-signals&quot; data-link-type=&quot;external&quot; target=&quot;_blank&quot;&gt;Just posted an article&lt;/a&gt; on the number of different places that people have worked from in their time with the company. Github are also known to have an &lt;em&gt;extremely&lt;/em&gt; geo-distributed team. There are others who manage very well with distributed teams, working remotely. I think it&amp;rsquo;s no coincidence that the common thread amongst these successful geo-distributed companies are that their leaders believe it can work.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve said many times that &lt;em&gt;culture is not imposed, it is made up of all of the individuals of a company; their beliefs and standards&lt;/em&gt;. So it is through long observation that I have come to the following rule of thumb:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;If remote working doesn't work at your company, it's your fault.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The corollary to this rule of thumb is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The management and leadership elements in a company will reflect their own 
+personal biases and previous failures at remote working onto the notion of 
+remote working; they may also fear the power of a truly self-organizing, 
+self-directed team on their own relevance, and will construct the necessary 
+social cues or fear based mechanisms within the company to ensure its 
+failure or otherwise.
+&lt;/code&gt;&lt;/pre&gt;
 </content>
  </entry>
  
