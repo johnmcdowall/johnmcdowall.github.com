@@ -5,12 +5,53 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2012-12-28T12:07:06-05:00</updated>
+ <updated>2013-01-01T12:22:53-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>The Future of Social Networks</title>
+   <link href="http://zachholman.com/posts/The-Future-of-Social-Networks"/>
+   <updated>2013-01-01T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/The-Future-of-Social-Networks</id>
+   <content type="html">&lt;p&gt;We are surrounded by noise. The environment around us is noisy; the streets, the airwaves, the oceans. The Universe has a constant background hiss that fills the void between the stars, known as the &lt;a href=&quot;http://en.wikipedia.org/wiki/Cosmic_background_radiation&quot;&gt;Cosmic Background Radiation&lt;/a&gt;. Additionally, there&amp;rsquo;s the concept of &lt;a href=&quot;http://en.wikipedia.org/wiki/Entropy&quot;&gt;Entropy&lt;/a&gt;, which says that all organized systems eventually degrade into complete, unorganized chaos.&lt;/p&gt;
+
+&lt;p&gt;This is the future of all Social Networks at present: degenerating into a chaotic morass of meaningless information.&lt;/p&gt;
+
+&lt;p&gt;There are &lt;a href=&quot;http://www.google.ca/publicdata/explore?ds=d5bncppjof8f9_&amp;amp;met_y=sp_pop_totl&amp;amp;tdim=true&amp;amp;dl=en&amp;amp;hl=en&amp;amp;q=current%20world%20population&quot;&gt;seven billion people&lt;/a&gt; on this planet, and if all or most of them are to be connected to each other in some degree, then the huge challenge that faces the ongoing existence and usefulness of any social network is how to increase the Signal to Noise ratio present in a user&amp;rsquo;s activity stream.&lt;/p&gt;
+
+&lt;p&gt;What information would a social network need in order to know what updates are most relevant to show you at a particular time, from all of the many &amp;lsquo;friends&amp;rsquo; that you have?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;I think the answer to this question will eventually be: &amp;lsquo;Everything&amp;rsquo;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Facebook have already made some inroads into gathering this information by tracking every page you visit with a &amp;lsquo;Like&amp;rsquo; button installed on it, or other nefarious means. Google know a fair amount about your activities on the web, what you search for, what you like, web sites you visit by using their public DNS service and so on. Twitter are gathering you activities from pages you visit with &amp;lsquo;Tweet&amp;rsquo; buttons on them.&lt;/p&gt;
+
+&lt;p&gt;The more that a social network knows about your activities, needs and desires, the better it is able to show you things that are relevant to your interests at that time. As more and more people are connected with each other, the amount of information about you that the social network will need to know must increase in order to maintain the Signal to Noise level in the meaningful range.&lt;/p&gt;
+
+&lt;p&gt;One can imagine the huge resources required to undertake this deep level of inspection into a user&amp;rsquo;s activities on the web, resource requirements that as time goes by will only increase. Very few companies are positioned to be able to play at the table of user monitoring.&lt;/p&gt;
+
+&lt;p&gt;So what might the future of Social Networks look like? I&amp;rsquo;m prepared to make some bold predictions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;There will only be one viable social network &amp;ndash; probably Facebook. They will acquire every smaller rival in order to add to the information totality they need to know in order to show you &amp;lsquo;what&amp;rsquo;s relevant&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Twitter will fail and become a minor player, if not disappear completely, as users come to realize that no viable or meaningful communication can happen there, and as pictures and video become increasingly used as communication. Today, Facebook already probably has all of your pictures, and your picture updates courtesy of the Instagram acquisition. The future will not be constrained to 140 characters.&lt;/li&gt;
+&lt;li&gt;MySpace is, and will continue to be irrelevant as a meaningful social network, despite their visually appealing &lt;a href=&quot;https://new.myspace.com/play&quot;&gt;smoke and mirrors video&lt;/a&gt;. SoundCloud is where the music crowd are at now.&lt;/li&gt;
+&lt;li&gt;Google Plus will continue as a minor player until Google acquires or are acquired by Facebook. Google has created a company staffed with people who are no doubt very smart, but have no idea what real users want or need, or how to give it to them.&lt;/li&gt;
+&lt;li&gt;Foursquare will be acquired by Facebook.&lt;/li&gt;
+&lt;li&gt;Path will disappear, having never made it outside of San Francisco.&lt;/li&gt;
+&lt;li&gt;Facebook are experimenting with charging to have posts reach certain users &amp;ndash; this is not a viable business model, especially if you believe that knowing everything about a user in real time in order to show them the most relevant thing will become a necessity.&lt;/li&gt;
+&lt;li&gt;Users will surrender every last shred of privacy as they are sold on the idea that total exposure to their social network of choice in order to have a more relevant and refined experience is the only available course.&lt;/li&gt;
+&lt;li&gt;Certain updates will become mandatory, probably location and time, in order to know what&amp;rsquo;s around you at a particular time.&lt;/li&gt;
+&lt;li&gt;Apple may possibly acquire Facebook in order to become the ultimate eCommerce platform that knows exactly what you want, before you know you want it.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Sounds fun, eh?&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>An Information Diet</title>
