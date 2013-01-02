@@ -5,12 +5,48 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-01-01T12:22:53-05:00</updated>
+ <updated>2013-01-02T10:57:40-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>What a Dead Man Named FM-2030 can tell us about the future of user names</title>
+   <link href="http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names"/>
+   <updated>2013-01-02T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/5/53/FM2030.jpg&quot; title=&quot;Fereidoun M. Esfandiary&quot; alt=&quot;Fereidoun M. Esfandiary&quot; /&gt;
+Fereidoun M. Esfandiary was born in Brussles in 1930, and died in New York in 2000 of Pancreatic cancer, subsequently being one of the first people cryonicaly frozen at the Alcor storage facility.  He lived an extremely varied life by most peoples standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1984 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
+
+&lt;p&gt;Esfandiary literally wrote the book on &lt;a href=&quot;http://en.wikipedia.org/wiki/Transhumanism&quot;&gt;Transhumanism&lt;/a&gt;, &lt;a href=&quot;http://www.amazon.ca/Are-You-Transhuman-Monitoring-Stimulating/dp/0446388068/ref=sr_1_1?ie=UTF8&amp;amp;qid=1357137985&amp;amp;sr=8-1&quot;&gt;&lt;em&gt;&amp;lsquo;Are You a Transhuman?&amp;rsquo;&lt;/em&gt;&lt;/a&gt; while teaching at The New School in New York. As a Futurologist, he predicted the invention of Globalization, in-vitro fertilization, teleconferencing, telemedicine and teleshopping amongst other things. He was noted as once saying:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;&amp;ldquo;I am a 21st century person who was accidentally launched in the 20th. I have a deep nostalgia for the future.&amp;rdquo;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;I know how he felt.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;But I find the most interesting thing about him is his legal name change in the mid 1970s from &lt;em&gt;Fereidoun M. Esfandiary&lt;/em&gt; to &lt;em&gt;FM-2030&lt;/em&gt;. &lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;He did this in a time before people changed their legal names for advertising stunts, to something that looks essentially like a Reddit username.&lt;/p&gt;
+
+&lt;p&gt;His reasoning was that he felt that Human naming conventions were a relic from its tribalistic past that stamped a person with a pre-determined identity that would degenerate into &amp;lsquo;stereotyping, factionalism and discrimination&amp;rsquo;. He said:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;&amp;ldquo;Conventional names define a person&amp;rsquo;s past: ancestry, ethnicity, nationality, religion. I am not who I was ten years ago and certainly not who I will be in twenty years. [&amp;hellip;] The name 2030 reflects my conviction that the years around 2030 will be a magical time. In 2030 we will be ageless and everyone will have an excellent chance to live forever. 2030 is a dream and a goal.&amp;rdquo;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;I think FM-2030&amp;rsquo;s last unheralded prediction for the future was that of wholesale people abandoning their given birth names and taking on the equivalent of a username that is unique to them (and available on all social networks).&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;While his own reasoning for changing his name is sound, he didn&amp;rsquo;t or couldn&amp;rsquo;t have predicted the rise of online social networks where usernames that match existing birth names are becoming a scarce resource even now, and will only continue to grow further scarce in the future. Future generations are going to find it impossible to register themselves on social networks with their actual birth names, because older generations have used them all.&lt;/p&gt;
+
+&lt;p&gt;As we come to live in an age where our online accounts and presences become who we are &lt;em&gt;seen&lt;/em&gt; to be, the username becomes the symbol by which others recognize us. Google Plus already tried and failed to make it so that users &lt;em&gt;had&lt;/em&gt; to use their real names. In one of the rare instances where I agree with &lt;a href=&quot;http://en.wikipedia.org/wiki/Richard_M_Stallman&quot;&gt;RMS&lt;/a&gt;, he asserted that when Users are forced to give their real names they are &lt;a href=&quot;http://www.youtube.com/watch?feature=player_embedded&amp;amp;v=ymuqUJ3MsEs#!&quot;&gt;being mistreated&lt;/a&gt; because it could put those users in danger. This is true, but it will be a secondary force to the growing scarcity of available usernames that match birth names, and a growing population of young adults who are part of online communities or networks from a very young age, and never know anything else. The failure of Google Plus to force users to use their legal birth names is an inevitable outcome of FM-2030&amp;rsquo;s example.&lt;/p&gt;
+
+&lt;p&gt;What does this mean for programmers? We have to work with the understanding that there&amp;rsquo;s a possibility in our lifetimes that users will &lt;em&gt;not have first or last names&lt;/em&gt;. They may legally only have one name. How would you process a credit card payment for someone who has only one name? And maybe that name happens to be legally, &lt;em&gt;their email address&lt;/em&gt;? Maybe their legal name is (╯°□°）╯︵ ┻━┻ ?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Are you ready to be a Transhumanist supporting programmer?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;You can read more about &lt;a href=&quot;http://en.wikipedia.org/wiki/FM-2030&quot;&gt;FM-2030 here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>The Future of Social Networks</title>
