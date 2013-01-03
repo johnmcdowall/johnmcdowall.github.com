@@ -1,6 +1,6 @@
 ---
 layout: post
-published: true
+published: false
 title: You are your best client (or how to evaluate a startup you think you want to join)
 ---
 
