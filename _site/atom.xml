@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-01-02T10:57:40-05:00</updated>
+ <updated>2013-01-03T15:20:29-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -13,12 +13,40 @@
  
  
  <entry>
+   <title>You are your best client (or how to evaluate a startup you think you want to join)</title>
+   <link href="http://zachholman.com/posts/you-are-your-best-client-or-how-to-evaluate-a-startup-you-want-to-join-"/>
+   <updated>2013-01-03T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/you-are-your-best-client-or-how-to-evaluate-a-startup-you-want-to-join-</id>
+   <content type="html">&lt;p&gt;I was watching AppSumo chief &lt;a href=&quot;http://twitter.com/noahkagan&quot;&gt;Noah Kagan&lt;/a&gt; giving a talk about how to give your customers &lt;em&gt;Lovegasms&lt;/em&gt;. You can watch it here:&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/GQhzKbjkBr4&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;&lt;strong&gt;One piece of advice he gave is &lt;em&gt;&amp;lsquo;You are your best customer.&amp;rsquo;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Sure, it&amp;rsquo;s part of the lean customer development process to go out, find and speak to people who have real problems, but we also know that it&amp;rsquo;s great to build something that scratches your own itch, and with that be you own customer. It short circuits the whole process of having to find and validate your customers.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s also a good metric for evaluating a startup you think you might want to join.&lt;/p&gt;
+
+&lt;p&gt;If the CEO doesn&amp;rsquo;t represent the target cutsomer, if he or she is not even in the same world as the target customer, you and everyone else there are going to have a bad time. Even if the company is some new consumer play, where the behaviours involved in the product are not exactly already widespread, I&amp;rsquo;d still want to see the CEO leading the charge by example and use of the product.&lt;/p&gt;
+
+&lt;p&gt;The single and most important function of a startup CEO is to have the clear, universal vision about why everyone is there and how they are going to change their customer&amp;rsquo;s worlds, and to clear the path for everyone else in the company to follow them. And it has to be authentic. Which means they have to be the customer.&lt;/p&gt;
+
+&lt;p&gt;Jason Fried at 37Signals did it with Basecamp. Tom Preston-Werner did it at Github with Github. Drew Houston did it at Dropbox with Dropbox. The list goes on.&lt;/p&gt;
+
+&lt;p&gt;So next time you&amp;rsquo;re looking at some new hot startup that you think you&amp;rsquo;d like to join, check out the CEO. Do they meet the above criteria? Are they authentic?&lt;/p&gt;
+
+&lt;p&gt;Don&amp;rsquo;t follow false gods into battle.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>What a Dead Man Named FM-2030 can tell us about the future of user names</title>
    <link href="http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names"/>
    <updated>2013-01-02T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names</id>
    <content type="html">&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/5/53/FM2030.jpg&quot; title=&quot;Fereidoun M. Esfandiary&quot; alt=&quot;Fereidoun M. Esfandiary&quot; /&gt;
-Fereidoun M. Esfandiary was born in Brussles in 1930, and died in New York in 2000 of Pancreatic cancer, subsequently being one of the first people cryonicaly frozen at the Alcor storage facility.  He lived an extremely varied life by most peoples standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1984 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
+Fereidoun M. Esfandiary was born in Brussles in 1930, and died in New York in 2000 of Pancreatic cancer, subsequently being one of the first people cryonicaly frozen at the Alcor storage facility.  He lived an extremely varied life by most peoples standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
 
 &lt;p&gt;Esfandiary literally wrote the book on &lt;a href=&quot;http://en.wikipedia.org/wiki/Transhumanism&quot;&gt;Transhumanism&lt;/a&gt;, &lt;a href=&quot;http://www.amazon.ca/Are-You-Transhuman-Monitoring-Stimulating/dp/0446388068/ref=sr_1_1?ie=UTF8&amp;amp;qid=1357137985&amp;amp;sr=8-1&quot;&gt;&lt;em&gt;&amp;lsquo;Are You a Transhuman?&amp;rsquo;&lt;/em&gt;&lt;/a&gt; while teaching at The New School in New York. As a Futurologist, he predicted the invention of Globalization, in-vitro fertilization, teleconferencing, telemedicine and teleshopping amongst other things. He was noted as once saying:&lt;/p&gt;
 
@@ -40,7 +68,7 @@ Fereidoun M. Esfandiary was born in Brussles in 1930, and died in New York in 20
 
 &lt;p&gt;As we come to live in an age where our online accounts and presences become who we are &lt;em&gt;seen&lt;/em&gt; to be, the username becomes the symbol by which others recognize us. Google Plus already tried and failed to make it so that users &lt;em&gt;had&lt;/em&gt; to use their real names. In one of the rare instances where I agree with &lt;a href=&quot;http://en.wikipedia.org/wiki/Richard_M_Stallman&quot;&gt;RMS&lt;/a&gt;, he asserted that when Users are forced to give their real names they are &lt;a href=&quot;http://www.youtube.com/watch?feature=player_embedded&amp;amp;v=ymuqUJ3MsEs#!&quot;&gt;being mistreated&lt;/a&gt; because it could put those users in danger. This is true, but it will be a secondary force to the growing scarcity of available usernames that match birth names, and a growing population of young adults who are part of online communities or networks from a very young age, and never know anything else. The failure of Google Plus to force users to use their legal birth names is an inevitable outcome of FM-2030&amp;rsquo;s example.&lt;/p&gt;
 
-&lt;p&gt;What does this mean for programmers? We have to work with the understanding that there&amp;rsquo;s a possibility in our lifetimes that users will &lt;em&gt;not have first or last names&lt;/em&gt;. They may legally only have one name. How would you process a credit card payment for someone who has only one name? And maybe that name happens to be legally, &lt;em&gt;their email address&lt;/em&gt;? Maybe their legal name is (╯°□°）╯︵ ┻━┻ ?&lt;/p&gt;
+&lt;p&gt;What does this potential future mean for programmers? We have to work with the understanding that there&amp;rsquo;s a possibility in our lifetimes that users will &lt;em&gt;not have first or last names&lt;/em&gt;, for example. They may legally only have one name. How would you process a credit card payment for someone who has only one name if fraud prevention requires it at your payment gateway? And maybe that name happens to be legally, &lt;em&gt;their email address&lt;/em&gt;? Maybe their legal name is (╯°□°）╯︵ ┻━┻ ?&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Are you ready to be a Transhumanist supporting programmer?&lt;/em&gt;&lt;/p&gt;
 
@@ -152,15 +180,6 @@ failure or otherwise.
  </entry>
  
  <entry>
-   <title>Drinking Coffee is Bad For Photographers</title>
-   <link href="http://zachholman.com/posts/drinking-coffee-is-bad-for-photographers"/>
-   <updated>2012-10-27T00:00:00-04:00</updated>
-   <id>http://zachholman.com/posts/drinking-coffee-is-bad-for-photographers</id>
-   <content type="html">&lt;p&gt;Don't drink coffee in the street. If you need a coffee, or whatever it is that you drink, go sit somewhere and drink it, or better still sit outside and drink it at a table. Otherwise, drinking coffee while on the move requires the constant use of one hand to hold the coffee cup.&lt;br&gt;&lt;/p&gt;&lt;p&gt;In that time that you are holding that coffee cup, you're going to miss any number of great shots because the time it takes for you to deal with the coffee cup, pick up your camera from your side, frame the shot and finally take the shot means that the decisive moment will be gone. &lt;/p&gt;&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/508c06e8e4b08e76ed280c57/1351354146929/Arrested.jpg&quot; /&gt;&lt;p&gt;Sometimes, I forget. I buy a cup of coffee and walk down the street. That's always when the magic happens.&amp;nbsp;&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
    <title>The Apple Television is already here</title>
    <link href="http://zachholman.com/posts/the-apple-television-is-already-here"/>
    <updated>2012-10-26T00:00:00-04:00</updated>
@@ -215,16 +234,6 @@ failure or otherwise.
  </entry>
  
  <entry>
-   <title>Feedback from a Reader</title>
-   <link href="http://zachholman.com/posts/feedback-from-a-reader"/>
-   <updated>2012-07-18T00:00:00-04:00</updated>
-   <id>http://zachholman.com/posts/feedback-from-a-reader</id>
-   <content type="html">&lt;p&gt;On the colorscheme:​&lt;/p&gt;&lt;center&gt;&lt;blockquote class=&quot;twitter-tweet&quot; data-in-reply-to=&quot;225719969160241153&quot;&gt;&lt;p&gt;@&lt;a href=&quot;https://twitter.com/MrMcDowall&quot;&gt;MrMcDowall&lt;/a&gt; A little bit less painful, it's like you stubbed me w/ rusted phillips screwdriver instead of a fork.I complained about colors.&lt;/p&gt;— Alex Indigo (@alexindigo) &lt;a href=&quot;https://twitter.com/alexindigo/status/225720661761482753&quot; data-datetime=&quot;2012-07-18T22:36:14+00:00&quot;&gt;July 18, 2012&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;center&gt;&lt;/center&gt;&lt;/center&gt;
-</content>
- </entry>
- 
- <entry>
    <title>My Notes from the movie Startup.com</title>
    <link href="http://zachholman.com/posts/my-notes-from-the-movie-startupcom"/>
    <updated>2012-07-12T00:00:00-04:00</updated>
@@ -243,29 +252,11 @@ failure or otherwise.
  </entry>
  
  <entry>
-   <title>Edinburgh Waverley Train Station - Christmas 2009</title>
-   <link href="http://zachholman.com/posts/edinburgh-waverley-train-station-christmas-2009"/>
-   <updated>2012-07-07T00:00:00-04:00</updated>
-   <id>http://zachholman.com/posts/edinburgh-waverley-train-station-christmas-2009</id>
-   <content type="html">&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/4ff88b53c4aaf2f6d6ca2c00/1341688576183/EdinburghWaverly.jpg&quot; /&gt;
-</content>
- </entry>
- 
- <entry>
    <title>What's your Development Philosophy?</title>
    <link href="http://zachholman.com/posts/whats-your-development-philosophy"/>
    <updated>2012-07-06T00:00:00-04:00</updated>
    <id>http://zachholman.com/posts/whats-your-development-philosophy</id>
    <content type="html">&lt;p&gt;Usually I try to get teams to define what '&lt;a href=&quot;http://jamesshore.com/Agile-Book/done_done.html&quot; target=&quot;_blank&quot;&gt;Done Done&lt;/a&gt;' is, but &lt;a href=&quot;http://cczona.com/blog/2012/05/keeping-it-simple/&quot;&gt;this take&lt;/a&gt; kind of spins it on its head in a Brian Eno &lt;a href=&quot;http://en.wikipedia.org/wiki/Oblique_Strategies&quot; target=&quot;_blank&quot;&gt;Oblique Strategy&lt;/a&gt; sort of way that I really like:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Untested code isn’t done.&lt;/li&gt;&lt;li&gt;Unreleased code isn’t done.&lt;/li&gt;&lt;li&gt;Undocumented code isn’t done.&lt;/li&gt;&lt;li&gt;Set many, small, specific goals.&lt;/li&gt;&lt;li&gt;Simplicity gives you more options than complexity.&lt;/li&gt;&lt;li&gt;Do something every day. Finish something every week.&lt;/li&gt;&lt;li&gt;One feature finished is better than ten features planned.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Nice and succinct. &lt;em&gt;What's yours?&lt;/em&gt;&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>To The Moon</title>
-   <link href="http://zachholman.com/posts/to-the-moon"/>
-   <updated>2012-07-05T00:00:00-04:00</updated>
-   <id>http://zachholman.com/posts/to-the-moon</id>
-   <content type="html">&lt;p&gt;​&lt;/p&gt;&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/4ff50c08c4aaf05888ec4e38/1341459545029/ToTheMoon.jpg&quot; /&gt;
 </content>
  </entry>
  
@@ -285,19 +276,6 @@ failure or otherwise.
    <updated>2012-07-05T00:00:00-04:00</updated>
    <id>http://zachholman.com/posts/facebook-is-the-space-shuttle-of-software</id>
    <content type="html">&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/4ff615f384ae8f3258f4453d/1341527541429/spaceshuttlerepl1.jpeg&quot; /&gt;&lt;p&gt;Facebook's main code base is more than&amp;nbsp;&lt;a href=&quot;http://www.quora.com/How-large-is-Facebooks-codebase&quot; target=&quot;_blank&quot; data-bitly-type=&quot;bitly_hover_card&quot;&gt;9.2M lines of PHP code&lt;/a&gt;&amp;nbsp;(excluding all supporting backend systems written over time). It's &lt;a href=&quot;http://www.quora.com/What-is-Facebooks-architecture&quot; data-bitly-type=&quot;bitly_hover_card&quot;&gt;estimated&lt;/a&gt;&amp;nbsp;the company owns and operates more than 60,000 servers. As of July 2010, the site received 100 billion hits, held more than 50 billion photos, cached 3 trillion objects, and accumulated 130 TB of logs a day.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Facebook is the most complex distributed software system ever created.&lt;/strong&gt; &lt;/p&gt;&lt;p&gt;And the Space Shuttle is the &lt;a href=&quot;http://spaceflight.nasa.gov/shuttle/upgrades/upgrades5.html&quot; data-bitly-type=&quot;bitly_hover_card&quot;&gt;most complex machine&lt;/a&gt; ever built. It had&amp;nbsp;2.5 million parts, including nearly 370 kilometres of wire and more than 1,060 plumbing valves and connections, 1,440 circuit breakers, and 27,000 insulating tiles and thermal blankets.&lt;/p&gt;&lt;p&gt;Facebook might not be the largest software &lt;em&gt;project&lt;/em&gt; ever built — in fact WIndows 7 &lt;a href=&quot;http://www.quora.com/Whats-got-a-larger-code-base-Windows-7-or-Facebook&quot; data-bitly-type=&quot;bitly_hover_card&quot;&gt;probably has a larger code base&lt;/a&gt;&amp;nbsp;—&amp;nbsp;but when it comes to daily usage levels, number of users and operational complexity, Facebook wins hands down.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Facebook is the Space Shuttle of software. &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;And like the Space Shuttle, it's a massive endeavour that requires thousands of people to support, maintain and improve it. It cannot fail.&lt;/p&gt;&lt;p&gt;But just as the Space Shuttle has been retired, so will Facebook be placed on the funeral boat and shoved out to sea. &lt;/p&gt;&lt;p&gt;Something better will replace it, just as the Space Shuttle is being &lt;a href=&quot;http://idealab.talkingpointsmemo.com/2011/09/say-hello-to-your-new-space-shuttle-replacement.php&quot; data-bitly-type=&quot;bitly_hover_card&quot;&gt;replaced by smaller, leaner craft&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;em&gt;What will replace Facebook?&lt;/em&gt;&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Brian Cox falls from grace</title>
-   <link href="http://zachholman.com/posts/brian-cox-falls-from-grace"/>
-   <updated>2012-07-05T00:00:00-04:00</updated>
-   <id>http://zachholman.com/posts/brian-cox-falls-from-grace</id>
-   <content type="html">&lt;p&gt;​&lt;/p&gt;&lt;center&gt;&lt;blockquote class=&quot;twitter-tweet&quot; data-in-reply-to=&quot;220427166662393856&quot;&gt;&lt;p&gt;@&lt;a href=&quot;https://twitter.com/ProfBrianCox&quot;&gt;ProfBrianCox&lt;/a&gt; @&lt;a href=&quot;https://twitter.com/VincentConnare&quot;&gt;VincentConnare&lt;/a&gt; If you have no taste. Using Comic Sans (except in comic strips) is like doing physics in Imperial units.&lt;/p&gt;— Alastair Houghton (@alastairh) &lt;a href=&quot;https://twitter.com/alastairh/status/220428479475367936&quot; data-datetime=&quot;2012-07-04T08:06:59+00:00&quot;&gt;July 4, 2012&lt;/a&gt;&lt;/blockquote&gt;
-  &lt;script src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/center&gt;&lt;p&gt;​Only to immediately redeem himself...&lt;/p&gt;&lt;center&gt;
-&lt;blockquote class=&quot;twitter-tweet&quot; data-in-reply-to=&quot;220581144729624576&quot;&gt;&lt;p&gt;@&lt;a href=&quot;https://twitter.com/HenryMcAmerica&quot;&gt;HenryMcAmerica&lt;/a&gt; Erm. We just discovered it you nob end&lt;/p&gt;— Brian Cox (@ProfBrianCox) &lt;a href=&quot;https://twitter.com/ProfBrianCox/status/220581347054452736&quot; data-datetime=&quot;2012-07-04T18:14:25+00:00&quot;&gt;July 4, 2012&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;/center&gt;
 </content>
  </entry>
  
