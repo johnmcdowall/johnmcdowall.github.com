@@ -5,7 +5,7 @@ title: What a Dead Man Named FM-2030 can tell us about the future of user names
 ---
 
 ![Fereidoun M. Esfandiary](http://upload.wikimedia.org/wikipedia/commons/5/53/FM2030.jpg "Fereidoun M. Esfandiary")
-Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 2000 of pancreatic cancer, subsequently being one of the first people cryonicaly frozen at the Alcor storage facility.  He lived an extremely varied life by most peoples standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.
+Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 2000 of pancreatic cancer, subsequently being one of the first people cryonically frozen at the Alcor storage facility.  He lived an extremely varied life by most people's standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.
 
 Esfandiary literally wrote the book on [Transhumanism](http://en.wikipedia.org/wiki/Transhumanism), [_'Are You a Transhuman?'_](http://www.amazon.ca/Are-You-Transhuman-Monitoring-Stimulating/dp/0446388068/ref=sr_1_1?ie=UTF8&qid=1357137985&sr=8-1) while teaching at The New School in New York. As a Futurologist, he predicted the invention of Globalization, in-vitro fertilization, teleconferencing, telemedicine and teleshopping amongst other things. He was noted as once saying:  
 
