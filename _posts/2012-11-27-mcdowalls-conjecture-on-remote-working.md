@@ -22,13 +22,8 @@ David Heinemier Hanson, parter at 37Signals, <a href="http://37signals.com/svn/p
 
 I've said many times that _culture is not imposed, it is made up of all of the individuals of a company; their beliefs and standards_. So it is through long observation that I have come to the following rule of thumb:
 
-	If remote working doesn't work at your company, it's your fault.
+> If remote working doesn't work at your company, it's your fault.
 
 The corollary to this rule of thumb is:
 
-	The management and leadership elements in a company will reflect their own 
-	personal biases and previous failures at remote working onto the notion of 
-	remote working; they may also fear the power of a truly self-organizing, 
-	self-directed team on their own relevance, and will construct the necessary 
-	social cues or fear based mechanisms within the company to ensure its 
-	failure or otherwise.
+> The management and leadership elements in a company will reflect their own personal biases and previous failures at remote working onto the notion of remote working; they may also fear the power of a truly self-organizing, self-directed team on their own relevance, and will construct the necessary social cues or fear based mechanisms within the company to ensure its failure or otherwise.
