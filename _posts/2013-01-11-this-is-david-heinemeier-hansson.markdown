@@ -53,3 +53,4 @@ It could be said, that he's so busy attacking any attempts to modernize software
 
 When all is said and done, I still respect David greatly, and we are haircut brethren since time began, I just wish he'd stop the attacks, stop being dismissive and read some new books. 
 
+_Discuss, upvote, or do whatever the hell you want on [HackerNews](http://news.ycombinator.com/item?id=5043573).
