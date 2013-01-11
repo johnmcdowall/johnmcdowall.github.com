@@ -5,12 +5,75 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-01-03T15:20:29-05:00</updated>
+ <updated>2013-01-11T12:02:49-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>This is David Heinemeier Hansson</title>
+   <link href="http://zachholman.com/posts/this-is-david-heinemeier-hansson"/>
+   <updated>2013-01-11T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/this-is-david-heinemeier-hansson</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/images/david.jpg&quot; title=&quot;David Heinemeier Hansson&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;David Heinemeier Hansson is a hell of a guy. He&amp;rsquo;s responsible for one of the best web development frameworks in the world, Ruby on Rails. He&amp;rsquo;s always been outspoken and a force to be reckoned with, but lately his writings have taken on the tone of an old man ranting at what the kids are into these days.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;He&amp;rsquo;s inside his own Isolator, writing from his oak-paneled study.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;But what evidence is there that he&amp;rsquo;s inside his Isolator? What follows is not an attack, but an attempt at a broad analysis of the character of his recent writings.&lt;/p&gt;
+
+&lt;p&gt;His recent post on what he thinks is &lt;a href=&quot;http://david.heinemeierhansson.com/2012/dependency-injection-is-not-a-virtue.html&quot;&gt;&amp;lsquo;Dependecy Injects&amp;rsquo;&lt;/a&gt; has been &lt;a href=&quot;http://codeulate.com/2013/01/a-criticism-of-dhhs-post-on-dependency-injection/&quot;&gt;rightly&lt;/a&gt; &lt;a href=&quot;http://chrismdp.com/2013/01/dependency-injection-not-ioc/&quot;&gt;prosecuted&lt;/a&gt; as an ill informed and at worse deliberately disingenuous piece of self oriented propaganda.&lt;/p&gt;
+
+&lt;p&gt;Nat Pryce, who &lt;a href=&quot;http://jmock.org/oopsla2004.pdf&quot;&gt;wrote the original paper&lt;/a&gt;, which spawned the &amp;lsquo;only mock types you own&amp;rsquo; quote that DHH misappropriates, said:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;The &amp;ldquo;only mock types you own&amp;rdquo; comes from a paper about jMock, which was a port of to Java of &amp;hellip; a Ruby library (and the design style that went along with it).
+DHH doesn&amp;rsquo;t know what people were doing in Ruby before he started using it.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;DHH&amp;rsquo;s Dependency Injection post is only the most recent crystallization of a slow and insidious change in his approach and language he uses. His posts are filled with deliberately charged and dismissive language like (emphasis mine):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://37signals.com/svn/posts/3373-getting-hyper-about-hypermedia-apis&quot;&gt;Getting hyper about hypermedia APIs&lt;/a&gt;. This post finishes with DHH equating Hypermedia APIs to WS-*, which suggests he might not understand either beyond a vague surface level.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;According to hypermedia &lt;strong&gt;lore&lt;/strong&gt;, you will be able to &lt;strong&gt;willy nilly&lt;/strong&gt; change your URLs without needing to update any clients.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://37signals.com/svn/posts/3372-put-chubby-models-on-a-diet-with-concerns&quot;&gt;Put chubby models on a diet with concerns&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;It doesn’t have the run-time mixin &lt;strong&gt;acrobatics&lt;/strong&gt; nor does it have the &lt;strong&gt;“thy models shall be completely devoid of logic themselves” prescription&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://37signals.com/svn/posts/3341-pattern-vision&quot;&gt;Pattern Vision&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;Go deep enough and the pattern vision turns into &lt;strong&gt;articles of faith&lt;/strong&gt;. [&amp;hellip;] &lt;strong&gt;&lt;em&gt;Turning patterns into articles of faith takes them out of the realm of rational discussion. Code either adheres to the holy patterns or it doesn’t. If it does not, the programmer must first repent, say his 25 rose-delegations&lt;/em&gt;&lt;/strong&gt; [&amp;hellip;]&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;As a writer, he&amp;rsquo;s trying to position himself as seemingly a rational and sane voice illustrating a demon filled world of superstition to a dumb and sheep like congregation.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;His position seems more a stance of &lt;strong&gt;anti-intellectualism&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve seen people suggest alternate ways of building Rails apps, only for DHH to dismiss it, and then when challenged make his rallying cry of &amp;lsquo;Look at the code! Look at the before and after!&amp;rsquo; and then fail to produce any counterexample himself.&lt;/p&gt;
+
+&lt;p&gt;DHH also wrote a post about &lt;a href=&quot;http://37signals.com/svn/posts/3375-the-five-programming-books-that-meant-most-to-me&quot;&gt;The five programming books that meant the most to me&lt;/a&gt;, a list of which coincidentally the most recent book is from 2003. This list is startlingly missing any of the important recent thinking on Software Design, most excellently lead by &lt;a href=&quot;http://www.amazon.ca/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627/ref=sr_1_1?ie=UTF8&amp;amp;qid=1357920398&amp;amp;sr=8-1&quot;&gt;Growing Object Oriented Software, Guided by Tests&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;But then, this shouldn&amp;rsquo;t be surprising since DHH is against keeping books he&amp;rsquo;s read:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p&gt;It's funny to see people who proclaim a love of &quot;less stuff&quot; still linger on to keeping a wall of paper books. Screw that.&lt;/p&gt;&amp;mdash; DHH (@dhh) &lt;a href=&quot;https://twitter.com/dhh/status/240550580899155968&quot; data-datetime=&quot;2012-08-28T20:45:02+00:00&quot;&gt;August 28, 2012&lt;/a&gt;&lt;/blockquote&gt;
+
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;There were other tweets he made around that one, where he makes further statements about getting rid of books you&amp;rsquo;ve read, but it&amp;rsquo;s impossible to find them using Twitter.&lt;/p&gt;
+
+&lt;p&gt;This is a shame, if only because the re-reading of great books is like having conversations with the great minds of the past. You learn something every time you re-read them, or at least you could if you didn&amp;rsquo;t trash them after reading.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s easy to say that DHH is becoming more and more out of touch with the realities that people face building software systems in the 21st century, or applications that aren&amp;rsquo;t Basecamp, but there is evidence to support that he is.&lt;/p&gt;
+
+&lt;p&gt;It could be said, that he&amp;rsquo;s so busy attacking any attempts to modernize software development using Rails as &amp;lsquo;dogma&amp;rsquo; or &amp;lsquo;the resurgence of Java pattern vision&amp;rsquo;, that he&amp;rsquo;s lacking the ability to introspect on himself, and ask himself the questions about his own cherished beliefs.&lt;/p&gt;
+
+&lt;p&gt;When all is said and done, I still respect David greatly, and we are haircut brethren since time began, I just wish he&amp;rsquo;d stop the attacks, stop being dismissive and read some new books.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>You are your best client (or how to evaluate a startup you think you want to join)</title>
@@ -28,7 +91,7 @@
 
 &lt;p&gt;It&amp;rsquo;s also a good metric for evaluating a startup you think you might want to join.&lt;/p&gt;
 
-&lt;p&gt;If the CEO doesn&amp;rsquo;t represent the target cutsomer, if he or she is not even in the same world as the target customer, you and everyone else there are going to have a bad time. Even if the company is some new consumer play, where the behaviours involved in the product are not exactly already widespread, I&amp;rsquo;d still want to see the CEO leading the charge by example and use of the product.&lt;/p&gt;
+&lt;p&gt;If the CEO doesn&amp;rsquo;t represent the target customer, if he or she is not even in the same world as the target customer, you and everyone else there are going to have a bad time. Even if the company is some new consumer play, where the behaviors involved in the product are not exactly already widespread, I&amp;rsquo;d still want to see the CEO leading the charge by example and use of the product.&lt;/p&gt;
 
 &lt;p&gt;The single and most important function of a startup CEO is to have the clear, universal vision about why everyone is there and how they are going to change their customer&amp;rsquo;s worlds, and to clear the path for everyone else in the company to follow them. And it has to be authentic. Which means they have to be the customer.&lt;/p&gt;
 
@@ -46,7 +109,7 @@
    <updated>2013-01-02T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names</id>
    <content type="html">&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/5/53/FM2030.jpg&quot; title=&quot;Fereidoun M. Esfandiary&quot; alt=&quot;Fereidoun M. Esfandiary&quot; /&gt;
-Fereidoun M. Esfandiary was born in Brussles in 1930, and died in New York in 2000 of Pancreatic cancer, subsequently being one of the first people cryonicaly frozen at the Alcor storage facility.  He lived an extremely varied life by most peoples standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
+Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 2000 of pancreatic cancer, subsequently being one of the first people cryonically frozen at the Alcor storage facility.  He lived an extremely varied life by most people&amp;rsquo;s standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
 
 &lt;p&gt;Esfandiary literally wrote the book on &lt;a href=&quot;http://en.wikipedia.org/wiki/Transhumanism&quot;&gt;Transhumanism&lt;/a&gt;, &lt;a href=&quot;http://www.amazon.ca/Are-You-Transhuman-Monitoring-Stimulating/dp/0446388068/ref=sr_1_1?ie=UTF8&amp;amp;qid=1357137985&amp;amp;sr=8-1&quot;&gt;&lt;em&gt;&amp;lsquo;Are You a Transhuman?&amp;rsquo;&lt;/em&gt;&lt;/a&gt; while teaching at The New School in New York. As a Futurologist, he predicted the invention of Globalization, in-vitro fertilization, teleconferencing, telemedicine and teleshopping amongst other things. He was noted as once saying:&lt;/p&gt;
 
@@ -146,18 +209,11 @@ Fereidoun M. Esfandiary was born in Brussles in 1930, and died in New York in 20
 
 &lt;p&gt;I&amp;rsquo;ve said many times that &lt;em&gt;culture is not imposed, it is made up of all of the individuals of a company; their beliefs and standards&lt;/em&gt;. So it is through long observation that I have come to the following rule of thumb:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;If remote working doesn't work at your company, it's your fault.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;&lt;p&gt;If remote working doesn&amp;rsquo;t work at your company, it&amp;rsquo;s your fault.&lt;/p&gt;&lt;/blockquote&gt;
 
 &lt;p&gt;The corollary to this rule of thumb is:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;The management and leadership elements in a company will reflect their own 
-personal biases and previous failures at remote working onto the notion of 
-remote working; they may also fear the power of a truly self-organizing, 
-self-directed team on their own relevance, and will construct the necessary 
-social cues or fear based mechanisms within the company to ensure its 
-failure or otherwise.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;&lt;p&gt;The management and leadership elements in a company will reflect their own personal biases and previous failures at remote working onto the notion of remote working; they may also fear the power of a truly self-organizing, self-directed team on their own relevance, and will construct the necessary social cues or fear based mechanisms within the company to ensure its failure or otherwise.&lt;/p&gt;&lt;/blockquote&gt;
 </content>
  </entry>
  
@@ -175,7 +231,7 @@ failure or otherwise.
    <link href="http://zachholman.com/posts/vagrant-running-commands-from-rake-as-the-vagrant-user"/>
    <updated>2012-10-30T00:00:00-04:00</updated>
    <id>http://zachholman.com/posts/vagrant-running-commands-from-rake-as-the-vagrant-user</id>
-   <content type="html">&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/50902e81e4b08a6452e1e19e/1351626371048/Screen%20Shot%202012-10-30%20at%203.45.40%20PM.png.40%20PM.png?format=original&quot; /&gt;&lt;p&gt;I was trying to find out a way of running some commands inside the Vagrant virtual machine as the &lt;em&gt;vagrant&lt;/em&gt; user, not as &lt;em&gt;root&lt;/em&gt;, which is what the &lt;em&gt;channel.sudo()&lt;/em&gt; method does.&amp;nbsp;&lt;/p&gt;&lt;p&gt;After a while of trying to find some documentation on the official Vagrant site, and finding none, I eventually found a call in the Vagrant source code for &lt;em&gt;channel.execute()&lt;/em&gt; - which does run the passed commands as the&amp;nbsp;&lt;em&gt;vagrant&lt;/em&gt; user.&lt;/p&gt;&lt;p&gt;Job done, right?&lt;/p&gt;&lt;p&gt;Well, not really. I did what all good citizens of the open source community should do, which was to fork the Vagrant documentation repo, update the documentation, and &lt;a href=&quot;https://github.com/mitchellh/vagrant/pull/1214&quot; target=&quot;_blank&quot;&gt;submit a pull request&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;The 'Boy Scout' principal prevails - try to leave the campsite tidier than when you found it. &lt;/p&gt;
+   <content type="html">&lt;p&gt;I was trying to find out a way of running some commands inside the Vagrant virtual machine as the &lt;em&gt;vagrant&lt;/em&gt; user, not as &lt;em&gt;root&lt;/em&gt;, which is what the &lt;em&gt;channel.sudo()&lt;/em&gt; method does.&amp;nbsp;&lt;/p&gt;&lt;p&gt;After a while of trying to find some documentation on the official Vagrant site, and finding none, I eventually found a call in the Vagrant source code for &lt;em&gt;channel.execute()&lt;/em&gt; - which does run the passed commands as the&amp;nbsp;&lt;em&gt;vagrant&lt;/em&gt; user.&lt;/p&gt;&lt;p&gt;Job done, right?&lt;/p&gt;&lt;p&gt;Well, not really. I did what all good citizens of the open source community should do, which was to fork the Vagrant documentation repo, update the documentation, and &lt;a href=&quot;https://github.com/mitchellh/vagrant/pull/1214&quot; target=&quot;_blank&quot;&gt;submit a pull request&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;The 'Boy Scout' principal prevails - try to leave the campsite tidier than when you found it. &lt;/p&gt;
 </content>
  </entry>
  
@@ -247,7 +303,7 @@ failure or otherwise.
    <link href="http://zachholman.com/posts/old-houses-and-software-projects"/>
    <updated>2012-07-10T00:00:00-04:00</updated>
    <id>http://zachholman.com/posts/old-houses-and-software-projects</id>
-   <content type="html">&lt;p&gt;Old Houses are products of accretion. Over the course of many years they gather new extensions, tweaked facades, upgraded central or under-floor heating systems, alarm systems, downstairs washrooms and nurseries. And usually, once one project is completed, you'll bask in the glow of it for a while until it's forgotten about and the next one embarked upon. Just like Software projects.&lt;/p&gt;&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/4ffc637884ae51f071734d0d/1341940598720/old_house.jpeg&quot; /&gt;&lt;p&gt;I lived once in a big, old house which had stood for over 80 years. It'd been split up so that a couple lived in the back portion, I lived in the front half, and there was a basement apartment. Sound can travel in funny ways in such old houses, split up like that.&amp;nbsp;&lt;/p&gt;&lt;p&gt;You see there are the remenants of what were once ducts for the purposes of a forced air central heating system, all through the house. The air vents are now partially sealed, but the ornamentation on the baseboard that gives away their purpose is still there. The ducts lie embedded within the walls still. Long forgotten about, these heating ducts were probably installed at great expense at the time, for what was felt to be the ultimate in home comfort: hot air blown into the rooms from a central heater!&lt;/p&gt;&lt;p&gt;At some point, the old air heater was pulled out, radiators were found and installed, and a fancy Swedish boiler system now silently and efficiently pumps hot water around the piping and heats the house. And the ducts remain, in the walls, now sealed up and silent. Except for when they carry sound in funny ways. Old houses are like that.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Occasionally, I was treated to the sounds of someone somewhere else in the house enjoying vigorous, short lived coitus, the echoes of it carried inside the bones of the house, inside these long forgoten about ducts that serve no purpose. Should the ducts be ripped out? That would be very costly, disruptive to the residents, and damaging to the house. So they stay. Silently embedded within the walls.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Much like the infastructure portions of almost every software design that's ever been written. Look at your codebase. Is there something in there, some remnant of infrastructure that was built with the greatest of hopes and expectations, only to be roundly replaced when you understood the problem better? Has it left a legacy that occasionally flares up or acts as the conduit for some other misbehaving component in the project?&lt;/p&gt;&lt;p&gt;Removing that code might be too hard now, because nobody writes perfect software. Some brittle tests somewhere might flare up, or a method call somewhere might explode.&amp;nbsp;&lt;/p&gt;&lt;p&gt;And yet that code sits there, inside your digital walls.&lt;/p&gt;&lt;p&gt;Software Projects can be like building houses. The construction continues long after the thing is 'finished', and you end up living with the choices you make for a long time, usually forever.&amp;nbsp;&lt;/p&gt;&lt;p&gt;And sometimes, in the night, you hear odd noises carried by those old ducts. &amp;nbsp;&lt;/p&gt;
+   <content type="html">&lt;p&gt;Old Houses are products of accretion. Over the course of many years they gather new extensions, tweaked facades, upgraded central or under-floor heating systems, alarm systems, downstairs washrooms and nurseries. And usually, once one project is completed, you'll bask in the glow of it for a while until it's forgotten about and the next one embarked upon. Just like Software projects.&lt;/p&gt;&lt;p&gt;I lived once in a big, old house which had stood for over 80 years. It'd been split up so that a couple lived in the back portion, I lived in the front half, and there was a basement apartment. Sound can travel in funny ways in such old houses, split up like that.&amp;nbsp;&lt;/p&gt;&lt;p&gt;You see there are the remenants of what were once ducts for the purposes of a forced air central heating system, all through the house. The air vents are now partially sealed, but the ornamentation on the baseboard that gives away their purpose is still there. The ducts lie embedded within the walls still. Long forgotten about, these heating ducts were probably installed at great expense at the time, for what was felt to be the ultimate in home comfort: hot air blown into the rooms from a central heater!&lt;/p&gt;&lt;p&gt;At some point, the old air heater was pulled out, radiators were found and installed, and a fancy Swedish boiler system now silently and efficiently pumps hot water around the piping and heats the house. And the ducts remain, in the walls, now sealed up and silent. Except for when they carry sound in funny ways. Old houses are like that.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Occasionally, I was treated to the sounds of someone somewhere else in the house enjoying vigorous, short lived coitus, the echoes of it carried inside the bones of the house, inside these long forgoten about ducts that serve no purpose. Should the ducts be ripped out? That would be very costly, disruptive to the residents, and damaging to the house. So they stay. Silently embedded within the walls.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Much like the infastructure portions of almost every software design that's ever been written. Look at your codebase. Is there something in there, some remnant of infrastructure that was built with the greatest of hopes and expectations, only to be roundly replaced when you understood the problem better? Has it left a legacy that occasionally flares up or acts as the conduit for some other misbehaving component in the project?&lt;/p&gt;&lt;p&gt;Removing that code might be too hard now, because nobody writes perfect software. Some brittle tests somewhere might flare up, or a method call somewhere might explode.&amp;nbsp;&lt;/p&gt;&lt;p&gt;And yet that code sits there, inside your digital walls.&lt;/p&gt;&lt;p&gt;Software Projects can be like building houses. The construction continues long after the thing is 'finished', and you end up living with the choices you make for a long time, usually forever.&amp;nbsp;&lt;/p&gt;&lt;p&gt;And sometimes, in the night, you hear odd noises carried by those old ducts. &amp;nbsp;&lt;/p&gt;
 </content>
  </entry>
  
