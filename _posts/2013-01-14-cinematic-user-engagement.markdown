@@ -2,6 +2,7 @@
 layout: post
 published: true
 title: Cinematic User Engagement
+description: Progressive User Engagement might be the wrong way to go, when we have all the tools necessary in the browser to present a more cinematic initial experience to a new user, and a chance to increase the perceived value of the product before they begin to use it. 
 ---
 ![Dr Strangelove](http://f.cl.ly/items/0w2t2u080P0R0W0p0334/Screen%20Shot%202013-01-13%20at%2010.55.59%20PM.png "Dr Strangelove")
 
