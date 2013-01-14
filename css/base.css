@@ -3,7 +3,7 @@ body {
   font-family: Palatino, Georgia, Times, Serif;
   margin: 0;
   -webkit-font-smoothing: antialiased; 
-  background-color: #ECEEF1;}
+  background-color: #2B3237;}
 
 a {
   color: #227ce8; }
@@ -13,6 +13,7 @@ a {
   left: 15px;
   top: 15px;
   width: 80px;
+  color: #C8CDCF;
   font-family: Helvetica, sans-serif; }
   .sidebar a {
     text-decoration: none; }
@@ -30,22 +31,24 @@ a {
       padding-left: 1px;
       font-size: 23px;
       letter-spacing: 5px;
-      color: black; }
+      color: #C8CDCF;
+       }
     .sidebar .name #mcdowall {
       font-size: 13px;
       font-weight: bold;
       letter-spacing: 1px;
-      color: black; }
+      color: #C8CDCF;
+       }
   .sidebar .meta a {
     margin-left: 0px;
-    color: black; }
+    color: color: #C8CDCF;; }
     .sidebar .meta a:hover {
       color: #227ce8; }
   .sidebar .sections {
     margin: 15px 0 0 0; }
     .sidebar .sections a {
       padding: 3px 0;
-      color: black;
+      color: #C8CDCF;;
       font-weight: bold;
       font-size: 12px;
       display: block; }
@@ -61,13 +64,26 @@ a {
 .content {
   margin-left: 150px;
   width: 650px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px; 
+  background: #C6CBCE;
+      
+      }
+
+      .content article {
+        padding: 1em 1em 1em 1em;  
+      }
+
+  .content header {
+    background: #156D9A;
+    padding: 1em;
+  }
+
   .content h1 {
-    color: #333;
+    color: white;
     
     font-weight: 400; }
   .content h1 a {
-    color: #111;
+    color: #FFF;
     text-decoration: none; }
   .content h2 {
     color: #333;
@@ -105,7 +121,8 @@ a {
     font-size: 20px;
     margin-top: 0;
     margin-bottom: 1.2em;
-    line-height: 30px; }
+    line-height: 30px; 
+}
     .content p code {
       font-size: 12px;
       background-color: #eeeeee;
@@ -113,10 +130,10 @@ a {
       border-radius: 3px;
       padding: 2px 3px; }
   .content img {
-    padding: 3px;
     border: 1px solid #eeeeee;
+    margin-bottom: 1em;
     float: right;
-    max-width: 100%; }
+    width: 100%; }
   .content hr {
     border: 0;
     height: 6px;
@@ -145,7 +162,7 @@ a {
     text-transform: uppercase;
     font-size: 0.9em;
     padding-left: 0px;
-    color: #777; }
+    color: #C6CBCE; }
   .content .aside {
     background-color: #eeeeee;
     padding: 14px;
@@ -155,7 +172,7 @@ a {
     line-height: 1.6em; }
   .content .listing {
     margin: 10px 0 0 0;
-    padding: 0;
+    padding: 0 1em 0 1em;
     font-family: Palatino, Georgia, Times, Serif; }
     .content .listing ul {
       margin: 0;
@@ -171,9 +188,12 @@ a {
       float: right; 
       text-transform: uppercase;
       font-size: 0.8em;
+      width: 150px;
+text-align: right;
       }
     .content .listing a {
-      text-decoration: none; }
+      text-decoration: none; 
+      color: #013E60;}
       .content .listing a:hover {
         text-decoration: underline; }
   .content .meta {
@@ -190,7 +210,8 @@ a {
       margin-top: 0px;
       margin-right: 10px;
       margin-left: -60px;
-      border-radius: 4px; }
+      border-radius: 4px; 
+      width: auto;}
     .content .meta .copy {
       padding-left: 60px; }
     .content .meta iframe {

@@ -18,7 +18,7 @@ I've heard these excuses time and time again against remote working or working f
 * _"People just goof off if they work from home."_
 
 
-David Heinemier Hanson, parter at 37Signals, <a href="http://37signals.com/svn/posts/3336-cities-with-signals" data-link-type="external" target="_blank">Just posted an article</a> on the number of different places that people have worked from in their time with the company. Github are also known to have an _extremely_ geo-distributed team. There are others who manage very well with distributed teams, working remotely. I think it's no coincidence that the common thread amongst these successful geo-distributed companies are that their leaders believe it can work.
+David Heinemier Hansson, parter at 37Signals, <a href="http://37signals.com/svn/posts/3336-cities-with-signals" data-link-type="external" target="_blank">Just posted an article</a> on the number of different places that people have worked from in their time with the company. Github are also known to have an _extremely_ geo-distributed team. There are others who manage very well with distributed teams, working remotely. I think it's no coincidence that the common thread amongst these successful geo-distributed companies are that their leaders believe it can work.
 
 I've said many times that _culture is not imposed, it is made up of all of the individuals of a company; their beliefs and standards_. So it is through long observation that I have come to the following rule of thumb:
 
