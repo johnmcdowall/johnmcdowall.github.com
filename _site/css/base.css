@@ -8,6 +8,11 @@ body {
 a {
   color: #227ce8; }
 
+iframe {
+  width: 100%;
+  margin: 0px auto;
+}
+
 .sidebar {
   position: fixed;
   left: 15px;
@@ -178,7 +183,7 @@ a {
       margin: 0;
       padding: 0; }
     .content .listing li {
-      font-size: 16px;
+      font-size: 20px;
       list-style: none;
       padding: 16px 3px;
       margin: 0;
@@ -188,8 +193,8 @@ a {
       float: right; 
       text-transform: uppercase;
       font-size: 0.8em;
-      width: 150px;
-text-align: right;
+      width: 162px;
+      text-align: right;
       }
     .content .listing a {
       text-decoration: none; 

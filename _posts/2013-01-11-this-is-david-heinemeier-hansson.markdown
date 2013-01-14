@@ -12,7 +12,7 @@ David Heinemeier Hansson is a hell of a guy. He's responsible for one of the bes
 
 But what evidence is there that he's inside his Isolator? What follows is not an attack, but an attempt at a broad analysis of the character of his recent writings.
 
-His recent post on what he thinks is ['Dependecy Injects'](http://david.heinemeierhansson.com/2012/dependency-injection-is-not-a-virtue.html) has been [rightly](http://codeulate.com/2013/01/a-criticism-of-dhhs-post-on-dependency-injection/) [prosecuted](http://chrismdp.com/2013/01/dependency-injection-not-ioc/) as an ill informed and at worse deliberately disingenuous piece of self oriented propaganda.
+His recent post on what he thinks is ['Dependency Injection'](http://david.heinemeierhansson.com/2012/dependency-injection-is-not-a-virtue.html) has been [rightly](http://codeulate.com/2013/01/a-criticism-of-dhhs-post-on-dependency-injection/) [prosecuted](http://chrismdp.com/2013/01/dependency-injection-not-ioc/) as an ill informed and at worse deliberately disingenuous piece of self oriented propaganda.
 
 Nat Pryce, who [wrote the original paper](http://jmock.org/oopsla2004.pdf), which spawned the 'only mock types you own' quote that DHH misappropriates, said:
 

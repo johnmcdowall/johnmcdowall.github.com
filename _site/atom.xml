@@ -5,12 +5,82 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-01-13T20:58:11-05:00</updated>
+ <updated>2013-01-14T00:09:15-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>Cinematic User Engagement</title>
+   <link href="http://zachholman.com/posts/cinematic-user-engagement"/>
+   <updated>2013-01-14T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/cinematic-user-engagement</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0w2t2u080P0R0W0p0334/Screen%20Shot%202013-01-13%20at%2010.55.59%20PM.png&quot; title=&quot;Dr Strangelove&quot; alt=&quot;Dr Strangelove&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Progressive User Engagement might be the wrong way to go, when we have all the tools necessary in the browser to present a more cinematic initial experience to a new user, and a chance to increase the perceived value of the product before they begin to use it.&lt;/p&gt;
+
+&lt;p&gt;Think of your favorite movies. Do you remember the title sequence? Maybe. Title sequences often go un-noticed by audiences, usually because they are constructed in a way as to help set the tone without being distracting. Or in the case of Star Wars, go all out to signal the beginning of something never before seen.&lt;/p&gt;
+
+&lt;p&gt;Some Directors spend great amounts of time choosing the title sequence font and how the dynamics of the sequence plays out. They do this because it can give the viewer a subtle clue as to what kind of movie they are about to see. And if done well, it can greatly enhance the impact of the opening sequence.&lt;/p&gt;
+
+&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/mRtT4HHQef0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;Half Life 2 was arguably the first game to raise the bar (ho ho!) in terms of convergence between Game and Movie. It borrowed many of the idioms of the Movie opening sequence throughout the game to mask the necessary loading sections between levels, for example.&lt;/p&gt;
+
+&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/KNCgs_47t28&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;In one of the sequels, Half Life 2: Episode One, Valve went to far as to incorporate a new type of &amp;lsquo;Cinematic Physics&amp;rsquo; intended to bring the grand spectacle of the movies to the small screen, and deepen user immersion. As did Crysis 2:&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/8pPI3i12hIw&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;Cinematic Physics seems to involve a lot of bridges.&lt;/p&gt;
+
+&lt;p&gt;Some authors have written about Progressive User Engagement, where the user is gradually introduced to form elements that request necessary information, or defer the collection of that information until later, in order to have as frictionless a process as possible for the new user.&lt;/p&gt;
+
+&lt;p&gt;The reasoning here is that since the signup process is a one time experience for the user, its best to get it over as quickly and painlessly as possible. The result tends to be small, static form elements that are served up briefly and then moved out of the way, and the user thrown into the application.&lt;/p&gt;
+
+&lt;p&gt;I think this strategy misses a chance to instead further deepen the experience for the user in such a way that it sets the tone for the forthcoming application.&lt;/p&gt;
+
+&lt;p&gt;How can we utilize the &amp;lsquo;Cinematic User Engagement&amp;rsquo; techniques for the web? What if we were to layer the notion of &amp;lsquo;Cinematic User Engagement&amp;rsquo; on to these ideas of Progressive User Engagement? What would this look like?&lt;/p&gt;
+
+&lt;p&gt;I think for a first pass, we could borrow some elements from Game Consoles such as the XBox 360 and their ideas around the &lt;a href=&quot;http://en.wikipedia.org/wiki/10-foot_user_interface&quot;&gt;10-foot user interface&lt;/a&gt;, and motion graphic design ironically often used in Movies to present a laughable cinematic notion of futuristic computer interfaces.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Instead of having cluttered screens that carry over brand, footers and other extraneous elements, we could have a completely minimalist screen which only displays the current element the user is to interact with.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Instead of having small forms, we could user over-sized text on high contrast backgrounds and fading techniques to transition from one form element to the next.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/1D2L1T0f0B0F2K1y0w16/Screen%20Shot%202013-01-13%20at%2011.23.43%20PM.png&quot; alt=&quot;Example 1&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;We could utilize HTML5 video elements to provide subtle backgrounds that set the tone for the Application the user is about to enter.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Subtle audio or music could be used to provide cues to the user at key stages. The Motion Graphics concept of the New MySpace demonstrates this.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;iframe src=&quot;http://player.vimeo.com/video/50071857?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;500&quot; height=&quot;313&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt; &lt;p&gt;&lt;a href=&quot;http://vimeo.com/50071857&quot;&gt;The new Myspace&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/myspace&quot;&gt;Myspace&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Once all of the necessary details have been collected, immediately launch a full-screen HTML5 video showing a user operating the application to get the central task it supports done.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;There is much that could be done in the browser using CSS3 and JavaScript to increase and enhance the user experience during first contact, that we are only beginning to scratch the surfaces of. And while it may not suit every application, it&amp;rsquo;s definitely a technique that could create a lasting impression in your user&amp;rsquo;s minds.&lt;/p&gt;
+
+&lt;p&gt;The future of web application user experience lies somewhere in the convergence of movie, game and appliance &amp;ndash; that space will be the battleground for user adoption in the 21st century.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;I&amp;rsquo;d love to find the time to build a demo of these concepts, or if someone wants to take these ideas and execute them, I&amp;rsquo;ll gladly work with you. Just &lt;a href=&quot;mailto:john@mcdowall.info&quot;&gt;get in touch&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>This is David Heinemeier Hansson</title>
@@ -25,7 +95,7 @@
 
 &lt;p&gt;But what evidence is there that he&amp;rsquo;s inside his Isolator? What follows is not an attack, but an attempt at a broad analysis of the character of his recent writings.&lt;/p&gt;
 
-&lt;p&gt;His recent post on what he thinks is &lt;a href=&quot;http://david.heinemeierhansson.com/2012/dependency-injection-is-not-a-virtue.html&quot;&gt;&amp;lsquo;Dependecy Injects&amp;rsquo;&lt;/a&gt; has been &lt;a href=&quot;http://codeulate.com/2013/01/a-criticism-of-dhhs-post-on-dependency-injection/&quot;&gt;rightly&lt;/a&gt; &lt;a href=&quot;http://chrismdp.com/2013/01/dependency-injection-not-ioc/&quot;&gt;prosecuted&lt;/a&gt; as an ill informed and at worse deliberately disingenuous piece of self oriented propaganda.&lt;/p&gt;
+&lt;p&gt;His recent post on what he thinks is &lt;a href=&quot;http://david.heinemeierhansson.com/2012/dependency-injection-is-not-a-virtue.html&quot;&gt;&amp;lsquo;Dependency Injection&amp;rsquo;&lt;/a&gt; has been &lt;a href=&quot;http://codeulate.com/2013/01/a-criticism-of-dhhs-post-on-dependency-injection/&quot;&gt;rightly&lt;/a&gt; &lt;a href=&quot;http://chrismdp.com/2013/01/dependency-injection-not-ioc/&quot;&gt;prosecuted&lt;/a&gt; as an ill informed and at worse deliberately disingenuous piece of self oriented propaganda.&lt;/p&gt;
 
 &lt;p&gt;Nat Pryce, who &lt;a href=&quot;http://jmock.org/oopsla2004.pdf&quot;&gt;wrote the original paper&lt;/a&gt;, which spawned the &amp;lsquo;only mock types you own&amp;rsquo; quote that DHH misappropriates, said:&lt;/p&gt;
 
