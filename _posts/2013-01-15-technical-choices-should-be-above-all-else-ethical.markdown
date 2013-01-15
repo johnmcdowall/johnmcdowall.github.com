@@ -5,7 +5,7 @@ title: Technical choices should be - above all else - ethical.
 description: Unless you're working for yourself, if you're building something for a client then your primary concern should be making ethical technical choices.
 ---
 
-Unless you're working for yourself, in which case do whatever your little heart desires, if you're building something for a client then your primary concern should be making ethical technical choices.
+If you're working for yourself, in which case do whatever your little heart desires, but if you're building something for a client then your primary concern should be making ethical technical choices.
 
 **When someone else is paying you to code, your responsibility to them is foremost to create the most value possible for their cash investment. **
 
