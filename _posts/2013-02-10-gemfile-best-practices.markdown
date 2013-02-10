@@ -1,7 +1,7 @@
 ---
 layout: post
 published: true
-title: Gemfile Best Practices
+title: Gemfile Best Practices &amp; Discourse
 description: Your Gemfile is often the starting place for new developers to get up to speed on your code. Here are some simple practices that can help new developers get a sense of the makeup and any peculiarities, and keep order in your project's Gemfile.
 ---
 

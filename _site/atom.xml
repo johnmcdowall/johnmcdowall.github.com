@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-02-10T17:09:41-05:00</updated>
+ <updated>2013-02-10T17:17:02-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -13,7 +13,7 @@
  
  
  <entry>
-   <title>Gemfile Best Practices</title>
+   <title>Gemfile Best Practices &amp; Discourse</title>
    <link href="http://zachholman.com/posts/gemfile-best-practices"/>
    <updated>2013-02-10T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/gemfile-best-practices</id>
