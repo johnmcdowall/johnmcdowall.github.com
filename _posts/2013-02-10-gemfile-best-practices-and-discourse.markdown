@@ -21,8 +21,8 @@ Over the years, I've come to form a set of best practices for the general organi
 4. Comments relating to a Gem are on the same line as the gem statement, not above. 
 5. Group Gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.
 6. Group Gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.
-7. Group all of the General project gems together.
-8. Group all of the Asset gems after the General group (consider using the `:default` group).
+7. Group all of the General project gems together (consider using the `:default` group).
+8. Group all of the Asset gems after the General group.
 9. Group all of the Test related gems after the Asset gems. 
 10. Group all of the Development related gems after the Test gems. 
 11. Within all Gem groups, sort the references by Alphabetical order.
