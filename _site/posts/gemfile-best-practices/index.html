@@ -4,11 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Technical choices should be - above all else - ethical.</title>
+  <title>Gemfile Best Practices</title>
 
   <!-- TODO: change name and description -->
   <meta name="author" content="John McDowall" />
-  <meta name="description" content="Unless you're working for yourself, if you're building something for a client then your primary concern should be making ethical technical choices." />
+  <meta name="description" content="Your Gemfile is often the starting place for new developers to get up to speed on your code. Here are some simple practices that can help new developers get a sense of the makeup and any peculiarities, and keep order in your project's Gemfile." />
 
   <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
 
@@ -58,46 +58,49 @@
   <section class="content">
   <header>
     <h1>
-      <a href="/posts/technical-choices-should-be-above-all-else-ethical">Technical choices should be - above all else - ethical.</a>
+      <a href="/posts/gemfile-best-practices">Gemfile Best Practices</a>
     </h1>
 
     <section class="byline">
-      January 15, 2013
+      February 10, 2013
     </section>
   </header>
 
   <article>
-  <p>If you&rsquo;re working for yourself, in which case do whatever your little heart desires, but if you&rsquo;re building something for a client then your primary concern should be making ethical technical choices.</p>
+  <p>This weekend I <a href="https://github.com/discourse/discourse/pull/93">did some Boy Scouting</a> on the newly released <a href="https://github.com/discourse/discourse">Discourse project</a>. The <a href="http://www.hans-eric.com/2010/07/26/the-boy-scout-rule/">Boy Scout Rule</a> says:</p>
 
-<p><strong>When someone else is paying you to code, your responsibility to them is foremost to create the most value possible for their cash investment. </strong></p>
+<blockquote><p>You should always leave the campground cleaner than you found it.</p></blockquote>
 
-<p>Time and time again, I see developers making technical choices that go against the following principles, and while they may not deliberately set out to be un-ethical, and can often make elaborate justifications, the net result is ultimately a question of ethics.</p>
+<p>Discourse is a Rails project, which means it has a nice fat, juicy Gemfile listing all of its dependencies.</p>
 
-<p>Ask yourself:</p>
+<p>The Gemfile tends to be the first thing I look at in an unfamiliar Rails project in order to get a quick mental overview of what makes up the application and if it&rsquo;s using any custom forks or private libraries.</p>
 
-<ul>
-<li>Am I unnecessarily constraining my client&rsquo;s future hiring pool by using this technology?</li>
-<li>Is this technology the most reasonable fit for the problem?</li>
-<li>Do I know enough about this technology to say that it will be reliable, documented, and well supported?</li>
-<li>Will this technology allow the project to be delivered within the timelines or is their a risk that it could in fact swell timelines?</li>
-<li>Does my client understand <em>as completely as possible</em> the implications of the choice I am making?</li>
-<li>Is my client insisting on the use of a technology without understanding <em>as completely as possible</em> any of the above questions?</li>
-</ul>
+<p>Over the years, I&rsquo;ve come to form a set of best practices for the general organization of Gemfiles that I think are very useful when on-boarding new developers and keeping order in your Gemfile.</p>
 
-
-<p>Or you could turn these questions on their head and make statements. Working for a client is not:</p>
-
-<ul>
-<li>An opportunity for you to explore new technologies that your client can&rsquo;t find anyone else to work on.</li>
-<li>An opportunity to use a technology for exploring the problem.</li>
-<li>A way to grow your skill set on their time and money.</li>
-<li>An opportunity to introduce more risk into a project at the expense of the client&rsquo;s timelines.</li>
-<li>An opportunity to blame the client for being &lsquo;stupid&rsquo;.</li>
-<li>A chance to tread gray areas in order to expand your resume for the future.</li>
-</ul>
+<ol>
+<li>Consistent use of Ruby hash syntax. Use either the old hashrocket or the new Ruby 1.9 syntax, but not both.</li>
+<li>Consistent use of a single quoted delimiter. Use either apostrophes or quotation marks, but not both.</li>
+<li>No commented Gem references. If it&rsquo;s commented out, it shouldn&rsquo;t be there.</li>
+<li>Comments relating to a Gem are on the same line as the gem statement, not above.</li>
+<li>Group Gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.</li>
+<li>Group Gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.</li>
+<li>Group all of the General project gems together.</li>
+<li>Group all of the Asset gems after the General group (consider using the <code>:default</code> group).</li>
+<li>Group all of the Test related gems after the Asset gems.</li>
+<li>Group all of the Development related gems after the Test gems.</li>
+<li>Within all Gem groups, sort the references by Alphabetical order.</li>
+<li>When adding new Gems, maintain the alphabetical ordering within the groups.</li>
+</ol>
 
 
-<p>Do you agree? Email me at <a href="mailto:john@mcdowall.info">john@mcdowall.info</a>.</p>
+<p>These guidelines produce a Gemfile which is logical and ordered: no little clumps of Gems related to the main project here and there. The alphabetical ordering within the groups increases scanability to see if a Gem has already been included.</p>
+
+<p>Here&rsquo;s my Discourse Gemfile changes:</p>
+
+<script src="https://gist.github.com/johnmcdowall/4751169.js"></script>
+
+
+<p>What do you think?</p>
 
 
 
@@ -115,7 +118,7 @@
 
       <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>
       <a href="http://twitter.com/mrmcdowall" class="twitter-follow-button" data-show-count="false">Follow @mrmcdowall</a>
-      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Technical choices should be - above all else - ethical." data-url="http://mcdowall.info//posts/technical-choices-should-be-above-all-else-ethical">Vote on HN</a>
+      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Gemfile Best Practices" data-url="http://mcdowall.info//posts/gemfile-best-practices">Vote on HN</a>
       <script>
           (function(d, t) {
               var g = d.createElement(t),

@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-01-15T14:39:19-05:00</updated>
+ <updated>2013-02-10T17:09:41-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -13,23 +13,65 @@
  
  
  <entry>
+   <title>Gemfile Best Practices</title>
+   <link href="http://zachholman.com/posts/gemfile-best-practices"/>
+   <updated>2013-02-10T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/gemfile-best-practices</id>
+   <content type="html">&lt;p&gt;This weekend I &lt;a href=&quot;https://github.com/discourse/discourse/pull/93&quot;&gt;did some Boy Scouting&lt;/a&gt; on the newly released &lt;a href=&quot;https://github.com/discourse/discourse&quot;&gt;Discourse project&lt;/a&gt;. The &lt;a href=&quot;http://www.hans-eric.com/2010/07/26/the-boy-scout-rule/&quot;&gt;Boy Scout Rule&lt;/a&gt; says:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;You should always leave the campground cleaner than you found it.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;Discourse is a Rails project, which means it has a nice fat, juicy Gemfile listing all of its dependencies.&lt;/p&gt;
+
+&lt;p&gt;The Gemfile tends to be the first thing I look at in an unfamiliar Rails project in order to get a quick mental overview of what makes up the application and if it&amp;rsquo;s using any custom forks or private libraries.&lt;/p&gt;
+
+&lt;p&gt;Over the years, I&amp;rsquo;ve come to form a set of best practices for the general organization of Gemfiles that I think are very useful when on-boarding new developers and keeping order in your Gemfile.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Consistent use of Ruby hash syntax. Use either the old hashrocket or the new Ruby 1.9 syntax, but not both.&lt;/li&gt;
+&lt;li&gt;Consistent use of a single quoted delimiter. Use either apostrophes or quotation marks, but not both.&lt;/li&gt;
+&lt;li&gt;No commented Gem references. If it&amp;rsquo;s commented out, it shouldn&amp;rsquo;t be there.&lt;/li&gt;
+&lt;li&gt;Comments relating to a Gem are on the same line as the gem statement, not above.&lt;/li&gt;
+&lt;li&gt;Group Gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.&lt;/li&gt;
+&lt;li&gt;Group Gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.&lt;/li&gt;
+&lt;li&gt;Group all of the General project gems together.&lt;/li&gt;
+&lt;li&gt;Group all of the Asset gems after the General group (consider using the &lt;code&gt;:default&lt;/code&gt; group).&lt;/li&gt;
+&lt;li&gt;Group all of the Test related gems after the Asset gems.&lt;/li&gt;
+&lt;li&gt;Group all of the Development related gems after the Test gems.&lt;/li&gt;
+&lt;li&gt;Within all Gem groups, sort the references by Alphabetical order.&lt;/li&gt;
+&lt;li&gt;When adding new Gems, maintain the alphabetical ordering within the groups.&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;These guidelines produce a Gemfile which is logical and ordered: no little clumps of Gems related to the main project here and there. The alphabetical ordering within the groups increases scanability to see if a Gem has already been included.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s my Discourse Gemfile changes:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/johnmcdowall/4751169.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;What do you think?&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Technical choices should be - above all else - ethical.</title>
    <link href="http://zachholman.com/posts/technical-choices-should-be-above-all-else-ethical"/>
    <updated>2013-01-15T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/technical-choices-should-be-above-all-else-ethical</id>
-   <content type="html">&lt;p&gt;Unless you&amp;rsquo;re working for yourself, in which case do whatever your little heart desires, if you&amp;rsquo;re building something for a client then your primary concern should be making ethical techincal choices.&lt;/p&gt;
+   <content type="html">&lt;p&gt;If you&amp;rsquo;re working for yourself, in which case do whatever your little heart desires, but if you&amp;rsquo;re building something for a client then your primary concern should be making ethical technical choices.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;When someone else is paying you to code, your responsibility to them is foremost to create the most value possible for their cash investment. &lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Time and time again, I see developers making technical choices that go against the following principles, and while they may not deliverately set out to be un-ethical, and can often make elaborate justifications, the net result is ultimately a question of ethics.&lt;/p&gt;
+&lt;p&gt;Time and time again, I see developers making technical choices that go against the following principles, and while they may not deliberately set out to be un-ethical, and can often make elaborate justifications, the net result is ultimately a question of ethics.&lt;/p&gt;
 
 &lt;p&gt;Ask yourself:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Am I unecesasrily constraining my client&amp;rsquo;s future hiring pool by using this technology?&lt;/li&gt;
+&lt;li&gt;Am I unnecessarily constraining my client&amp;rsquo;s future hiring pool by using this technology?&lt;/li&gt;
 &lt;li&gt;Is this technology the most reasonable fit for the problem?&lt;/li&gt;
 &lt;li&gt;Do I know enough about this technology to say that it will be reliable, documented, and well supported?&lt;/li&gt;
-&lt;li&gt;Will this technology allow the project to be delivered within the timelines or is their a risk that it could in fact swell timeslines?&lt;/li&gt;
+&lt;li&gt;Will this technology allow the project to be delivered within the timelines or is their a risk that it could in fact swell timelines?&lt;/li&gt;
 &lt;li&gt;Does my client understand &lt;em&gt;as completely as possible&lt;/em&gt; the implications of the choice I am making?&lt;/li&gt;
 &lt;li&gt;Is my client insisting on the use of a technology without understanding &lt;em&gt;as completely as possible&lt;/em&gt; any of the above questions?&lt;/li&gt;
 &lt;/ul&gt;
@@ -40,10 +82,10 @@
 &lt;ul&gt;
 &lt;li&gt;An opportunity for you to explore new technologies that your client can&amp;rsquo;t find anyone else to work on.&lt;/li&gt;
 &lt;li&gt;An opportunity to use a technology for exploring the problem.&lt;/li&gt;
-&lt;li&gt;A way to grow your skillset on their time and money.&lt;/li&gt;
+&lt;li&gt;A way to grow your skill set on their time and money.&lt;/li&gt;
 &lt;li&gt;An opportunity to introduce more risk into a project at the expense of the client&amp;rsquo;s timelines.&lt;/li&gt;
 &lt;li&gt;An opportunity to blame the client for being &amp;lsquo;stupid&amp;rsquo;.&lt;/li&gt;
-&lt;li&gt;A chance to tread grey areas in order to expand your resume for the future.&lt;/li&gt;
+&lt;li&gt;A chance to tread gray areas in order to expand your resume for the future.&lt;/li&gt;
 &lt;/ul&gt;
 
 
