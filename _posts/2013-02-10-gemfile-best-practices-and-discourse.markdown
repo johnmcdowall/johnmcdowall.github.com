@@ -34,4 +34,4 @@ Here's my Discourse Gemfile changes:
 
 <script src="https://gist.github.com/johnmcdowall/4751169.js"></script>
 
-What do you think? Discuss these ideas on [Hacker News](http://news.ycombinator.com/item?id=5198217).
+
