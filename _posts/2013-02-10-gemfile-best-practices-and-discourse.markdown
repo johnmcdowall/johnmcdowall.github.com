@@ -19,14 +19,15 @@ Over the years, I've come to form a set of best practices for the general organi
 2. Consistent use of a single quoted delimiter. Use either apostrophes or quotation marks, but not both.
 3. No commented Gem references. If it's commented out, it shouldn't be there. 
 4. Comments relating to a Gem are on the same line as the gem statement, not above. 
-5. Group Gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.
-6. Group Gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.
+5. Group gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.
+6. Group gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.
 7. Group all of the General project gems together (consider using the `:default` group).
-8. Group all of the Asset gems after the General group.
-9. Group all of the Test related gems after the Asset gems. 
-10. Group all of the Development related gems after the Test gems. 
-11. Within all Gem groups, sort the references by Alphabetical order.
-12. When adding new Gems, maintain the alphabetical ordering within the groups.
+8. Group all of the Production project gems together after the General gems.
+9. Group all of the Asset gems after the Production group.
+10. Group all of the Test related gems after the Asset gems. 
+11. Group all of the Development related gems after the Test gems. 
+12. Within all Gem groups, sort the references by Alphabetical order.
+13. When adding new gems, maintain the alphabetical ordering within the groups.
 
 These guidelines produce a Gemfile which is logical and ordered: no little clumps of Gems related to the main project here and there. The alphabetical ordering within the groups increases scanability to see if a Gem has already been included. 
 
