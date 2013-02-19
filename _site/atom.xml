@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-02-19T12:33:00-05:00</updated>
+ <updated>2013-02-19T12:51:57-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -475,8 +475,9 @@ Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 20
    <link href="http://zachholman.com/posts/how-management-can-destroy-creativity"/>
    <updated>2012-07-05T00:00:00-04:00</updated>
    <id>http://zachholman.com/posts/how-management-can-destroy-creativity</id>
-   <content type="html">&lt;div class=&quot;quote&quot;&gt;&lt;blockquote&gt;&lt;span&gt;&amp;#147;&lt;/span&gt;Taking platform developers and throwing them against hard goals and deadlines kills your ability to adapt. Management &lt;br/&gt;and project stakeholders end up making too many decisions about the technology away from the people who know it &lt;br/&gt;best – the people building it. To show progress and keep management happy, engineers shift their focus to tangible &lt;br/&gt;deliverables and ignore the pieces management can’t understand, like the underlying architecture. You start going &lt;br/&gt;down the path of building lots of bells and whistles, but nothing solid that you can competitively leverage.&lt;span&gt;&amp;#148;&lt;/span&gt;&lt;/blockquote&gt;&lt;/div&gt;
-&lt;div class=&quot;source&quot;&gt;&amp;mdash; http://www.vanityfair.com/online/daily/2012/07/microsoft-downfall-emails-steve-ballmer&lt;/div&gt;
+   <content type="html">&lt;blockquote&gt;&lt;p&gt;Taking platform developers and throwing them against hard goals and deadlines kills your ability to adapt. Management and project stakeholders end up making too many decisions about the technology away from the people who know it best – the people building it. To show progress and keep management happy, engineers shift their focus to tangible deliverables and ignore the pieces management can’t understand, like the underlying architecture. You start going down the path of building lots of bells and whistles, but nothing solid that you can competitively leverage.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;source&quot;&gt;http://www.vanityfair.com/online/daily/2012/07/microsoft-downfall-emails-steve-ballmer&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
