@@ -4,11 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>John McDowall - 404</title>
+  <title>{{ page.title }}</title>
 
   <!-- TODO: change name and description -->
   <meta name="author" content="John McDowall" />
-  <meta name="description" content="John McDowall's journal on software development, teams, ruby, rails, software craftmanship, photography, philosophy and such like." />
+  <meta name="description" content="{{page.description}}" />
 
   <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
 
@@ -26,40 +26,29 @@
 </head>
 
 <body>
-  <section class="sidebar">
-    <a href="/">
-      <!-- TODO: change this gravatar URL -->
-      <img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="75" width="75" class="avatar" />
-    </a>
+  <section id="page">
+    <header>
+      <section class="name">
+        <a href="/">
+          <span id="john">John</span>
+          <span id="mcdowall">McDowall</span>
+        </a>
+      </section>
 
-    <!-- TODO: change name -->
-    <section class="name">
-      <a href="/">
-        <span id="john">John</span>
-        <span id="mcdowall">McDowall</span>
-      </a>
-    </section>
+      <nav>
+        <ul>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/">posts</a></li>
+          <li><a href="https://github.com/johnmcdowall">Github</a></li>
+          <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
+          <li><a href="/atom.xml">RSSSS's</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <!-- TODO: change links -->
-    <section class="meta">
-      <a href="https://github.com/johnmcdowall"><img src="/images/github.png" /></a>
-      <a href="https://twitter.com/mrmcdowall"><img src="/images/twitter.png"></a>
-      <a href="/atom.xml"><img src="/images/rss.png" /></a>
-    </section>
+    <h1>Dang.</h1>
+    <p>That article seems to have been put in the bin. Sorry about that. Maybe try the <a href="/">main index</a>?</p>
 
-    <section class="sections">
-      <ul>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/">posts</a></li>
-      </ul>
-    </section>
-  </section>
-
-  <section class="content">
-    <h1>
-      Damn. Missing in action.
-    </h1>
-    <p>I change things a lot around here, maybe try the posts page?</p>
   </section>
 
   <script type="text/javascript">
