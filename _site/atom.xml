@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-02-10T17:17:02-05:00</updated>
+ <updated>2013-02-19T12:33:00-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Gemfile Best Practices &amp; Discourse</title>
-   <link href="http://zachholman.com/posts/gemfile-best-practices"/>
+   <link href="http://zachholman.com/posts/gemfile-best-practices-and-discourse"/>
    <updated>2013-02-10T00:00:00-05:00</updated>
-   <id>http://zachholman.com/posts/gemfile-best-practices</id>
+   <id>http://zachholman.com/posts/gemfile-best-practices-and-discourse</id>
    <content type="html">&lt;p&gt;This weekend I &lt;a href=&quot;https://github.com/discourse/discourse/pull/93&quot;&gt;did some Boy Scouting&lt;/a&gt; on the newly released &lt;a href=&quot;https://github.com/discourse/discourse&quot;&gt;Discourse project&lt;/a&gt;. The &lt;a href=&quot;http://www.hans-eric.com/2010/07/26/the-boy-scout-rule/&quot;&gt;Boy Scout Rule&lt;/a&gt; says:&lt;/p&gt;
 
 &lt;blockquote&gt;&lt;p&gt;You should always leave the campground cleaner than you found it.&lt;/p&gt;&lt;/blockquote&gt;
@@ -32,14 +32,15 @@
 &lt;li&gt;Consistent use of a single quoted delimiter. Use either apostrophes or quotation marks, but not both.&lt;/li&gt;
 &lt;li&gt;No commented Gem references. If it&amp;rsquo;s commented out, it shouldn&amp;rsquo;t be there.&lt;/li&gt;
 &lt;li&gt;Comments relating to a Gem are on the same line as the gem statement, not above.&lt;/li&gt;
-&lt;li&gt;Group Gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.&lt;/li&gt;
-&lt;li&gt;Group Gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.&lt;/li&gt;
-&lt;li&gt;Group all of the General project gems together.&lt;/li&gt;
-&lt;li&gt;Group all of the Asset gems after the General group (consider using the &lt;code&gt;:default&lt;/code&gt; group).&lt;/li&gt;
+&lt;li&gt;Group gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.&lt;/li&gt;
+&lt;li&gt;Group gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.&lt;/li&gt;
+&lt;li&gt;Group all of the General project gems together (consider using the &lt;code&gt;:default&lt;/code&gt; group).&lt;/li&gt;
+&lt;li&gt;Group all of the Production project gems together after the General gems.&lt;/li&gt;
+&lt;li&gt;Group all of the Asset gems after the Production group.&lt;/li&gt;
 &lt;li&gt;Group all of the Test related gems after the Asset gems.&lt;/li&gt;
 &lt;li&gt;Group all of the Development related gems after the Test gems.&lt;/li&gt;
 &lt;li&gt;Within all Gem groups, sort the references by Alphabetical order.&lt;/li&gt;
-&lt;li&gt;When adding new Gems, maintain the alphabetical ordering within the groups.&lt;/li&gt;
+&lt;li&gt;When adding new gems, maintain the alphabetical ordering within the groups.&lt;/li&gt;
 &lt;/ol&gt;
 
 
@@ -50,7 +51,7 @@
 &lt;script src=&quot;https://gist.github.com/johnmcdowall/4751169.js&quot;&gt;&lt;/script&gt;
 
 
-&lt;p&gt;What do you think?&lt;/p&gt;
+
 </content>
  </entry>
  
@@ -375,7 +376,7 @@ Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 20
    <link href="http://zachholman.com/posts/twitter-must-go"/>
    <updated>2012-11-10T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/twitter-must-go</id>
-   <content type="html">&lt;img src=&quot;http://static.squarespace.com/static/4ff4f78ac4aaf05888ec4716/4ff4f78ac4aaf05888ec4725/509d9d1ae4b081ffff72175a/1352506650842/#img.png&quot; /&gt;&lt;p&gt;Somehow, it has become part of my morning ritual that upon waking I immediately check Twitter on my iPhone 4. I think that it eases me into the day by getting my brain going, quickly checking for news headlines, or interesting Tweets with links.&amp;nbsp;&lt;/p&gt;&lt;p&gt;The trouble is that it actually rarely leads to finding anything satisfying, and often sucks me in to 15 to 20 minutes of aimless browsing sometimes. &lt;/p&gt;&lt;p&gt;Recently, I've began to question the usefulness of Twitter in my life and why I feel so attached to a medium that is broken. I gave up paying attention to the distorting mainstream media several years ago, but it could be time for a swing back to something of a certain level of quality.&lt;/p&gt;&lt;p&gt;I'm going to replace Twitter in the morning with &lt;a href=&quot;http://www.nytimes.com/subscriptions/Multiproduct/lp5558.html&quot; target=&quot;_blank&quot;&gt;The New York Times&lt;/a&gt;, and I'm going to limit Twitter use to one session per day. &lt;/p&gt;&lt;p&gt;Eventually, I'm just going to stop using it for consumption. &lt;/p&gt;&lt;p&gt;Everyone has to make their own decision, obviously, but Twitter has reached its peak of maximum onanism for me.&lt;/p&gt;
+   <content type="html">&lt;p&gt;Somehow, it has become part of my morning ritual that upon waking I immediately check Twitter on my iPhone 4. I think that it eases me into the day by getting my brain going, quickly checking for news headlines, or interesting Tweets with links.&amp;nbsp;&lt;/p&gt;&lt;p&gt;The trouble is that it actually rarely leads to finding anything satisfying, and often sucks me in to 15 to 20 minutes of aimless browsing sometimes. &lt;/p&gt;&lt;p&gt;Recently, I've began to question the usefulness of Twitter in my life and why I feel so attached to a medium that is broken. I gave up paying attention to the distorting mainstream media several years ago, but it could be time for a swing back to something of a certain level of quality.&lt;/p&gt;&lt;p&gt;I'm going to replace Twitter in the morning with &lt;a href=&quot;http://www.nytimes.com/subscriptions/Multiproduct/lp5558.html&quot; target=&quot;_blank&quot;&gt;The New York Times&lt;/a&gt;, and I'm going to limit Twitter use to one session per day. &lt;/p&gt;&lt;p&gt;Eventually, I'm just going to stop using it for consumption. &lt;/p&gt;&lt;p&gt;Everyone has to make their own decision, obviously, but Twitter has reached its peak of maximum onanism for me.&lt;/p&gt;
 </content>
  </entry>
  

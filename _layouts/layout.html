@@ -26,36 +26,29 @@
 </head>
 
 <body>
-  <section class="sidebar">
-    <a href="/">
-      <!-- TODO: change this gravatar URL -->
-      <img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="75" width="75" class="avatar" />
-    </a>
+  <section id="page">
+    <header>
+      <section class="name">
+        <a href="/">
+          <span id="john">John</span>
+          <span id="mcdowall">McDowall</span>
+        </a>
+      </section>
 
-    <!-- TODO: change name -->
-    <section class="name">
-      <a href="/">
-        <span id="john">John</span>
-        <span id="mcdowall">McDowall</span>
-      </a>
-    </section>
+      <nav>
+        <ul>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/">posts</a></li>
+          <li><a href="https://github.com/johnmcdowall">Github</a></li>
+          <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
+          <li><a href="/atom.xml">RSSSS's</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <!-- TODO: change links -->
-    <section class="meta">
-      <a href="https://github.com/johnmcdowall"><img src="/images/github.png" /></a>
-      <a href="https://twitter.com/mrmcdowall"><img src="/images/twitter.png"></a>
-      <a href="/atom.xml"><img src="/images/rss.png" /></a>
-    </section>
+    {{ content }}
 
-    <section class="sections">
-      <ul>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/">posts</a></li>
-      </ul>
-    </section>
   </section>
-
-  {{ content }}
 
   <script type="text/javascript">
     var _gauges = _gauges || [];

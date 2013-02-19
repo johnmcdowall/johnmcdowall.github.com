@@ -26,36 +26,27 @@
 </head>
 
 <body>
-  <section class="sidebar">
-    <a href="/">
-      <!-- TODO: change this gravatar URL -->
-      <img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="75" width="75" class="avatar" />
-    </a>
+  <section id="page">
+    <header>
+      <section class="name">
+        <a href="/">
+          <span id="john">John</span>
+          <span id="mcdowall">McDowall</span>
+        </a>
+      </section>
 
-    <!-- TODO: change name -->
-    <section class="name">
-      <a href="/">
-        <span id="john">John</span>
-        <span id="mcdowall">McDowall</span>
-      </a>
-    </section>
+      <nav>
+        <ul>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/">posts</a></li>
+          <li><a href="https://github.com/johnmcdowall">Github</a></li>
+          <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
+          <li><a href="/atom.xml">RSSSS's</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <!-- TODO: change links -->
-    <section class="meta">
-      <a href="https://github.com/johnmcdowall"><img src="/images/github.png" /></a>
-      <a href="https://twitter.com/mrmcdowall"><img src="/images/twitter.png"></a>
-      <a href="/atom.xml"><img src="/images/rss.png" /></a>
-    </section>
-
-    <section class="sections">
-      <ul>
-        <li><a href="/about.html">about</a></li>
-        <li><a href="/">posts</a></li>
-      </ul>
-    </section>
-  </section>
-
-  <section class="content">
+    <section class="content">
   <header>
     <h1>
       <a href="/posts/cinematic-user-engagement">Cinematic User Engagement</a>
@@ -131,16 +122,11 @@
 <p><em>I&rsquo;d love to find the time to build a demo of these concepts, or if someone wants to take these ideas and execute them, I&rsquo;ll gladly work with you. Just <a href="mailto:john@mcdowall.info">get in touch</a>.</em></p>
 
 
-
-  <!-- TODO: change links, gravatar, and bio here -->
   <section class="meta">
     <h3>Discussion, links, and tweets</h3>
     <section class="copy">
-      <a href="https://twitter.com/mrmcdowall">
-        <img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" />
-      </a>
-
       <p>
+        <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
         I own and run <a href="http://revolutionlake.co">Revolution Lake</a>, a small software and product development studio in Toronto, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a> for much ranting and hilarity.
       </p>
 
@@ -160,6 +146,8 @@
   </section>
   </article>
 </section>
+
+  </section>
 
   <script type="text/javascript">
     var _gauges = _gauges || [];

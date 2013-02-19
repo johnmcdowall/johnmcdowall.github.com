@@ -4,11 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>How Management Can Destroy Creativity</title>
+  <title>Gemfile Best Practices &amp; Discourse</title>
 
   <!-- TODO: change name and description -->
   <meta name="author" content="John McDowall" />
-  <meta name="description" content="" />
+  <meta name="description" content="Your Gemfile is often the starting place for new developers to get up to speed on your code. Here are some simple practices that can help new developers get a sense of the makeup and any peculiarities, and keep order in your project's Gemfile." />
 
   <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
 
@@ -49,17 +49,50 @@
     <section class="content">
   <header>
     <h1>
-      <a href="/posts/how-management-can-destroy-creativity">How Management Can Destroy Creativity</a>
+      <a href="/posts/gemfile-best-practices-and-discourse">Gemfile Best Practices &amp; Discourse</a>
     </h1>
 
     <section class="byline">
-      July  5, 2012
+      February 10, 2013
     </section>
   </header>
 
   <article>
-  <div class="quote"><blockquote><span>&#147;</span>Taking platform developers and throwing them against hard goals and deadlines kills your ability to adapt. Management <br/>and project stakeholders end up making too many decisions about the technology away from the people who know it <br/>best – the people building it. To show progress and keep management happy, engineers shift their focus to tangible <br/>deliverables and ignore the pieces management can’t understand, like the underlying architecture. You start going <br/>down the path of building lots of bells and whistles, but nothing solid that you can competitively leverage.<span>&#148;</span></blockquote></div>
-<div class="source">&mdash; http://www.vanityfair.com/online/daily/2012/07/microsoft-downfall-emails-steve-ballmer</div>
+  <p>This weekend I <a href="https://github.com/discourse/discourse/pull/93">did some Boy Scouting</a> on the newly released <a href="https://github.com/discourse/discourse">Discourse project</a>. The <a href="http://www.hans-eric.com/2010/07/26/the-boy-scout-rule/">Boy Scout Rule</a> says:</p>
+
+<blockquote><p>You should always leave the campground cleaner than you found it.</p></blockquote>
+
+<p>Discourse is a Rails project, which means it has a nice fat, juicy Gemfile listing all of its dependencies.</p>
+
+<p>The Gemfile tends to be the first thing I look at in an unfamiliar Rails project in order to get a quick mental overview of what makes up the application and if it&rsquo;s using any custom forks or private libraries.</p>
+
+<p>Over the years, I&rsquo;ve come to form a set of best practices for the general organization of Gemfiles that I think are very useful when on-boarding new developers and keeping order in your Gemfile.</p>
+
+<ol>
+<li>Consistent use of Ruby hash syntax. Use either the old hashrocket or the new Ruby 1.9 syntax, but not both.</li>
+<li>Consistent use of a single quoted delimiter. Use either apostrophes or quotation marks, but not both.</li>
+<li>No commented Gem references. If it&rsquo;s commented out, it shouldn&rsquo;t be there.</li>
+<li>Comments relating to a Gem are on the same line as the gem statement, not above.</li>
+<li>Group gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.</li>
+<li>Group gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.</li>
+<li>Group all of the General project gems together (consider using the <code>:default</code> group).</li>
+<li>Group all of the Production project gems together after the General gems.</li>
+<li>Group all of the Asset gems after the Production group.</li>
+<li>Group all of the Test related gems after the Asset gems.</li>
+<li>Group all of the Development related gems after the Test gems.</li>
+<li>Within all Gem groups, sort the references by Alphabetical order.</li>
+<li>When adding new gems, maintain the alphabetical ordering within the groups.</li>
+</ol>
+
+
+<p>These guidelines produce a Gemfile which is logical and ordered: no little clumps of Gems related to the main project here and there. The alphabetical ordering within the groups increases scanability to see if a Gem has already been included.</p>
+
+<p>Here&rsquo;s my Discourse Gemfile changes:</p>
+
+<script src="https://gist.github.com/johnmcdowall/4751169.js"></script>
+
+
+
 
 
   <section class="meta">
@@ -72,7 +105,7 @@
 
       <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>
       <a href="http://twitter.com/mrmcdowall" class="twitter-follow-button" data-show-count="false">Follow @mrmcdowall</a>
-      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="How Management Can Destroy Creativity" data-url="http://mcdowall.info//posts/how-management-can-destroy-creativity">Vote on HN</a>
+      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Gemfile Best Practices &amp; Discourse" data-url="http://mcdowall.info//posts/gemfile-best-practices-and-discourse">Vote on HN</a>
       <script>
           (function(d, t) {
               var g = d.createElement(t),
