@@ -70,6 +70,15 @@ article ul li {
 	margin-bottom: 6px;
 }
 
+article ol {
+	font-family: Arial, sans-serif;
+}
+
+
+article ol li {
+	margin-bottom: 6px;
+}
+
 .copy img {
 	float: left;
 	margin-right: 1em;
