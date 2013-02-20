@@ -67,6 +67,7 @@ article blockquote {
 }
 
 article ul li {
+	color: #414141;
 	margin-bottom: 6px;
 }
 
@@ -76,6 +77,7 @@ article ol {
 
 
 article ol li {
+	color: #414141;
 	margin-bottom: 6px;
 }
 
