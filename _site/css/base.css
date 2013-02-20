@@ -1,5 +1,5 @@
 #page {
-	width: 960px;
+	width: 800px;
 	margin: 2em auto;
 
 	font-size: 17px;
@@ -48,6 +48,7 @@
 
 article p {
 	color: #414141;
+	line-height: 1.8em;
 }
 
 article img {
@@ -66,6 +67,17 @@ article blockquote {
 }
 
 article ul li {
+	color: #414141;
+	margin-bottom: 6px;
+}
+
+article ol {
+	font-family: Arial, sans-serif;
+}
+
+
+article ol li {
+	color: #414141;
 	margin-bottom: 6px;
 }
 

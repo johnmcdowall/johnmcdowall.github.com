@@ -5,12 +5,35 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-02-19T12:57:08-05:00</updated>
+ <updated>2013-02-20T10:29:31-05:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>Search is the homeless guy of your application</title>
+   <link href="http://zachholman.com/posts/search-is-the-the-homeless-guy-of-your-app"/>
+   <updated>2013-02-20T00:00:00-05:00</updated>
+   <id>http://zachholman.com/posts/search-is-the-the-homeless-guy-of-your-app</id>
+   <content type="html">&lt;p&gt;Most people walk past the homeless. They ignore the out-thrust hands, the pleas for &amp;lsquo;spare change&amp;rsquo;, and avoid the possibility of making eye contact. Search is the homeless guy or gal of your App.&lt;/p&gt;
+
+&lt;p&gt;You&amp;rsquo;ve built all of these elaborate features and imagined use cases, but the basic route for a user to discover what data is inside your App, that meets their needs, is ignored and left to languish on the cold street. It&amp;rsquo;s an afterthought.&lt;/p&gt;
+
+&lt;p&gt;At most, you&amp;rsquo;ve implemented a text box that does a basic fuzzy string matching and lands the user on a useless list page of results, hopefully with some paging controls. At best, you&amp;rsquo;ve done the basics and provided some sort of ordering maybe. Your App sucks at search. It sucks in every way that is meaningful to the user.&lt;/p&gt;
+
+&lt;p&gt;Users should not have to think about what type of object they want to search for in your App (&amp;lsquo;Is it a contact, an address, a postcode?&amp;rsquo;), and choose that thing from a dropdown before the search works correctly. The search results should not be a list of context-less results that require further analysis by the user. Results should not share the same cookie-cutter visual appearance: if some results are more relevant than others, make them visually more relevant!&lt;/p&gt;
+
+&lt;p&gt;Every time you build an App that has useless search, you&amp;rsquo;re denting and diminishing the value that your App provides to the user.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s said that Security can&amp;rsquo;t be baked into an application at the end, that it&amp;rsquo;s got to be a primary concern. Well, just like Security, neither can a good and useful Search feature.&lt;/p&gt;
+
+&lt;p&gt;So start at the beginning, planning out how users will search the data they&amp;rsquo;ve put into your application, what tasks will they try to solve by searching, and bake it into the cake from the start. Spare your search feature some change.&lt;/p&gt;
+
+&lt;p&gt;Your users will thank you, and find your App to be much more useful &amp;ndash; I guarantee it.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Gemfile Best Practices &amp; Discourse</title>
@@ -262,8 +285,9 @@ DHH doesn&amp;rsquo;t know what people were doing in Ruby before he started usin
    <link href="http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names"/>
    <updated>2013-01-02T00:00:00-05:00</updated>
    <id>http://zachholman.com/posts/what-a-dead-man-named-fm-2030-can-tell-us-about-the-future-of-user-names</id>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/5/53/FM2030.jpg&quot; title=&quot;Fereidoun M. Esfandiary&quot; alt=&quot;Fereidoun M. Esfandiary&quot; /&gt;
-Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 2000 of pancreatic cancer, subsequently being one of the first people cryonically frozen at the Alcor storage facility.  He lived an extremely varied life by most people&amp;rsquo;s standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/5/53/FM2030.jpg&quot; title=&quot;Fereidoun M. Esfandiary&quot; alt=&quot;Fereidoun M. Esfandiary&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fereidoun M. Esfandiary was born in Brussels in 1930, and died in New York in 2000 of pancreatic cancer, subsequently being one of the first people cryonically frozen at the Alcor storage facility.  He lived an extremely varied life by most people&amp;rsquo;s standards. Esfandiary had resided in upwards of 17 countries by the time he was 11, traveling with his father who was an Iranian diplomat. He represented Iran as a basketball player in the 1948 Olympics, and later served on the United Nations Conciliation Commission for Palestine.&lt;/p&gt;
 
 &lt;p&gt;Esfandiary literally wrote the book on &lt;a href=&quot;http://en.wikipedia.org/wiki/Transhumanism&quot;&gt;Transhumanism&lt;/a&gt;, &lt;a href=&quot;http://www.amazon.ca/Are-You-Transhuman-Monitoring-Stimulating/dp/0446388068/ref=sr_1_1?ie=UTF8&amp;amp;qid=1357137985&amp;amp;sr=8-1&quot;&gt;&lt;em&gt;&amp;lsquo;Are You a Transhuman?&amp;rsquo;&lt;/em&gt;&lt;/a&gt; while teaching at The New School in New York. As a Futurologist, he predicted the invention of Globalization, in-vitro fertilization, teleconferencing, telemedicine and teleshopping amongst other things. He was noted as once saying:&lt;/p&gt;
 
