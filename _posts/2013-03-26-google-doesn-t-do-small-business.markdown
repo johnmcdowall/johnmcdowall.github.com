@@ -21,7 +21,7 @@ Some wildly speculative, back of the napkin, math could say that Google just sho
 
 I know of many startups who would kill to be in that position, so why did Google not simply ask users of Google Reader to pay up?
 
-*Because it's small business, for them. *
+*Because it's small business, for them.*
 
 For a company that makes _$50 Billion_ in annual _profit_, a product that generates hundreds of millions per year won't make the cut. The engineering talent associated with the project could be better deployed elsewhere to tweak the levers that have a significant impact on that profit total. So, they kill it. It makes good business sense. Google Reader was always destined to be lead to the Abattoir. 
 
