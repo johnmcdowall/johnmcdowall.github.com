@@ -5,12 +5,135 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-02-20T10:54:19-05:00</updated>
+ <updated>2013-04-06T11:24:47-04:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>Ember Application Initializers</title>
+   <link href="http://zachholman.com/posts/ember-application-initializers"/>
+   <updated>2013-04-06T00:00:00-04:00</updated>
+   <id>http://zachholman.com/posts/ember-application-initializers</id>
+   <content type="html">&lt;p&gt;Ember Application Initializers allow you to register blocks of code that execute when your Ember application is initializing. With an Initializer, you could access Ember&amp;rsquo;s underlying object container, grab all the controllers and inject other objects into them, register global DOM &lt;code&gt;onReady&lt;/code&gt; event blocks or anything that is useful to setting up your application.&lt;/p&gt;
+
+&lt;p&gt;Fundamentally, the Initializer requires a &lt;code&gt;name&lt;/code&gt; attribute and an &lt;code&gt;initialize&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;A basic Application Initializer looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerName&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ 
+  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Initializers can also specify dependencies by using a &lt;code&gt;after&lt;/code&gt; attribute which references the name of the Initializer it should run after.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerFirst&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ 
+  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerSecond&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;after&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerFirst&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ 
+  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Some example use cases&lt;/h3&gt;
+
+&lt;p&gt;Here&amp;rsquo;s some examples of using Application initializers to clean up repeated code, or give code that would otherwise run outside of Ember a home inside Ember.&lt;/p&gt;
+
+&lt;h4&gt;Looking up objects in the Container &amp;amp; Injecting Types&lt;/h4&gt;
+
+&lt;p&gt;You can look up objects in the Container inside the &lt;code&gt;initialize&lt;/code&gt; method like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+  store = container.lookup('store:main')
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Then you could inject a controller into all other loaded controllers in the container:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+  controller = container.lookup('controller:currentUser').set('content', user)
+  container.typeInjection('controller', 'currentUser', 'controller:currentUser')
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4&gt;Defining global DOM &lt;code&gt;onReady&lt;/code&gt; blocks&lt;/h4&gt;
+
+&lt;p&gt;If you need code to be executed when the DOM is ready and want a clean place to integrate it into your Ember app, you can use an initializer. This example loads a current-user attribute from a &lt;code&gt;META&lt;/code&gt; tag in the document.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerName&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ 
+  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+      &lt;span class=&quot;cm&quot;&gt;/* Look up an attribute in a meta tag */&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;attributes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;meta[name=&amp;quot;current-user&amp;quot;]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;content&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;cm&quot;&gt;/* Do something with it */&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you&amp;rsquo;re using Rails, this would be a good way to get the CSRF token and use it in the jQuery AJAX setup.&lt;/p&gt;
+
+&lt;h4&gt;Pre-loading records&lt;/h4&gt;
+
+&lt;p&gt;One way to make the initial Ember application experience even faster is to render some records as JSON strings into the HTML document body. When your Ember application starts up, you can load those records from the document and create instances from them, thus saving an initial AJAX call to fetch the records.&lt;/p&gt;
+
+&lt;h3&gt;Further Reading&lt;/h3&gt;
+
+&lt;p&gt;I assembled this knowledge from a rag-tag collection of blog posts and gists, namely this Gist by &lt;a href=&quot;https://gist.github.com/ivanvanderbyl/4560416&quot;&gt;Ian Vanderbyl&lt;/a&gt; and this blog post by &lt;a href=&quot;http://say26.com/using-rails-devise-with-ember-js&quot;&gt;Alexander Zaytsev on using Ember with Rails and Devise&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This only scratches the surface of what could be possible with Ember Application Initializers. They are poorly documented at the moment, and could change their behavior at any time before the 1.0 release, but until that happens use them wisely.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Google doesn't do Small Business</title>
+   <link href="http://zachholman.com/posts/google-doesn-t-do-small-business"/>
+   <updated>2013-03-26T00:00:00-04:00</updated>
+   <id>http://zachholman.com/posts/google-doesn-t-do-small-business</id>
+   <content type="html">&lt;p&gt;As the Internet recovers from the summary execution of Google Reader, many people are searching or moving to alternative feed reader services, including me.&lt;/p&gt;
+
+&lt;p&gt;It turned out that I had bought a license for &lt;a href=&quot;http://feedafever.com&quot;&gt;Fever&lt;/a&gt;, which is a self-hosted PHP application written by Uber Hipster, &lt;a href=&quot;http://www.shauninman.com/pendium/&quot;&gt;Sean Inman&lt;/a&gt;. All you need is a server to run it on. Enter &lt;a href=&quot;http://digitalocean.com/&quot;&gt;DigitalOcean&lt;/a&gt;, stage left.&lt;/p&gt;
+
+&lt;p&gt;With DigitalOcean, you can rent a VPS for as little as $5 a month: the perfect candidate for running a feed reader service. So I logged in to my account, created an instance for $5 per month, and installed Fever.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Total Annual Cost: $60&lt;/em&gt; (excluding one off $30 Fever license which I had bought years ago).&lt;/p&gt;
+
+&lt;p&gt;Google could potentially be making $60-$120 (I would pay up to $10 a month for such a service) a year from me by basically asking me for money for a service I already used. How much might that be in terms of revenue across the Google Reader user base?&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s a Quora question about &lt;a href=&quot;http://qr.ae/TOrYh&quot;&gt;How many users did Google Reader have?&lt;/a&gt;, and the guestimate is &amp;lsquo;10s of millions of active users per month.&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;Some wildly speculative, back of the napkin, math could say that Google just shot in the head a market worth millions of dollars per year.&lt;/p&gt;
+
+&lt;p&gt;I know of many startups who would kill to be in that position, so why did Google not simply ask users of Google Reader to pay up?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Because it&amp;rsquo;s small business, for them.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;For a company that makes &lt;em&gt;$50 Billion&lt;/em&gt; in annual &lt;em&gt;profit&lt;/em&gt;, a product that generates hundreds of millions per year won&amp;rsquo;t make the cut. The engineering talent associated with the project could be better deployed elsewhere to tweak the levers that have a significant impact on that profit total. So, they kill it. It makes good business sense. Google Reader was always destined to be lead to the Abattoir.&lt;/p&gt;
+
+&lt;p&gt;Google doesn&amp;rsquo;t do small business.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Search is the homeless guy of your application</title>

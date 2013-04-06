@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Ember Application Initializers - John McDowall</title>
+
+  <!-- TODO: change name and description -->
+  <meta name="author" content="John McDowall" />
+  <meta name="description" content="Use Ember Application Initializers to clean up your application code." />
+
+  <meta name="viewport" content="width=840, maximum-scale=1.0, user-scalable=yes">
+
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+  <link media="only screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" rel="stylesheet" />
+  <link media="only screen and (device-width: 768px)" href="/css/iphone.css" type="text/css" rel="stylesheet" />
+
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//use.typekit.net/fyu6ury.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript" src="/js/application.js"></script>
+</head>
+
+<body>
+  <section id="page">
+    <header>
+      <section class="name">
+        <a href="/">
+          <span id="john">John</span>
+          <span id="mcdowall">McDowall</span>
+        </a>
+      </section>
+
+      <nav>
+        <ul>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/">posts</a></li>
+          <li><a href="https://github.com/johnmcdowall">Github</a></li>
+          <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
+          <li><a href="/atom.xml">RSSSS's</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="content">
+  <header>
+    <h1>
+      <a href="/posts/ember-application-initializers">Ember Application Initializers</a>
+    </h1>
+
+    <section class="byline">
+      April  6, 2013
+    </section>
+  </header>
+
+  <article>
+  <p>Ember Application Initializers allow you to register blocks of code that execute when your Ember application is initializing. With an Initializer, you could access Ember&rsquo;s underlying object container, grab all the controllers and inject other objects into them, register global DOM <code>onReady</code> event blocks or anything that is useful to setting up your application.</p>
+
+<p>Fundamentally, the Initializer requires a <code>name</code> attribute and an <code>initialize</code> method.</p>
+
+<p>A basic Application Initializer looks like this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerName&quot;</span><span class="p">,</span>
+ 
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span> <span class="nx">your</span> <span class="nx">code</span> <span class="p">...</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+
+<p>Initializers can also specify dependencies by using a <code>after</code> attribute which references the name of the Initializer it should run after.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerFirst&quot;</span><span class="p">,</span>
+ 
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span> <span class="nx">your</span> <span class="nx">code</span> <span class="p">...</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerSecond&quot;</span><span class="p">,</span>
+  <span class="nx">after</span><span class="o">:</span> <span class="s2">&quot;initializerFirst&quot;</span><span class="p">,</span>
+ 
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span> <span class="nx">your</span> <span class="nx">code</span> <span class="p">...</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+
+<h3>Some example use cases</h3>
+
+<p>Here&rsquo;s some examples of using Application initializers to clean up repeated code, or give code that would otherwise run outside of Ember a home inside Ember.</p>
+
+<h4>Looking up objects in the Container &amp; Injecting Types</h4>
+
+<p>You can look up objects in the Container inside the <code>initialize</code> method like so:</p>
+
+<p><code>
+  store = container.lookup('store:main')
+</code></p>
+
+<p>Then you could inject a controller into all other loaded controllers in the container:</p>
+
+<p><code>
+  controller = container.lookup('controller:currentUser').set('content', user)
+  container.typeInjection('controller', 'currentUser', 'controller:currentUser')
+</code></p>
+
+<h4>Defining global DOM <code>onReady</code> blocks</h4>
+
+<p>If you need code to be executed when the DOM is ready and want a clean place to integrate it into your Ember app, you can use an initializer. This example loads a current-user attribute from a <code>META</code> tag in the document.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerName&quot;</span><span class="p">,</span>
+ 
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="cm">/* Look up an attribute in a meta tag */</span>
+      <span class="nx">attributes</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;current-user&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span>
+
+      <span class="cm">/* Do something with it */</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+
+<p>If you&rsquo;re using Rails, this would be a good way to get the CSRF token and use it in the jQuery AJAX setup.</p>
+
+<h4>Pre-loading records</h4>
+
+<p>One way to make the initial Ember application experience even faster is to render some records as JSON strings into the HTML document body. When your Ember application starts up, you can load those records from the document and create instances from them, thus saving an initial AJAX call to fetch the records.</p>
+
+<h3>Further Reading</h3>
+
+<p>I assembled this knowledge from a rag-tag collection of blog posts and gists, namely this Gist by <a href="https://gist.github.com/ivanvanderbyl/4560416">Ian Vanderbyl</a> and this blog post by <a href="http://say26.com/using-rails-devise-with-ember-js">Alexander Zaytsev on using Ember with Rails and Devise</a>.</p>
+
+<p>This only scratches the surface of what could be possible with Ember Application Initializers. They are poorly documented at the moment, and could change their behavior at any time before the 1.0 release, but until that happens use them wisely.</p>
+
+
+  <section class="meta">
+    <h3>Discussion, links, and tweets</h3>
+    <section class="copy">
+      <p>
+        <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
+        I own and run <a href="http://revolutionlake.co">Revolution Lake</a>, a small software and product development studio in Toronto, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a> for much ranting and hilarity.
+      </p>
+
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>
+      <a href="http://twitter.com/mrmcdowall" class="twitter-follow-button" data-show-count="false">Follow @mrmcdowall</a>
+      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Ember Application Initializers" data-url="http://mcdowall.info//posts/ember-application-initializers">Vote on HN</a>
+      <script>
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.src = '//hnbutton.appspot.com/static/hn.min.js';
+              s.parentNode.insertBefore(g, s);
+          }(document, 'script'));
+      </script>
+      <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+  </article>
+</section>
+
+  </section>
+
+  <script type="text/javascript">
+    var _gauges = _gauges || [];
+    (function() {
+      var t   = document.createElement('script');
+      t.type  = 'text/javascript';
+      t.async = true;
+      t.id    = 'gauges-tracker';
+      t.setAttribute('data-site-id', '50ddcdac613f5d43c3000007');
+      t.src = '//secure.gaug.es/track.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(t, s);
+    })();
+  </script>
+
+</body>
+
+</html>
