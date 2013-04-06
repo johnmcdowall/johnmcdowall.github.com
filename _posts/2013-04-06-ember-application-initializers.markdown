@@ -14,13 +14,13 @@ Fundamentally, the Initializer requires a ```name``` attribute and an ```initial
 A basic Application Initializer looks like this:
 
 ```javascript
-Ember.Application.initializer({
-  name: "initializerName",
- 
-  initialize: function(container, application) {
-    ... your code ...
-  }
-});
+  Ember.Application.initializer({
+    name: "initializerName",
+   
+    initialize: function(container, application) {
+      ... your code ...
+    }
+  });
 ```
 
 Initializers can also specify dependencies by using a ```after``` attribute which references the name of the Initializer it should run after. 
@@ -33,7 +33,7 @@ Here's some examples of using Application initializers to clean up repeated code
 You can look up objects in the Container inside the ```initialize``` method like so:
 
 ```javascript
-store = container.lookup('store:main')
+  store = container.lookup('store:main')
 ```
 
 Then you could inject a controller into all other loaded controllers in the container:
@@ -48,18 +48,18 @@ Then you could inject a controller into all other loaded controllers in the cont
 If you need code to be executed when the DOM is ready and want a clean place to integrate it into your Ember app, you can use an initializer. This example loads a current-user attribute from a ```META``` tag in the document. 
 
 ```javascript
-Ember.Application.initializer({
-  name: "initializerName",
- 
-  initialize: function(container, application) {
-    $(function(){
-      /* Look up an attribute in a meta tag */
-      attributes = $('meta[name="current-user"]').attr('content')
+  Ember.Application.initializer({
+    name: "initializerName",
+   
+    initialize: function(container, application) {
+      $(function(){
+        /* Look up an attribute in a meta tag */
+        attributes = $('meta[name="current-user"]').attr('content')
 
-      /* Do something with it */
-    });
-  }
-});
+        /* Do something with it */
+      });
+    }
+  });
 ```
 
 If you're using Rails, this would be a good way to get the CSRF token and use it in the jQuery AJAX setup. 
