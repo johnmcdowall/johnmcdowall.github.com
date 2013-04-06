@@ -11,7 +11,6 @@ Fundamentally, the Initializer requires a ```name``` attribute and an ```initial
 
 A basic Application Initializer looks like this:
 
-```
     Ember.Application.initializer({
       name: "initializerName",
      
@@ -19,7 +18,6 @@ A basic Application Initializer looks like this:
         ... your code ...
       }
     });
-```
 
 Initializers can also specify dependencies by using a ```after``` attribute which references the name of the Initializer it should run after. 
 
@@ -45,7 +43,6 @@ Then you could inject a controller into all other loaded controllers in the cont
 
 If you need code to be executed when the DOM is ready and want a clean place to integrate it into your Ember app, you can use an initializer. This example loads a current-user attribute from a ```META``` tag in the document. 
 
-```
       Ember.Application.initializer({
         name: "initializerName",
        
@@ -58,7 +55,6 @@ If you need code to be executed when the DOM is ready and want a clean place to 
           });
         }
       });
-```
 
 If you're using Rails, this would be a good way to get the CSRF token and use it in the jQuery AJAX setup. 
 
