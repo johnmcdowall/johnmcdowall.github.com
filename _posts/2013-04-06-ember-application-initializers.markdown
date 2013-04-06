@@ -21,6 +21,23 @@ A basic Application Initializer looks like this:
 
 Initializers can also specify dependencies by using a ```after``` attribute which references the name of the Initializer it should run after. 
 
+    Ember.Application.initializer({
+      name: "initializerFirst",
+     
+      initialize: function(container, application) {
+        ... your code ...
+      }
+    });
+
+    Ember.Application.initializer({
+      name: "initializerSecond",
+      after: "initializerFirst",
+     
+      initialize: function(container, application) {
+        ... your code ...
+      }
+    });
+
 ### Some example use cases
 Here's some examples of using Application initializers to clean up repeated code, or give code that would otherwise run outside of Ember a home inside Ember. 
 
