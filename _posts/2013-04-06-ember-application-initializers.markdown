@@ -50,13 +50,13 @@ Here's some examples of using Application initializers to clean up repeated code
 You can look up objects in the Container inside the ```initialize``` method like so:
 
 ```
-  store = container.lookup('store:main')
+  var store = container.lookup('store:main')
 ```
 
 Then you could inject a controller into all other loaded controllers in the container:
 
 ```
-  controller = container.lookup('controller:currentUser').set('content', user)
+  var controller = container.lookup('controller:currentUser').set('content', user)
   container.typeInjection('controller', 'currentUser', 'controller:currentUser')
 ```
 
@@ -71,7 +71,7 @@ Ember.Application.initializer({
   initialize: function(container, application) {
     $(function(){
       /* Look up an attribute in a meta tag */
-      attributes = $('meta[name="current-user"]').attr('content')
+      var attributes = $('meta[name="current-user"]').attr('content')
 
       /* Do something with it */
     });
