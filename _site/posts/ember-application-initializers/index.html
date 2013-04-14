@@ -106,13 +106,13 @@
 <p>You can look up objects in the Container inside the <code>initialize</code> method like so:</p>
 
 <p><code>
-  store = container.lookup('store:main')
+  var store = container.lookup('store:main')
 </code></p>
 
 <p>Then you could inject a controller into all other loaded controllers in the container:</p>
 
 <p><code>
-  controller = container.lookup('controller:currentUser').set('content', user)
+  var controller = container.lookup('controller:currentUser').set('content', user)
   container.typeInjection('controller', 'currentUser', 'controller:currentUser')
 </code></p>
 
@@ -126,7 +126,7 @@
   <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
       <span class="cm">/* Look up an attribute in a meta tag */</span>
-      <span class="nx">attributes</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;current-user&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span>
+      <span class="kd">var</span> <span class="nx">attributes</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;current-user&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span>
 
       <span class="cm">/* Do something with it */</span>
     <span class="p">});</span>
