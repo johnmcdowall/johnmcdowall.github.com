@@ -1,7 +1,7 @@
 ---
 layout: post
 published: true
-title: Getting started with Internationalizrion (i18n) in Ember.js
+title: Getting started with Internationalization (i18n) in Ember.js
 description: Writing your Ember.js app to include Internationalization support is easy.
 ---
 
