@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>A simple Rake task to update Ember.js - John McDowall</title>
+
+  <!-- TODO: change name and description -->
+  <meta name="author" content="John McDowall" />
+  <meta name="description" content="Writing your Ember.js app to include Internationalization support is easy." />
+
+  <meta name="viewport" content="width=840, maximum-scale=1.0, user-scalable=yes">
+
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+  <link media="only screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" rel="stylesheet" />
+  <link media="only screen and (device-width: 768px)" href="/css/iphone.css" type="text/css" rel="stylesheet" />
+
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//use.typekit.net/fyu6ury.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript" src="/js/application.js"></script>
+</head>
+
+<body>
+  <section id="page">
+    <header>
+      <section class="name">
+        <a href="/">
+          <span id="john">John</span>
+          <span id="mcdowall">McDowall</span>
+        </a>
+      </section>
+
+      <nav>
+        <ul>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/">posts</a></li>
+          <li><a href="https://github.com/johnmcdowall">Github</a></li>
+          <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
+          <li><a href="/atom.xml">RSSSS's</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="content">
+  <header>
+    <h1>
+      <a href="/posts/a-simple-rake-task-to-update-ember-js">A simple Rake task to update Ember.js</a>
+    </h1>
+
+    <section class="byline">
+      April 21, 2013
+    </section>
+  </header>
+
+  <article>
+  <p>I was using a Rake task that I had seen <a href="https://twitter.com/IvanVanderbyl">Ivan Vanderbyl</a> using to update the Ember source files to whatever was the latest available. It assumed you were using the <code>ember-rails</code> gem and it would pull down the repos necessary, build the projects, and place the compilation results in the <code>vendor</code> directory so that the asset pipeline would pick them up.</p>
+
+<p>Since the Ember team put some work into getting builds served up from S3, the process of getting the latest code has become super simple. All you need is this Rake task in your <code>lib/tasks</code> folder and away you go:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="c1"># A simple rake task to update Ember and Ember Data to latest official build from S3.</span>
+<span class="c1">#</span>
+<span class="c1"># Assumptions:</span>
+<span class="c1"># - You&#39;re using the `ember-rails` gem</span>
+<span class="c1"># - You are requiring rember with sprockets with something like `require ember`</span>
+<span class="c1">#</span>
+<span class="c1"># Usage:</span>
+<span class="c1">#</span>
+<span class="c1">#   $ rake ember:update</span>
+<span class="c1">#</span>
+<span class="c1">#  This will place a development build (with comments and debug tags) into:</span>
+<span class="c1">#   vendor/assets/ember/development/ember.js</span>
+<span class="c1">#  and a production minified build (no comments or debug tags) into:</span>
+<span class="c1">#   vendor/assets/ember/production/ember.js</span>
+<span class="c1">#</span>
+<span class="c1"># Idea by Ivan Vanderbyl (ivan@crashlog.io) December, 2012</span>
+<span class="c1"># This implementation by John McDowall (john@mcdowall.info) April, 2013</span>
+ 
+<span class="k">def</span> <span class="nf">say</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+  <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">msg</span><span class="si">}</span><span class="s2">...&quot;</span>
+ 
+  <span class="k">if</span> <span class="nb">block_given?</span>
+    <span class="n">quietly</span> <span class="k">do</span>
+      <span class="k">yield</span>
+    <span class="k">end</span>
+    <span class="nb">puts</span> <span class="s2">&quot; Done.&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+ 
+<span class="n">namespace</span> <span class="ss">:ember</span> <span class="k">do</span>
+  <span class="n">desc</span> <span class="s2">&quot;Update Ember.js from latest Builds on S3.&quot;</span>
+  <span class="n">task</span> <span class="ss">:update</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:core</span><span class="p">,</span> <span class="ss">:data</span><span class="o">]</span>
+
+  <span class="n">task</span> <span class="ss">:core</span> <span class="k">do</span>
+    <span class="n">say</span> <span class="s2">&quot;Grabbing Core from S3...&quot;</span> <span class="k">do</span> 
+      <span class="n">sh</span> <span class="s2">&quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-latest.js -o vendor/assets/ember/development/ember.js&quot;</span>
+      <span class="n">sh</span> <span class="s2">&quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-latest.min.js -o vendor/assets/ember/production/ember.js&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">task</span> <span class="ss">:data</span> <span class="k">do</span>
+    <span class="n">say</span> <span class="s2">&quot;Grabbing Data from S3...&quot;</span> <span class="k">do</span> 
+      <span class="n">sh</span> <span class="s2">&quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.js -o vendor/assets/ember/development/ember-data.js&quot;</span>
+      <span class="n">sh</span> <span class="s2">&quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.min.js -o vendor/assets/ember/production/ember-data.js&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+<p>Now you can simply say <code>rake ember:update</code> and if you&rsquo;re using the <code>ember-rails</code> gem, you&rsquo;ll get the latest builds in no time at all.</p>
+
+<p>Gist <a href="https://gist.github.com/johnmcdowall/5431985">here</a>.</p>
+
+
+  <section class="meta">
+    <h3>Discussion, links, and tweets</h3>
+    <section class="copy">
+      <p>
+        <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
+        I own and run <a href="http://revolutionlake.co">Revolution Lake</a>, a small software and product development studio in Toronto, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a> for much ranting and hilarity.
+      </p>
+
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>
+      <a href="http://twitter.com/mrmcdowall" class="twitter-follow-button" data-show-count="false">Follow @mrmcdowall</a>
+      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="A simple Rake task to update Ember.js" data-url="http://mcdowall.info//posts/a-simple-rake-task-to-update-ember-js">Vote on HN</a>
+      <script>
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.src = '//hnbutton.appspot.com/static/hn.min.js';
+              s.parentNode.insertBefore(g, s);
+          }(document, 'script'));
+      </script>
+      <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+  </article>
+</section>
+
+  </section>
+
+  <script type="text/javascript">
+    var _gauges = _gauges || [];
+    (function() {
+      var t   = document.createElement('script');
+      t.type  = 'text/javascript';
+      t.async = true;
+      t.id    = 'gauges-tracker';
+      t.setAttribute('data-site-id', '50ddcdac613f5d43c3000007');
+      t.src = '//secure.gaug.es/track.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(t, s);
+    })();
+  </script>
+
+</body>
+
+</html>

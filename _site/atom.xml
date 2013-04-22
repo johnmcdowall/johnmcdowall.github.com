@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-04-14T17:19:33-04:00</updated>
+ <updated>2013-04-21T22:05:24-04:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -13,7 +13,72 @@
  
  
  <entry>
-   <title>Getting started with Internationalizrion (i18n) in Ember.js</title>
+   <title>A simple Rake task to update Ember.js</title>
+   <link href="http://zachholman.com/posts/a-simple-rake-task-to-update-ember-js"/>
+   <updated>2013-04-21T00:00:00-04:00</updated>
+   <id>http://zachholman.com/posts/a-simple-rake-task-to-update-ember-js</id>
+   <content type="html">&lt;p&gt;I was using a Rake task that I had seen &lt;a href=&quot;https://twitter.com/IvanVanderbyl&quot;&gt;Ivan Vanderbyl&lt;/a&gt; using to update the Ember source files to whatever was the latest available. It assumed you were using the &lt;code&gt;ember-rails&lt;/code&gt; gem and it would pull down the repos necessary, build the projects, and place the compilation results in the &lt;code&gt;vendor&lt;/code&gt; directory so that the asset pipeline would pick them up.&lt;/p&gt;
+
+&lt;p&gt;Since the Ember team put some work into getting builds served up from S3, the process of getting the latest code has become super simple. All you need is this Rake task in your &lt;code&gt;lib/tasks&lt;/code&gt; folder and away you go:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# A simple rake task to update Ember and Ember Data to latest official build from S3.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Assumptions:&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# - You&amp;#39;re using the `ember-rails` gem&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# - You are requiring rember with sprockets with something like `require ember`&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Usage:&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#   $ rake ember:update&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#  This will place a development build (with comments and debug tags) into:&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#   vendor/assets/ember/development/ember.js&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#  and a production minified build (no comments or debug tags) into:&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#   vendor/assets/ember/production/ember.js&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Idea by Ivan Vanderbyl (ivan@crashlog.io) December, 2012&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# This implementation by John McDowall (john@mcdowall.info) April, 2013&lt;/span&gt;
+ 
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;...&amp;quot;&lt;/span&gt;
+ 
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block_given?&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;quietly&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot; Done.&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:ember&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Update Ember.js from latest Builds on S3.&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:update&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:core&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:core&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;say&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Grabbing Core from S3...&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; 
+      &lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-latest.js -o vendor/assets/ember/development/ember.js&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-latest.min.js -o vendor/assets/ember/production/ember.js&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:data&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;say&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Grabbing Data from S3...&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; 
+      &lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.js -o vendor/assets/ember/development/ember-data.js&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.min.js -o vendor/assets/ember/production/ember-data.js&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can simply say &lt;code&gt;rake ember:update&lt;/code&gt; and if you&amp;rsquo;re using the &lt;code&gt;ember-rails&lt;/code&gt; gem, you&amp;rsquo;ll get the latest builds in no time at all.&lt;/p&gt;
+
+&lt;p&gt;Gist &lt;a href=&quot;https://gist.github.com/johnmcdowall/5431985&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Getting started with Internationalization (i18n) in Ember.js</title>
    <link href="http://zachholman.com/posts/getting-started-with-internationalization-i18n-in-ember-js"/>
    <updated>2013-04-14T00:00:00-04:00</updated>
    <id>http://zachholman.com/posts/getting-started-with-internationalization-i18n-in-ember-js</id>
