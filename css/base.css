@@ -1,3 +1,5 @@
+@-webkit-keyframes appear{0%{opacity:0;} 100%{opacity:100%;}}
+
 body {
 	margin:0;
 }
@@ -6,9 +8,9 @@ body {
 	width: 800px;
 	margin: 2em auto;
 
-	font-size: 17px;
-	font-family: 'Proxima-Nova', Helvetica, Arial, sans-serif;
-	line-height: 24px;
+	font-size: 14px;
+	font-family: 'Myriad Pro', 'Lucida Grande', 'Trebuchet MS', Verdana, sans-serif;
+	line-height: 23px;
 
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: subpixel-antialiased !important;
@@ -19,19 +21,16 @@ body {
 
 .byline {
 	text-transform: uppercase;
-	text-align: center;
-	margin-bottom: 4em;
 	color: #4C4C4C;
 }
 
 .content header h1 {
-	text-align: center;
-	width: 480px;
-	margin: 18px auto;
-	font-size: 32px;
-	line-height: 37px;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
+	font-family: 'Helvetica';
+	margin-top: 0;
+	font-size: 5.6em;
+	line-height: 1em;
+	letter-spacing: -2px;
+	margin-bottom: 1rem;
 }
 
 .content header h1 a {
@@ -51,7 +50,7 @@ body {
 }
 
 article p {
-	color: #414141;
+	color: #444;
 	line-height: 1.8em;
 }
 
@@ -79,6 +78,9 @@ article ol {
 	font-family: Arial, sans-serif;
 }
 
+article section.meta {
+	margin-top: 4em;
+}
 
 article ol li {
 	color: #414141;
@@ -132,13 +134,14 @@ header nav ul li a {
 }
 
 ul.listing {
+	-webkit-animation:appear 800ms ease-in; -webkit-animation-delay:500ms; -webkit-animation-fill-mode:both;
 	list-style-type: none;
 	margin-bottom: 3em;
 	padding:0;
 }
 
 ul.listing li {
-	font-size: 20px;
+	font-size: 16px;
 	text-transform: uppercase;
 	overflow: hidden;
 	border-bottom: 1px dotted gray;
@@ -159,9 +162,4 @@ ul.listing li span {
 	float: right;
 	line-height: 1.2em;
 	vertical-align: top;
-}
-
-
-.tagline {
-	text-align: center;
 }
