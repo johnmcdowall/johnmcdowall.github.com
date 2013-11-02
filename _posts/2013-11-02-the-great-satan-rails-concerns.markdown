@@ -61,3 +61,5 @@ New developers might look through a couple of files before they hit the thing th
 - Encourage a use of Modules that is just as bad as 'The Kitchen Drawer' approach to using the ```lib``` directory that we know is bad, but this time it's at a much more fine grained line-of-code level.
 
 This is all symptomatic of the Rails world only now just coming to terms with some of the Domain Driven Design concepts of Services, and at the same time having the project leader stand behind a really badly thought out approach to handling complex large software projects.
+
+Your Models don't deserve this fate - tearing methods away from them and placing them in the Phantom Zone that is ActiveSupport::Concerns. Give them and anyone who might read the code other than you a chance for a better life, and if you need further guidance, there's this [excellent CodeClimate post](http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/) which shows SEVEN ways not to use Concerns.
