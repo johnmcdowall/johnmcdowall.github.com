@@ -5,12 +5,80 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-11-01T15:19:57-07:00</updated>
+ <updated>2013-11-02T11:59:13-07:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
  </author>
  
+ 
+ <entry>
+   <title>The Great Satan - Rails Concerns</title>
+   <link href="http://zachholman.com/posts/the-great-satan-rails-concerns"/>
+   <updated>2013-11-02T00:00:00-07:00</updated>
+   <id>http://zachholman.com/posts/the-great-satan-rails-concerns</id>
+   <content type="html">&lt;p&gt;Corey Haines has already &lt;a href=&quot;(http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html&quot;&gt;masterfully expounded&lt;/a&gt; on why &lt;code&gt;ActiveSupport::Concern&lt;/code&gt; will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.&lt;/p&gt;
+
+&lt;h2&gt;The Headless Horseman&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;ActiveSupport::Concern&lt;/code&gt; may not have been intended to be used this way, but I see it used this way in a lot of Rails projects I&amp;rsquo;ve worked on since the introduction of Concerns. I&amp;rsquo;m talking about discorporated methods:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;active_support/concern&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;MonsterConcern&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;extend&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;ActiveSupport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:Concern&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;included&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;can_fangs_be_seen_by_children?&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;nearby_children&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;can_see?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:fangs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shaggy_monster&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;make_coat_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:shaggy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;engage_rage&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;chew_bones&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We have four disembodied methods here, stuck in a file. We get no indication of &lt;em&gt;whom&lt;/em&gt; includes this file - if we&amp;rsquo;re lucky the name might reflect that information, but it&amp;rsquo;s still not exact. Where should we go to see where the &lt;code&gt;nearby_children&lt;/code&gt; method is defined?&lt;/p&gt;
+
+&lt;h2&gt;The Goose Chase&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s say we want to look at the &lt;code&gt;make_coat_type&lt;/code&gt; method. Where is it? It could be on the &lt;code&gt;Monster&lt;/code&gt; model, but it&amp;rsquo;s not. If we&amp;rsquo;re lucky, maybe we spy a file called &lt;code&gt;monster_coat_type.rb&lt;/code&gt;, but chances are it&amp;rsquo;s bundled into something bigger. Eventually we find the appropriate method, but it&amp;rsquo;s in another concern file that we didn&amp;rsquo;t expect.&lt;/p&gt;
+
+&lt;h2&gt;Hunt and Peck&lt;/h2&gt;
+
+&lt;p&gt;New developers might look through a couple of files before they hit the thing they are looking for, because Concerns give no indication of what they contain at the file name level. Better developers will &lt;code&gt;grep&lt;/code&gt; immediately, but even then they might waste time optimistically looking in a couple of file that seem likely first.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;ActiveSupport::Concern&lt;/code&gt; actually makes your code base worse. They make it:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Harder to reason about the code you are currently reading. You must satisfy several mental dependencies before you can make any kind of informed change in the code you are looking at. This increased mental barrier also makes it more likely that a developer will make a mistake in the code they are changing inside a concern.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Harder to navigate the codebase. If I want to look at the &lt;code&gt;make_coat_type&lt;/code&gt; method, I have to already know that it:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Doesn&amp;rsquo;t live on the main &lt;code&gt;Monster&lt;/code&gt; model.&lt;/li&gt;
+&lt;li&gt;Is actually inside another file which contains a different &lt;code&gt;Concern&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Encourage a use of Modules that is just as bad as &amp;lsquo;The Kitchen Drawer&amp;rsquo; approach to using the &lt;code&gt;lib&lt;/code&gt; directory that we know is bad, but this time it&amp;rsquo;s at a much more fine grained line-of-code level.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;This is all symptomatic of the Rails world only now just coming to terms with some of the Domain Driven Design concepts of Services, and at the same time having the project leader stand behind a really badly thought out approach to handling complex large software projects.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>A simple Rake task to update Ember.js</title>
