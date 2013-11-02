@@ -5,7 +5,7 @@ title: The Great Satan - Rails Concerns
 description: Why ActiveSupport::Concern is a really bad thing.
 ---
 
-Corey Haines has already [masterfully expounded]((http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html) on why ```ActiveSupport::Concern``` will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.
+Corey Haines has already [masterfully expounded](http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html) on why ```ActiveSupport::Concern``` will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.
 
 ## The Headless Horseman
 
