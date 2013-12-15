@@ -5,7 +5,7 @@
  <title>Zach Holman</title>
  <link href="http://zachholman.com/atom.xml" rel="self"/>
  <link href="http://zachholman.com/"/>
- <updated>2013-11-02T11:59:13-07:00</updated>
+ <updated>2013-12-14T18:48:32-08:00</updated>
  <id>http://zachholman.com</id>
  <author>
    <name>Zach Holman</name>
@@ -17,7 +17,7 @@
    <link href="http://zachholman.com/posts/the-great-satan-rails-concerns"/>
    <updated>2013-11-02T00:00:00-07:00</updated>
    <id>http://zachholman.com/posts/the-great-satan-rails-concerns</id>
-   <content type="html">&lt;p&gt;Corey Haines has already &lt;a href=&quot;(http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html&quot;&gt;masterfully expounded&lt;/a&gt; on why &lt;code&gt;ActiveSupport::Concern&lt;/code&gt; will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.&lt;/p&gt;
+   <content type="html">&lt;p&gt;Corey Haines has already &lt;a href=&quot;http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html&quot;&gt;masterfully expounded&lt;/a&gt; on why &lt;code&gt;ActiveSupport::Concern&lt;/code&gt; will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.&lt;/p&gt;
 
 &lt;h2&gt;The Headless Horseman&lt;/h2&gt;
 
@@ -26,7 +26,7 @@
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;active_support/concern&amp;#39;&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;MonsterConcern&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;extend&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;ActiveSupport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:Concern&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;extend&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveSupport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Concern&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;included&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;can_fangs_be_seen_by_children?&lt;/span&gt;
@@ -77,6 +77,8 @@
 
 
 &lt;p&gt;This is all symptomatic of the Rails world only now just coming to terms with some of the Domain Driven Design concepts of Services, and at the same time having the project leader stand behind a really badly thought out approach to handling complex large software projects.&lt;/p&gt;
+
+&lt;p&gt;Your Models don&amp;rsquo;t deserve this fate - tearing methods away from them and placing them in the Phantom Zone that is ActiveSupport::Concerns. Give them and anyone who might read the code other than you a chance for a better life, and if you need further guidance, there&amp;rsquo;s this &lt;a href=&quot;http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/&quot;&gt;excellent CodeClimate post&lt;/a&gt; which shows SEVEN ways not to use Concerns.&lt;/p&gt;
 </content>
  </entry>
  

@@ -40,11 +40,11 @@
 
       <nav>
         <ul>
-          <li><a href="/about.html">about</a></li>
-          <li><a href="/">posts</a></li>
           <li><a href="https://github.com/johnmcdowall">Github</a></li>
           <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
           <li><a href="/atom.xml">RSS</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="/">Archive</a></li>
         </ul>
       </nav>
     </header>
@@ -61,7 +61,7 @@
   </header>
 
   <article>
-  <p>Corey Haines has already <a href="(http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html">masterfully expounded</a> on why <code>ActiveSupport::Concern</code> will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.</p>
+  <p>Corey Haines has already <a href="http://blog.coreyhaines.com/2012/12/why-i-dont-use-activesupportconcern.html">masterfully expounded</a> on why <code>ActiveSupport::Concern</code> will lead to you having a Real Bad Time - and you really should read it, but I wanted to write a quick cautionary tale to those thinking about using Concerns and highlight a couple of the more practical pains explicitly.</p>
 
 <h2>The Headless Horseman</h2>
 
@@ -70,7 +70,7 @@
 <div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;active_support/concern&#39;</span>
 
 <span class="k">module</span> <span class="nn">MonsterConcern</span>
-  <span class="kp">extend</span> <span class="ss">ActiveSupport</span><span class="p">:</span><span class="ss">:Concern</span>
+  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
 
   <span class="n">included</span> <span class="k">do</span>
     <span class="k">def</span> <span class="nf">can_fangs_be_seen_by_children?</span>
@@ -121,6 +121,8 @@
 
 
 <p>This is all symptomatic of the Rails world only now just coming to terms with some of the Domain Driven Design concepts of Services, and at the same time having the project leader stand behind a really badly thought out approach to handling complex large software projects.</p>
+
+<p>Your Models don&rsquo;t deserve this fate - tearing methods away from them and placing them in the Phantom Zone that is ActiveSupport::Concerns. Give them and anyone who might read the code other than you a chance for a better life, and if you need further guidance, there&rsquo;s this <a href="http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/">excellent CodeClimate post</a> which shows SEVEN ways not to use Concerns.</p>
 
 
   <section class="meta">
