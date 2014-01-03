@@ -144,6 +144,18 @@ article h2 {
 	text-transform: uppercase;
 }
 
+article h3 {
+	margin-top: 2em;
+	font-family: 'Open Sans', Arial, sans-serif;
+	text-transform: uppercase;
+}
+
+article h4 {
+	margin-top: 2em;
+	font-family: 'Open Sans', Arial, sans-serif;
+	text-transform: uppercase;
+}
+
 footer {
 	width: 1000px;
 	text-align: center;
