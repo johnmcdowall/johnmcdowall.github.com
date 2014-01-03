@@ -8,7 +8,8 @@ type: post
 published: true
 meta: {}
 ---
-I was trying to find out a way of running some commands inside the Vagrant virtual machine as the ```vagrant``` user, not as ```root```, which is what the ```channel.sudo()``` method does.&nbsp;</p><p>After a while of trying to find some documentation on the official Vagrant site, and finding none, I eventually found a call in the Vagrant source code for ```channel.execute()``` - which does run the passed commands as the&```vagrant``` user.
+
+I was trying to find out a way of running some commands inside the Vagrant virtual machine as the ```vagrant``` user, not as ```root```, which is what the ```channel.sudo()``` method does.After a while of trying to find some documentation on the official Vagrant site, and finding none, I eventually found a call in the Vagrant source code for ```channel.execute()``` - which does run the passed commands as the&```vagrant``` user.
 
 Job done, right?
 
