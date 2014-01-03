@@ -2,13 +2,20 @@
 layout: layout
 title: "Posts"
 ---
-
-<section class="content">
-  <ul class="listing">
-    {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a><span>{{ post.date | date: "%B %e, %Y" }}</span>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<article>
+  <h1>Hello. My name is John McDowall. </h1>
+  <p><img class='johnmcdowall' src='https://dl.dropboxusercontent.com/u/4382241/photo.jpg' /> Welcome to my infrequently updated Journal. I'm a Scottish ex-patriot who used to be the CTO at a couple of different startups, and now I'm an independant consultant working out of Vancouver, Canada. Below you'll find my last five recent Articles. If you're looking for more, check out the Archive. </p>
+  <p>If you like to read, I wrote a book which is a collection of interviews with Startup founders called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
+</article>
+<hr/>
+<aside>
+<h2>Recent Articles</h2>
+<ul id='recent-articles'>
+  {% for post in site.posts offset: 0 limit: 5 %}
+  <li>
+    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+    <date>{{ post.date | date: "%B %e, %Y" }}</date>
+  </li>
+  {% endfor %}
+</ul>
+</aside>

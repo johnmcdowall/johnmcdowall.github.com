@@ -1,0 +1,16 @@
+---
+layout: layout
+title: "Archive"
+---
+
+<section>
+  <h2>The complete Archives:</h2>
+  <ul id='archive'>
+    {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+      <date>{{ post.date | date: "%B %e, %Y" }}</date>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
