@@ -1,3 +1,11 @@
+body {
+  margin:0;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 22px;
+  line-height: 1.6;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 #page > header {
   background: #16161D url(/images/header.jpg) bottom;
   color: #efefef;
