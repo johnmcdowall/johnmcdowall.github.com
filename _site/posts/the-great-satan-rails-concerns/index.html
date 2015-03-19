@@ -37,7 +37,6 @@
               <li><a href="/books.html">Books</a></li>
               <li><a href="/archive.html">Archive</a></li>
               <li><a href="https://github.com/johnmcdowall">Github</a></li>
-              <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
               <li><a href="/atom.xml">RSS</a></li>
             </ul>
           </nav>
@@ -62,7 +61,7 @@
 
 <p><code>ActiveSupport::Concern</code> may not have been intended to be used this way, but I see it used this way in a lot of Rails projects I&rsquo;ve worked on since the introduction of Concerns. I&rsquo;m talking about discorporated methods:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;active_support/concern&#39;</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;active_support/concern&#39;</span>
 
 <span class="k">module</span> <span class="nn">MonsterConcern</span>
   <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
@@ -84,8 +83,7 @@
       <span class="o">.</span><span class="n">.</span><span class="o">.</span>
     <span class="k">end</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 
 <p>We have four disembodied methods here, stuck in a file. We get no indication of <em>whom</em> includes this file - if we&rsquo;re lucky the name might reflect that information, but it&rsquo;s still not exact. Where should we go to see where the <code>nearby_children</code> method is defined?</p>
@@ -128,7 +126,7 @@
               <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
           </div>
           <div class="flag__body">
-              <p>I own and run <a href="http://revolutionlake.co">Revolution Lake</a>, a small software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
+              <p>I co-own and run <a href="http://kantan.io">Kantan</a>, a small CRO Optimization, software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
           </div>
       </div>
       <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>

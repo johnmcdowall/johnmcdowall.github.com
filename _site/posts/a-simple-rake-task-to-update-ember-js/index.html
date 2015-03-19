@@ -37,7 +37,6 @@
               <li><a href="/books.html">Books</a></li>
               <li><a href="/archive.html">Archive</a></li>
               <li><a href="https://github.com/johnmcdowall">Github</a></li>
-              <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
               <li><a href="/atom.xml">RSS</a></li>
             </ul>
           </nav>
@@ -60,7 +59,7 @@
 
 <p>Since the Ember team put some work into getting builds served up from S3, the process of getting the latest code has become super simple. All you need is this Rake task in your <code>lib/tasks</code> folder and away you go:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="c1"># A simple rake task to update Ember and Ember Data to latest official build from S3.</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># A simple rake task to update Ember and Ember Data to latest official build from S3.</span>
 <span class="c1">#</span>
 <span class="c1"># Assumptions:</span>
 <span class="c1"># - You&#39;re using the `ember-rails` gem</span>
@@ -106,8 +105,7 @@
       <span class="n">sh</span> <span class="s2">&quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.min.js -o vendor/assets/ember/production/ember-data.js&quot;</span>
     <span class="k">end</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 
 <p>Now you can simply say <code>rake ember:update</code> and if you&rsquo;re using the <code>ember-rails</code> gem, you&rsquo;ll get the latest builds in no time at all.</p>
@@ -123,7 +121,7 @@
               <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
           </div>
           <div class="flag__body">
-              <p>I own and run <a href="http://revolutionlake.co">Revolution Lake</a>, a small software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
+              <p>I co-own and run <a href="http://kantan.io">Kantan</a>, a small CRO Optimization, software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
           </div>
       </div>
       <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>

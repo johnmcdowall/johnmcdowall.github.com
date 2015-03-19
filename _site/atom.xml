@@ -3,12 +3,134 @@
  <title>John McDowall - mcdowall.info</title>
  <link href="http://mcdowall.info/atom.xml" rel="self"/>
  <link href="http://mcdowall.info/"/>
- <updated>2014-01-02T22:00:03-08:00</updated>
+ <updated>2015-03-19T15:31:39-07:00</updated>
  <id>http://mcdowall.info</id>
  <author>
    <name>John McDowall</name>
  </author>
 
+ 
+ <entry>
+   <title>Announcing Centerline</title>
+   <link href="http://mcdowall.info/posts/announcing-centerline"/>
+   <updated>2015-03-19T00:00:00-07:00</updated>
+   <id>http://mcdowall.info/posts/announcing-centerline</id>
+   <content type="html">&lt;p&gt;I like to design in the Browser. Sometimes I&amp;rsquo;m not quite sure if something is fully centered in the Browser window or not, so I made Centerline. Centerline
+is just a dumb bookmarklet that adds a global &amp;lsquo;center line&amp;rsquo; in your Browser viewport. Here it is:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;javascript:(function()%7Bvar%20v%3D%272.1.3%27%3B%20if%20(window.jQuery%3D%3D%3Dundefined%20%7C%7C%20window.jQuery.fn.jquery%20%3C%20v)%7Bvar%20done%3Dfalse%3B%20var%20script%3Ddocument.createElement(%27script%27)%3B%20script.src%3D%27http%3A%2F%2Fajax.googleapis.com%2Fajax%2Flibs%2Fjquery%2F%27%20%2B%20v%20%2B%20%27%2Fjquery.min.js%27%3B%20script.onload%3Dscript.onreadystatechange%3Dfunction()%7Bif%20(!done%20%26%26%20(!this.readyState%20%7C%7C%20this.readyState%3D%3D%27loaded%27%20%7C%7C%20this.readyState%3D%3D%27complete%27))%7Bdone%3Dtrue%3B%20initCenterLine()%3B%7D%7D%3B%20document.getElementsByTagName(%27head%27)%5B0%5D.appendChild(script)%3B%7Delse%7BinitCenterLine()%3B%7Dfunction%20initCenterLine()%7B(window.centerLine%3Dfunction()%7B%24(%27body%27).append(%27%3Cdiv%20class%3D%22centerLineDiv%22%3E%3C%2Fdiv%3E%27)%3B%20%24(%27body%27).append(%27%3Cstyle%20type%3D%22text%2Fcss%22%3E.centerLineDiv%7Bcontent%3A%22%22%3B%20position%3A%20fixed%3B%20top%3A%200%3B%20bottom%3A%200%3B%20left%3A%2050%25%3B%20border-left%3A%202px%20dotted%20%23444%3B%20z-index%3A%2099999999%3B%7D%3C%2Fstyle%3E%27)%3B%20%24(%27body%27).append(%27%3Cstyle%20type%3D%22text%2Fcss%22%3E.container%7Bborder-left%3A%201px%20solid%20red%3B%20border-right%3A%201px%20solid%20red%3B%7D%3C%2Fstyle%3E%27)%3B%7D)()%3B%7D%7D)()%3B&quot;&gt;CenterLine&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Just drag it onto your bookmark bar, and when you need that center line, click the hell out of it.&lt;/p&gt;
+
+&lt;p&gt;To remove, just refresh the page.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Run RSpec with Documentation Formatter for Better Specs</title>
+   <link href="http://mcdowall.info/posts/run-rspec-with-documentation-formatter-for-better-specs"/>
+   <updated>2014-01-12T00:00:00-08:00</updated>
+   <id>http://mcdowall.info/posts/run-rspec-with-documentation-formatter-for-better-specs</id>
+   <content type="html">&lt;p&gt;The default RSpec report formatter is &lt;code&gt;progress&lt;/code&gt;: it&amp;rsquo;s the one that, hopefully, outputs litte green dots as RSpec executes each Spec. This can lead to serious problems with the structure of your Specs.&lt;/p&gt;
+
+&lt;h2&gt;Everyone wants to be happy&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;progress&lt;/code&gt; is the formatter that makes you feel better than you probably should. It&amp;rsquo;s the formatter that says &amp;lsquo;Hey, everything&amp;rsquo;s OK. So much green.&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;» rspec spec/requests/tps_2014_spec.rb
+...................
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But the &lt;code&gt;progress&lt;/code&gt; formatter hides times when what you&amp;rsquo;ve said you&amp;rsquo;re Speccing is complete nonsense. Often, if you haven&amp;rsquo;t thought about the Spec assertion in any depth, your test might well be nonsense too.&lt;/p&gt;
+
+&lt;h2&gt;Documentation formatter to the rescue&lt;/h2&gt;
+
+&lt;p&gt;RSpec allows you to use different style report formatters (which you can list by typing &lt;code&gt;rspec -h&lt;/code&gt;), and one of the other built in options is &lt;code&gt;documentation&lt;/code&gt;. You can choose it easily by inserting &lt;code&gt;-fd&lt;/code&gt; into your rspec options:&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at an example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rspec&quot;&gt;» rspec -fd spec/requests/tps_2014_spec.rb
+
+CreateAccount
+  paid account
+    success
+      sets annual plan
+      sets the correct values
+      moves the needle
+      sets the pricing_version
+  free account
+    success
+      sends out a welcome email
+      associates the models correctly
+      creates a user and free org
+        should have content &quot;Welcome to TPS Report 2014&quot;
+        should have content &quot;Welcome to TPS Report 2014&quot;
+        should have content &quot;Welcome to TPS Report 2014&quot;
+    started free then switched to paid
+      failure
+        doesn&#39;t let me check out
+      success
+        creates paid org
+    failure
+      incomplete form
+        browser behavior
+          puts me back on the form
+        does not create squat
+          should not change #count
+          should not change #count
+          should not change #count
+      email already taken
+        should report the error
+        doesn&#39;t work
+          should not change #count
+          should not change #count
+          should not change #count
+      org already taken
+        should report the error
+        doesn&#39;t work
+          should not change #count
+          should not change #count
+          should not change #count
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The problem is immediately apparent. These Spec descriptions don&amp;rsquo;t actually make any sense. We&amp;rsquo;re seeing multiple repetitions of the same message, and that means either the Spec description is wrong, the test is a lie, or at the very least could be written to be more informative.&lt;/p&gt;
+
+&lt;h2&gt;Examining the issue&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the Spec &lt;code&gt;CreateAccount &amp;gt; free account &amp;gt; failure &amp;gt; email already taken &amp;gt; doesn&#39;t work &amp;gt; should not change #count&lt;/code&gt;. The documentation formatter is telling us three times that something &amp;lsquo;should not change #count&amp;rsquo;. Here are the problems:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;What #count shouldn&amp;rsquo;t change? Cats? Doges?&lt;/li&gt;
+&lt;li&gt;Are we asserting three times that the same #count shouldn&amp;rsquo;t change?&lt;/li&gt;
+&lt;li&gt;Why are we asserting three times?&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Let&amp;rsquo;s look at the Spec:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;describe &quot;doesn&#39;t work&quot; do
+  subject { -&amp;gt; { click_button &#39;Create TPS Report&#39; } }
+
+  it { should_not change(User, :count) }
+  it { should_not change(Comapny, :count) }
+  it { should_not change(TPSReport, :count) }
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see the condition &amp;ldquo;doesn&amp;rsquo;t work&amp;rdquo; actually has three distinct criteria that must be satisfied, which is completely absent from the documentation output. This is easy enough to fix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;describe &quot;doesn&#39;t work&quot; do
+  subject { -&amp;gt; { click_button &#39;Create TPS Report&#39; } }
+
+  it { should_not change(User, :count), &#39;A User is not created.&#39; }
+  it { should_not change(Comapny, :count), &#39;A User is not created.&#39; }
+  it { should_not change(TPSReport, :count), &#39;A User is not created.&#39; }
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You could argue that I&amp;rsquo;ve increased the number of lines required to express the same idea, and for not much gain while reading the Spec. I&amp;rsquo;d argue I&amp;rsquo;ve made the Spec more explicitly intentional about&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>The Great Satan - Rails Concerns</title>
@@ -21,7 +143,7 @@
 
 &lt;p&gt;&lt;code&gt;ActiveSupport::Concern&lt;/code&gt; may not have been intended to be used this way, but I see it used this way in a lot of Rails projects I&amp;rsquo;ve worked on since the introduction of Concerns. I&amp;rsquo;m talking about discorporated methods:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;active_support/concern&amp;#39;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;active_support/concern&amp;#39;&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;MonsterConcern&lt;/span&gt;
   &lt;span class=&quot;kp&quot;&gt;extend&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveSupport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Concern&lt;/span&gt;
@@ -43,8 +165,7 @@
       &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;We have four disembodied methods here, stuck in a file. We get no indication of &lt;em&gt;whom&lt;/em&gt; includes this file - if we&amp;rsquo;re lucky the name might reflect that information, but it&amp;rsquo;s still not exact. Where should we go to see where the &lt;code&gt;nearby_children&lt;/code&gt; method is defined?&lt;/p&gt;
@@ -89,7 +210,7 @@
 
 &lt;p&gt;Since the Ember team put some work into getting builds served up from S3, the process of getting the latest code has become super simple. All you need is this Rake task in your &lt;code&gt;lib/tasks&lt;/code&gt; folder and away you go:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# A simple rake task to update Ember and Ember Data to latest official build from S3.&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# A simple rake task to update Ember and Ember Data to latest official build from S3.&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# Assumptions:&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# - You&amp;#39;re using the `ember-rails` gem&lt;/span&gt;
@@ -135,8 +256,7 @@
       &lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;curl -# http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.min.js -o vendor/assets/ember/production/ember-data.js&amp;quot;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now you can simply say &lt;code&gt;rake ember:update&lt;/code&gt; and if you&amp;rsquo;re using the &lt;code&gt;ember-rails&lt;/code&gt; gem, you&amp;rsquo;ll get the latest builds in no time at all.&lt;/p&gt;
@@ -162,16 +282,14 @@
 &lt;/ol&gt;
 
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;    &lt;span class=&quot;nx&quot;&gt;Em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;I18n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;translations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;I18n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;translations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;s1&quot;&gt;&amp;#39;user.edit.title&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Edit User&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s1&quot;&gt;&amp;#39;user.followers.title.one&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;One Follower&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s1&quot;&gt;&amp;#39;user.followers.title.other&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;All  Followers&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s1&quot;&gt;&amp;#39;button.add_user.title&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Add a user&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s1&quot;&gt;&amp;#39;button.add_user.text&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Add&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s1&quot;&gt;&amp;#39;button.add_user.disabled&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Saving...&amp;#39;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-    
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;In your Handlebars templates, you can now reference the usual &lt;code&gt;t&lt;/code&gt; object to get the i18n strings:&lt;/p&gt;
@@ -187,90 +305,7 @@
    <link href="http://mcdowall.info/posts/ember-application-initializers"/>
    <updated>2013-04-06T00:00:00-07:00</updated>
    <id>http://mcdowall.info/posts/ember-application-initializers</id>
-   <content type="html">&lt;p&gt;Ember Application Initializers allow you to register blocks of code that execute when your Ember application is initializing. With an Initializer, you could access Ember&amp;rsquo;s underlying object container, grab all the controllers and inject other objects into them, register global DOM &lt;code&gt;onReady&lt;/code&gt; event blocks or anything that is useful to setting up your application.&lt;/p&gt;
-
-&lt;p&gt;Fundamentally, the Initializer requires a &lt;code&gt;name&lt;/code&gt; attribute and an &lt;code&gt;initialize&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;p&gt;A basic Application Initializer looks like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerName&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- 
-  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Initializers can also specify dependencies by using a &lt;code&gt;after&lt;/code&gt; attribute which references the name of the Initializer it should run after.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerFirst&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- 
-  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerSecond&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;after&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerFirst&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- 
-  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;your&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;Some example use cases&lt;/h3&gt;
-
-&lt;p&gt;Here&amp;rsquo;s some examples of using Application initializers to clean up repeated code, or give code that would otherwise run outside of Ember a home inside Ember.&lt;/p&gt;
-
-&lt;h4&gt;Looking up objects in the Container &amp;amp; Injecting Types&lt;/h4&gt;
-
-&lt;p&gt;You can look up objects in the Container inside the &lt;code&gt;initialize&lt;/code&gt; method like so:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  var store = container.lookup(&#39;store:main&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then you could inject a controller into all other loaded controllers in the container:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  var controller = container.lookup(&#39;controller:currentUser&#39;).set(&#39;content&#39;, user)
-  container.typeInjection(&#39;controller&#39;, &#39;currentUser&#39;, &#39;controller:currentUser&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4&gt;Defining global DOM &lt;code&gt;onReady&lt;/code&gt; blocks&lt;/h4&gt;
-
-&lt;p&gt;If you need code to be executed when the DOM is ready and want a clean place to integrate it into your Ember app, you can use an initializer. This example loads a current-user attribute from a &lt;code&gt;META&lt;/code&gt; tag in the document.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;initializerName&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- 
-  &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-      &lt;span class=&quot;cm&quot;&gt;/* Look up an attribute in a meta tag */&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attributes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;meta[name=&amp;quot;current-user&amp;quot;]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;content&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-      &lt;span class=&quot;cm&quot;&gt;/* Do something with it */&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you&amp;rsquo;re using Rails, this would be a good way to get the CSRF token and use it in the jQuery AJAX setup.&lt;/p&gt;
-
-&lt;h4&gt;Pre-loading records&lt;/h4&gt;
-
-&lt;p&gt;One way to make the initial Ember application experience even faster is to render some records as JSON strings into the HTML document body. When your Ember application starts up, you can load those records from the document and create instances from them, thus saving an initial AJAX call to fetch the records.&lt;/p&gt;
-
-&lt;h3&gt;Further Reading&lt;/h3&gt;
-
-&lt;p&gt;I assembled this knowledge from a rag-tag collection of blog posts and gists, namely this Gist by &lt;a href=&quot;https://gist.github.com/ivanvanderbyl/4560416&quot;&gt;Ian Vanderbyl&lt;/a&gt; and this blog post by &lt;a href=&quot;http://say26.com/using-rails-devise-with-ember-js&quot;&gt;Alexander Zaytsev on using Ember with Rails and Devise&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;This only scratches the surface of what could be possible with Ember Application Initializers. They are poorly documented at the moment, and could change their behavior at any time before the 1.0 release, but until that happens use them wisely.&lt;/p&gt;
+   <content type="html">&lt;p&gt;This post is now part of &lt;a href=&quot;http://ember.zone/ember-application-initializers/&quot;&gt;The Ember Zone.&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
@@ -479,6 +514,71 @@
  </entry>
  
  <entry>
+   <title>This is David Heinemeier Hansson</title>
+   <link href="http://mcdowall.info/posts/this-is-david-heinemeier-hansson"/>
+   <updated>2013-01-11T00:00:00-08:00</updated>
+   <id>http://mcdowall.info/posts/this-is-david-heinemeier-hansson</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/images/david.jpg&quot; title=&quot;David Heinemeier Hansson&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;David Heinemeier Hansson is a hell of a guy. He&amp;rsquo;s responsible for one of the best web development frameworks in the world, Ruby on Rails. He&amp;rsquo;s always been outspoken and a force to be reckoned with, but lately his writings have taken on the tone of an old man ranting at what the kids are into these days.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;He&amp;rsquo;s inside his own Isolator, writing from his oak-paneled study.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;But what evidence is there that he&amp;rsquo;s inside his Isolator? What follows is not an attack, but an attempt at a broad analysis of the character of his recent writings.&lt;/p&gt;
+
+&lt;p&gt;His recent post on what he thinks is &lt;a href=&quot;http://david.heinemeierhansson.com/2012/dependency-injection-is-not-a-virtue.html&quot;&gt;&amp;lsquo;Dependency Injection&amp;rsquo;&lt;/a&gt; has been &lt;a href=&quot;http://codeulate.com/2013/01/a-criticism-of-dhhs-post-on-dependency-injection/&quot;&gt;rightly&lt;/a&gt; &lt;a href=&quot;http://chrismdp.com/2013/01/dependency-injection-not-ioc/&quot;&gt;prosecuted&lt;/a&gt; as an ill informed and at worse deliberately disingenuous piece of self oriented propaganda.&lt;/p&gt;
+
+&lt;p&gt;Nat Pryce, who &lt;a href=&quot;http://jmock.org/oopsla2004.pdf&quot;&gt;wrote the original paper&lt;/a&gt;, which spawned the &amp;lsquo;only mock types you own&amp;rsquo; quote that DHH misappropriates, said:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;The &amp;ldquo;only mock types you own&amp;rdquo; comes from a paper about jMock, which was a port of to Java of &amp;hellip; a Ruby library (and the design style that went along with it).
+DHH doesn&amp;rsquo;t know what people were doing in Ruby before he started using it.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;DHH&amp;rsquo;s Dependency Injection post is only the most recent crystallization of a slow and insidious change in his approach and language he uses. His posts are filled with deliberately charged and dismissive language like (emphasis mine):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://37signals.com/svn/posts/3373-getting-hyper-about-hypermedia-apis&quot;&gt;Getting hyper about hypermedia APIs&lt;/a&gt;. This post finishes with DHH equating Hypermedia APIs to WS-*, which suggests he might not understand either beyond a vague surface level.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;According to hypermedia &lt;strong&gt;lore&lt;/strong&gt;, you will be able to &lt;strong&gt;willy nilly&lt;/strong&gt; change your URLs without needing to update any clients.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://37signals.com/svn/posts/3372-put-chubby-models-on-a-diet-with-concerns&quot;&gt;Put chubby models on a diet with concerns&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;It doesn’t have the run-time mixin &lt;strong&gt;acrobatics&lt;/strong&gt; nor does it have the &lt;strong&gt;“thy models shall be completely devoid of logic themselves” prescription&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://37signals.com/svn/posts/3341-pattern-vision&quot;&gt;Pattern Vision&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;Go deep enough and the pattern vision turns into &lt;strong&gt;articles of faith&lt;/strong&gt;. [&amp;hellip;] &lt;strong&gt;&lt;em&gt;Turning patterns into articles of faith takes them out of the realm of rational discussion. Code either adheres to the holy patterns or it doesn’t. If it does not, the programmer must first repent, say his 25 rose-delegations&lt;/em&gt;&lt;/strong&gt; [&amp;hellip;]&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;As a writer, he&amp;rsquo;s trying to position himself as seemingly a rational and sane voice illustrating a demon filled world of superstition to a dumb and sheep like congregation.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;His position seems more a stance of &lt;strong&gt;anti-intellectualism&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve seen people suggest alternate ways of building Rails apps, only for DHH to dismiss it, and then when challenged make his rallying cry of &amp;lsquo;Look at the code! Look at the before and after!&amp;rsquo; and then fail to produce any counterexample himself.&lt;/p&gt;
+
+&lt;p&gt;DHH also wrote a post about &lt;a href=&quot;http://37signals.com/svn/posts/3375-the-five-programming-books-that-meant-most-to-me&quot;&gt;The five programming books that meant the most to me&lt;/a&gt;, a list of which coincidentally the most recent book is from 2003. This list is startlingly missing any of the important recent thinking on Software Design, most excellently lead by &lt;a href=&quot;http://www.amazon.ca/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627/ref=sr_1_1?ie=UTF8&amp;amp;qid=1357920398&amp;amp;sr=8-1&quot;&gt;Growing Object Oriented Software, Guided by Tests&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;But then, this shouldn&amp;rsquo;t be surprising since DHH is against keeping books he&amp;rsquo;s read:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p&gt;It&#39;s funny to see people who proclaim a love of &quot;less stuff&quot; still linger on to keeping a wall of paper books. Screw that.&lt;/p&gt;&amp;mdash; DHH (@dhh) &lt;a href=&quot;https://twitter.com/dhh/status/240550580899155968&quot; data-datetime=&quot;2012-08-28T20:45:02+00:00&quot;&gt;August 28, 2012&lt;/a&gt;&lt;/blockquote&gt;
+
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;There were other tweets he made around that one, where he makes further statements about getting rid of books you&amp;rsquo;ve read, but it&amp;rsquo;s impossible to find them using Twitter.&lt;/p&gt;
+
+&lt;p&gt;This is a shame, if only because the re-reading of great books is like having conversations with the great minds of the past. You learn something every time you re-read them, or at least you could if you didn&amp;rsquo;t trash them after reading.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s easy to say that DHH is becoming more and more out of touch with the realities that people face building software systems in the 21st century, or applications that aren&amp;rsquo;t Basecamp, but there is evidence to support that he is.&lt;/p&gt;
+
+&lt;p&gt;It could be said, that he&amp;rsquo;s so busy attacking any attempts to modernize software development using Rails as &amp;lsquo;dogma&amp;rsquo; or &amp;lsquo;the resurgence of Java pattern vision&amp;rsquo;, that he&amp;rsquo;s lacking the ability to introspect on himself, and ask himself the questions about his own cherished beliefs.&lt;/p&gt;
+
+&lt;p&gt;When all is said and done, I still respect David greatly, and we are haircut brethren since time began, I just wish he&amp;rsquo;d stop the attacks, stop being dismissive and read some new books.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Discuss, upvote, or do whatever the hell you want on &lt;a href=&quot;http://news.ycombinator.com/item?id=5043573&quot;&gt;HackerNews&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>You are your best client (or how to evaluate a startup you think you want to join)</title>
    <link href="http://mcdowall.info/posts/you-are-your-best-client-or-how-to-evaluate-a-startup-you-want-to-join-"/>
    <updated>2013-01-03T00:00:00-08:00</updated>
@@ -635,7 +735,13 @@
    <link href="http://mcdowall.info/posts/vagrant-running-commands-from-rake-as-the-vagrant-user"/>
    <updated>2012-10-30T00:00:00-07:00</updated>
    <id>http://mcdowall.info/posts/vagrant-running-commands-from-rake-as-the-vagrant-user</id>
-   <content type="html">&lt;p&gt;I was trying to find out a way of running some commands inside the Vagrant virtual machine as the &lt;em&gt;vagrant&lt;/em&gt; user, not as &lt;em&gt;root&lt;/em&gt;, which is what the &lt;em&gt;channel.sudo()&lt;/em&gt; method does.&amp;nbsp;&lt;/p&gt;&lt;p&gt;After a while of trying to find some documentation on the official Vagrant site, and finding none, I eventually found a call in the Vagrant source code for &lt;em&gt;channel.execute()&lt;/em&gt; - which does run the passed commands as the&amp;nbsp;&lt;em&gt;vagrant&lt;/em&gt; user.&lt;/p&gt;&lt;p&gt;Job done, right?&lt;/p&gt;&lt;p&gt;Well, not really. I did what all good citizens of the open source community should do, which was to fork the Vagrant documentation repo, update the documentation, and &lt;a href=&quot;https://github.com/mitchellh/vagrant/pull/1214&quot; target=&quot;_blank&quot;&gt;submit a pull request&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;The &#39;Boy Scout&#39; principal prevails - try to leave the campsite tidier than when you found it. &lt;/p&gt;
+   <content type="html">&lt;p&gt;I was trying to find out a way of running some commands inside the Vagrant virtual machine as the &lt;code&gt;vagrant&lt;/code&gt; user, not as &lt;code&gt;root&lt;/code&gt;, which is what the &lt;code&gt;channel.sudo()&lt;/code&gt; method does. After a while of trying to find some documentation on the official Vagrant site, and finding none, I eventually found a call in the Vagrant source code for &lt;code&gt;channel.execute()&lt;/code&gt; - which does run the passed commands as the &lt;code&gt;vagrant&lt;/code&gt; user.&lt;/p&gt;
+
+&lt;p&gt;Job done, right?&lt;/p&gt;
+
+&lt;p&gt;Well, not really. I did what all good citizens of the open source community should do, which was to fork the Vagrant documentation repo, update the documentation, and &lt;a href=&quot;https://github.com/mitchellh/vagrant/pull/1214&quot; target=&quot;_blank&quot;&gt;submit a pull request&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &amp;lsquo;Boy Scout&amp;rsquo; principal prevails - try to leave the campsite tidier than when you found it.&lt;/p&gt;
 </content>
  </entry>
  

@@ -37,7 +37,6 @@
               <li><a href="/books.html">Books</a></li>
               <li><a href="/archive.html">Archive</a></li>
               <li><a href="https://github.com/johnmcdowall">Github</a></li>
-              <li><a href="https://twitter.com/mrmcdowall">Twitter</a></li>
               <li><a href="/atom.xml">RSS</a></li>
             </ul>
           </nav>
@@ -56,90 +55,7 @@
     </section>
   </header>
 
-  <p>Ember Application Initializers allow you to register blocks of code that execute when your Ember application is initializing. With an Initializer, you could access Ember&rsquo;s underlying object container, grab all the controllers and inject other objects into them, register global DOM <code>onReady</code> event blocks or anything that is useful to setting up your application.</p>
-
-<p>Fundamentally, the Initializer requires a <code>name</code> attribute and an <code>initialize</code> method.</p>
-
-<p>A basic Application Initializer looks like this:</p>
-
-<div class="highlight"><pre><code class="javascript"><span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerName&quot;</span><span class="p">,</span>
- 
-  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">...</span> <span class="nx">your</span> <span class="nx">code</span> <span class="p">...</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
-
-<p>Initializers can also specify dependencies by using a <code>after</code> attribute which references the name of the Initializer it should run after.</p>
-
-<div class="highlight"><pre><code class="javascript"><span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerFirst&quot;</span><span class="p">,</span>
- 
-  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">...</span> <span class="nx">your</span> <span class="nx">code</span> <span class="p">...</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-
-<span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerSecond&quot;</span><span class="p">,</span>
-  <span class="nx">after</span><span class="o">:</span> <span class="s2">&quot;initializerFirst&quot;</span><span class="p">,</span>
- 
-  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">...</span> <span class="nx">your</span> <span class="nx">code</span> <span class="p">...</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
-
-<h3>Some example use cases</h3>
-
-<p>Here&rsquo;s some examples of using Application initializers to clean up repeated code, or give code that would otherwise run outside of Ember a home inside Ember.</p>
-
-<h4>Looking up objects in the Container &amp; Injecting Types</h4>
-
-<p>You can look up objects in the Container inside the <code>initialize</code> method like so:</p>
-
-<pre><code>  var store = container.lookup('store:main')
-</code></pre>
-
-<p>Then you could inject a controller into all other loaded controllers in the container:</p>
-
-<pre><code>  var controller = container.lookup('controller:currentUser').set('content', user)
-  container.typeInjection('controller', 'currentUser', 'controller:currentUser')
-</code></pre>
-
-<h4>Defining global DOM <code>onReady</code> blocks</h4>
-
-<p>If you need code to be executed when the DOM is ready and want a clean place to integrate it into your Ember app, you can use an initializer. This example loads a current-user attribute from a <code>META</code> tag in the document.</p>
-
-<div class="highlight"><pre><code class="javascript"><span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">initializer</span><span class="p">({</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;initializerName&quot;</span><span class="p">,</span>
- 
-  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">application</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-      <span class="cm">/* Look up an attribute in a meta tag */</span>
-      <span class="kd">var</span> <span class="nx">attributes</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;current-user&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span>
-
-      <span class="cm">/* Do something with it */</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
-
-<p>If you&rsquo;re using Rails, this would be a good way to get the CSRF token and use it in the jQuery AJAX setup.</p>
-
-<h4>Pre-loading records</h4>
-
-<p>One way to make the initial Ember application experience even faster is to render some records as JSON strings into the HTML document body. When your Ember application starts up, you can load those records from the document and create instances from them, thus saving an initial AJAX call to fetch the records.</p>
-
-<h3>Further Reading</h3>
-
-<p>I assembled this knowledge from a rag-tag collection of blog posts and gists, namely this Gist by <a href="https://gist.github.com/ivanvanderbyl/4560416">Ian Vanderbyl</a> and this blog post by <a href="http://say26.com/using-rails-devise-with-ember-js">Alexander Zaytsev on using Ember with Rails and Devise</a>.</p>
-
-<p>This only scratches the surface of what could be possible with Ember Application Initializers. They are poorly documented at the moment, and could change their behavior at any time before the 1.0 release, but until that happens use them wisely.</p>
+  <p>This post is now part of <a href="http://ember.zone/ember-application-initializers/">The Ember Zone.</a></p>
 
 
   <section class="meta">
@@ -150,7 +66,7 @@
               <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
           </div>
           <div class="flag__body">
-              <p>I own and run <a href="http://revolutionlake.co">Revolution Lake</a>, a small software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
+              <p>I co-own and run <a href="http://kantan.io">Kantan</a>, a small CRO Optimization, software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
           </div>
       </div>
       <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>

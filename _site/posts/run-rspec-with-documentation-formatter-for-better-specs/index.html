@@ -1,0 +1,191 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Run RSpec with Documentation Formatter for Better Specs - John McDowall</title>
+
+    <meta name="author" content="John McDowall" />
+    <meta name="description" content="The progress formatter hides some really nasty business." />
+
+    <meta name="viewport" content="width=1000, maximum-scale=1.0, user-scalable=yes">
+
+    <link rel="alternate" type="application/rss+xml" href="/atom.xml" />
+
+    <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+
+    <link media="only screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" rel="stylesheet" />
+    <link media="only screen and (device-width: 768px)" href="/css/iphone.css" type="text/css" rel="stylesheet" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="/js/application.js"></script>
+  </head>
+
+  <body>
+    <section id="page">
+      <header>
+        <section>
+          <a href="/">
+            <img src="/images/logo.png" srcset='/images/logo-hires.png 2x' alt='John McDowall'/>
+          </a>
+
+          <nav>
+            <ul>
+              <li><a href="/books.html">Books</a></li>
+              <li><a href="/archive.html">Archive</a></li>
+              <li><a href="https://github.com/johnmcdowall">Github</a></li>
+              <li><a href="/atom.xml">RSS</a></li>
+            </ul>
+          </nav>
+        </section>
+      </header>
+
+      <section class='content'>
+        <article>
+  <header>
+    <h1>
+      <a href="/posts/run-rspec-with-documentation-formatter-for-better-specs">Run RSpec with Documentation Formatter for Better Specs</a>
+    </h1>
+
+    <section class="byline">
+      January 12, 2014
+    </section>
+  </header>
+
+  <p>The default RSpec report formatter is <code>progress</code>: it&rsquo;s the one that, hopefully, outputs litte green dots as RSpec executes each Spec. This can lead to serious problems with the structure of your Specs.</p>
+
+<h2>Everyone wants to be happy</h2>
+
+<p><code>progress</code> is the formatter that makes you feel better than you probably should. It&rsquo;s the formatter that says &lsquo;Hey, everything&rsquo;s OK. So much green.&rsquo;</p>
+
+<pre><code>» rspec spec/requests/tps_2014_spec.rb
+...................
+</code></pre>
+
+<p>But the <code>progress</code> formatter hides times when what you&rsquo;ve said you&rsquo;re Speccing is complete nonsense. Often, if you haven&rsquo;t thought about the Spec assertion in any depth, your test might well be nonsense too.</p>
+
+<h2>Documentation formatter to the rescue</h2>
+
+<p>RSpec allows you to use different style report formatters (which you can list by typing <code>rspec -h</code>), and one of the other built in options is <code>documentation</code>. You can choose it easily by inserting <code>-fd</code> into your rspec options:</p>
+
+<p>Let&rsquo;s look at an example:</p>
+
+<pre><code class="rspec">» rspec -fd spec/requests/tps_2014_spec.rb
+
+CreateAccount
+  paid account
+    success
+      sets annual plan
+      sets the correct values
+      moves the needle
+      sets the pricing_version
+  free account
+    success
+      sends out a welcome email
+      associates the models correctly
+      creates a user and free org
+        should have content "Welcome to TPS Report 2014"
+        should have content "Welcome to TPS Report 2014"
+        should have content "Welcome to TPS Report 2014"
+    started free then switched to paid
+      failure
+        doesn't let me check out
+      success
+        creates paid org
+    failure
+      incomplete form
+        browser behavior
+          puts me back on the form
+        does not create squat
+          should not change #count
+          should not change #count
+          should not change #count
+      email already taken
+        should report the error
+        doesn't work
+          should not change #count
+          should not change #count
+          should not change #count
+      org already taken
+        should report the error
+        doesn't work
+          should not change #count
+          should not change #count
+          should not change #count
+</code></pre>
+
+<p>The problem is immediately apparent. These Spec descriptions don&rsquo;t actually make any sense. We&rsquo;re seeing multiple repetitions of the same message, and that means either the Spec description is wrong, the test is a lie, or at the very least could be written to be more informative.</p>
+
+<h2>Examining the issue</h2>
+
+<p>Let&rsquo;s look at the Spec <code>CreateAccount &gt; free account &gt; failure &gt; email already taken &gt; doesn't work &gt; should not change #count</code>. The documentation formatter is telling us three times that something &lsquo;should not change #count&rsquo;. Here are the problems:</p>
+
+<ul>
+<li>What #count shouldn&rsquo;t change? Cats? Doges?</li>
+<li>Are we asserting three times that the same #count shouldn&rsquo;t change?</li>
+<li>Why are we asserting three times?</li>
+</ul>
+
+
+<p>Let&rsquo;s look at the Spec:</p>
+
+<pre><code>describe "doesn't work" do
+  subject { -&gt; { click_button 'Create TPS Report' } }
+
+  it { should_not change(User, :count) }
+  it { should_not change(Comapny, :count) }
+  it { should_not change(TPSReport, :count) }
+end
+</code></pre>
+
+<p>We can see the condition &ldquo;doesn&rsquo;t work&rdquo; actually has three distinct criteria that must be satisfied, which is completely absent from the documentation output. This is easy enough to fix:</p>
+
+<pre><code>describe "doesn't work" do
+  subject { -&gt; { click_button 'Create TPS Report' } }
+
+  it { should_not change(User, :count), 'A User is not created.' }
+  it { should_not change(Comapny, :count), 'A User is not created.' }
+  it { should_not change(TPSReport, :count), 'A User is not created.' }
+end
+</code></pre>
+
+<p>You could argue that I&rsquo;ve increased the number of lines required to express the same idea, and for not much gain while reading the Spec. I&rsquo;d argue I&rsquo;ve made the Spec more explicitly intentional about</p>
+
+
+  <section class="meta">
+    <hr />
+    <section class="copy">
+      <div class="flag">
+          <div class="flag__image">
+              <a href="https://twitter.com/mrmcdowall"><img src="http://gravatar.com/avatar/493e6c6fc3f24eb73295548cfd136574?s=150" height="50" width="50" /></a>
+          </div>
+          <div class="flag__body">
+              <p>I co-own and run <a href="http://kantan.io">Kantan</a>, a small CRO Optimization, software and product development studio in Vancouver, Canada. <a href="https://twitter.com/mrmcdowall">Follow me on Twitter</a>, or check out a book I wrote called <a href='https://leanpub.com/you-should-launch-with-less'>You Should Launch with less</a>.</p>
+          </div>
+      </div>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>
+      <a href="http://twitter.com/mrmcdowall" class="twitter-follow-button" data-show-count="false">Follow @mrmcdowall</a>
+      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Run RSpec with Documentation Formatter for Better Specs" data-url="http://mcdowall.info//posts/run-rspec-with-documentation-formatter-for-better-specs">Vote on HN</a>
+      <script>
+          (function(d, t) {
+              var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+              g.src = '//hnbutton.appspot.com/static/hn.min.js';
+              s.parentNode.insertBefore(g, s);
+          }(document, 'script'));
+      </script>
+      <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+    </section>
+  </section>
+</article>
+      </section>
+
+    </section>
+    <footer>
+      All Content Copyright &copy; 2014 - John McDowall
+    </footer>
+  </body>
+</html>

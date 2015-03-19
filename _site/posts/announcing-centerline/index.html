@@ -1,10 +1,10 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Technical choices should be - above all else - ethical. - John McDowall</title>
+    <title>Announcing Centerline - John McDowall</title>
 
     <meta name="author" content="John McDowall" />
-    <meta name="description" content="Unless you're working for yourself, if you're building something for a client then your primary concern should be making ethical technical choices." />
+    <meta name="description" content="A handy bookmarlet that lets you check the center alignment when designing in the Browser." />
 
     <meta name="viewport" content="width=1000, maximum-scale=1.0, user-scalable=yes">
 
@@ -47,45 +47,22 @@
         <article>
   <header>
     <h1>
-      <a href="/posts/technical-choices-should-be-above-all-else-ethical">Technical choices should be - above all else - ethical.</a>
+      <a href="/posts/announcing-centerline">Announcing Centerline</a>
     </h1>
 
     <section class="byline">
-      January 15, 2013
+      March 19, 2015
     </section>
   </header>
 
-  <p>If you&rsquo;re working for yourself, in which case do whatever your little heart desires, but if you&rsquo;re building something for a client then your primary concern should be making ethical technical choices.</p>
+  <p>I like to design in the Browser. Sometimes I&rsquo;m not quite sure if something is fully centered in the Browser window or not, so I made Centerline. Centerline
+is just a dumb bookmarklet that adds a global &lsquo;center line&rsquo; in your Browser viewport. Here it is:</p>
 
-<p><strong>When someone else is paying you to code, your responsibility to them is foremost to create the most value possible for their cash investment. </strong></p>
+<p><a href="javascript:(function()%7Bvar%20v%3D%272.1.3%27%3B%20if%20(window.jQuery%3D%3D%3Dundefined%20%7C%7C%20window.jQuery.fn.jquery%20%3C%20v)%7Bvar%20done%3Dfalse%3B%20var%20script%3Ddocument.createElement(%27script%27)%3B%20script.src%3D%27http%3A%2F%2Fajax.googleapis.com%2Fajax%2Flibs%2Fjquery%2F%27%20%2B%20v%20%2B%20%27%2Fjquery.min.js%27%3B%20script.onload%3Dscript.onreadystatechange%3Dfunction()%7Bif%20(!done%20%26%26%20(!this.readyState%20%7C%7C%20this.readyState%3D%3D%27loaded%27%20%7C%7C%20this.readyState%3D%3D%27complete%27))%7Bdone%3Dtrue%3B%20initCenterLine()%3B%7D%7D%3B%20document.getElementsByTagName(%27head%27)%5B0%5D.appendChild(script)%3B%7Delse%7BinitCenterLine()%3B%7Dfunction%20initCenterLine()%7B(window.centerLine%3Dfunction()%7B%24(%27body%27).append(%27%3Cdiv%20class%3D%22centerLineDiv%22%3E%3C%2Fdiv%3E%27)%3B%20%24(%27body%27).append(%27%3Cstyle%20type%3D%22text%2Fcss%22%3E.centerLineDiv%7Bcontent%3A%22%22%3B%20position%3A%20fixed%3B%20top%3A%200%3B%20bottom%3A%200%3B%20left%3A%2050%25%3B%20border-left%3A%202px%20dotted%20%23444%3B%20z-index%3A%2099999999%3B%7D%3C%2Fstyle%3E%27)%3B%20%24(%27body%27).append(%27%3Cstyle%20type%3D%22text%2Fcss%22%3E.container%7Bborder-left%3A%201px%20solid%20red%3B%20border-right%3A%201px%20solid%20red%3B%7D%3C%2Fstyle%3E%27)%3B%7D)()%3B%7D%7D)()%3B">CenterLine</a></p>
 
-<p>Time and time again, I see developers making technical choices that go against the following principles, and while they may not deliberately set out to be un-ethical, and can often make elaborate justifications, the net result is ultimately a question of ethics.</p>
+<p>Just drag it onto your bookmark bar, and when you need that center line, click the hell out of it.</p>
 
-<p>Ask yourself:</p>
-
-<ul>
-<li>Am I unnecessarily constraining my client&rsquo;s future hiring pool by using this technology?</li>
-<li>Is this technology the most reasonable fit for the problem?</li>
-<li>Do I know enough about this technology to say that it will be reliable, documented, and well supported?</li>
-<li>Will this technology allow the project to be delivered within the timelines or is their a risk that it could in fact swell timelines?</li>
-<li>Does my client understand <em>as completely as possible</em> the implications of the choice I am making?</li>
-<li>Is my client insisting on the use of a technology without understanding <em>as completely as possible</em> any of the above questions?</li>
-</ul>
-
-
-<p>Or you could turn these questions on their head and make statements. Working for a client is not:</p>
-
-<ul>
-<li>An opportunity for you to explore new technologies that your client can&rsquo;t find anyone else to work on.</li>
-<li>An opportunity to use a technology for exploring the problem.</li>
-<li>A way to grow your skill set on their time and money.</li>
-<li>An opportunity to introduce more risk into a project at the expense of the client&rsquo;s timelines.</li>
-<li>An opportunity to blame the client for being &lsquo;stupid&rsquo;.</li>
-<li>A chance to tread gray areas in order to expand your resume for the future.</li>
-</ul>
-
-
-<p>Do you agree? Email me at <a href="mailto:john@mcdowall.info">john@mcdowall.info</a>.</p>
+<p>To remove, just refresh the page.</p>
 
 
   <section class="meta">
@@ -101,7 +78,7 @@
       </div>
       <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="mrmcdowall">Tweet</a>
       <a href="http://twitter.com/mrmcdowall" class="twitter-follow-button" data-show-count="false">Follow @mrmcdowall</a>
-      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Technical choices should be - above all else - ethical." data-url="http://mcdowall.info//posts/technical-choices-should-be-above-all-else-ethical">Vote on HN</a>
+      <a href="http://news.ycombinator.com/submit" class="hn-share-button" data-title="Announcing Centerline" data-url="http://mcdowall.info//posts/announcing-centerline">Vote on HN</a>
       <script>
           (function(d, t) {
               var g = d.createElement(t),
