@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>John McDowall</title>
+    <description>An infrequently updated journal.
+</description>
+    <link>http://ember.zone/</link>
+    <atom:link href="http://ember.zone/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 28 Jan 2016 16:56:43 -0800</pubDate>
+    <lastBuildDate>Thu, 28 Jan 2016 16:56:43 -0800</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      
+        <item>
+          <title>An experiment in refactoring Ember Properties</title>
+          <description>&lt;p&gt;You might have run across the situation where you have lots of properties in a Controller or Component, and they have associated Computed Properties that calculate some presence value. They end up feeling like repetitive boilerplate. &lt;/p&gt;
+
+&lt;p&gt;How might you go about cleaning them up? Perhaps auto-generating them?&lt;/p&gt;
+
+&lt;h2 id=&quot;typical-ember-example&quot;&gt;Typical Ember Example&lt;/h2&gt;
+
+&lt;p&gt;Specifically, what kind of code am I talking about? Something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;ember&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LoginComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;userName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;hasUsername&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;userName&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;hasPassword&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;etc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LoginComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Typically these properties are the results of requirements from the UI to display different elements on particular states. The template will have some conditionals that lean on these properties to achieve this. Depending on how complex the UI is, you could end up having a few of these state properties. &lt;/p&gt;
+
+&lt;p&gt;Let’s look at how we could save ourselves from manually having to define lots of boilerplate properties.&lt;/p&gt;
+
+&lt;h2 id=&quot;higher-order-functions&quot;&gt;Higher Order Functions&lt;/h2&gt;
+&lt;p&gt;Any function that takes another function as a parameter, or returns a function as its result is a Higher Order Function. Given that functions are first class citizens in Javascript, it’s pretty easy, even casual to use Higher Order Functions to clean up functions that differ only by name and the property referenced. Can we use Higher Order Functions to create the &lt;code&gt;notEmpty&lt;/code&gt; Computed Properties for us? Let’s see. &lt;/p&gt;
+
+&lt;h2 id=&quot;take-1-using-embers-defineproperty-method&quot;&gt;Take 1: Using Ember’s &lt;code&gt;defineProperty&lt;/code&gt; Method&lt;/h2&gt;
+
+&lt;p&gt;Ember provides a method which allows you to perform a basic level of meta-programming by defining properties at runtime. The parameters for &lt;code&gt;defineProperty&lt;/code&gt; are (basically):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The object you want to define the new property on&lt;/li&gt;
+  &lt;li&gt;The name of the new property&lt;/li&gt;
+  &lt;li&gt;A ‘Descriptor’ which for our purposes will be a Computed Property to be attached to the new property&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Which looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Ember.defineProperty(this, myCpPropName, Ember.computed(&#39;propName&#39;, function(){...});&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We’re now going to use a Higher Order Function to pass back to &lt;code&gt;defineProperty&lt;/code&gt; so that the Computed Property has a dynamic value.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Note that this is a trivial example for the purposes of showing how Higher Order Functions can be used, and the example is chosen to illustrate the technique.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;And with that in mind lets look at the solution:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;ember&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This is our Higher Order Function, that we are passing in the field name&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// to so that it can be captured by the Computed Property and returned as the&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// function to be called. &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// We define it here because if we defined it on the Component we would expose&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// a method on the public API which is not usable outside the component, and &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// only returns a descriptor. &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;has&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LoginComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;UI_FIELDS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;userName&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// Builds a field property name from a field name.&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;_fieldPropName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;// Utilize ES6 string interpolation. &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;has$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;capitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// Run once on component init, sets the default empty values for the field&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// and generated the hasPropertyName properties for each field.&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;defineFieldProperties&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;init&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;27&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UI_FIELDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;28&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;29&lt;/span&gt;       &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;propName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_fieldPropName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;30&lt;/span&gt;       &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;defineProperty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;propName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;31&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;32&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;33&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;34&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;35&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LoginComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Unfortunately there’s a bit of a hidden trap here. As it turns out &lt;code&gt;defineProperty&lt;/code&gt; is a relatively slow function, and we’ve just set it up so that the Component is going to execute it every time its initialized. While the technique above would be fine in something long lived like a `Service, it’s no good in a component displayed 100 times. So what do we do? &lt;/p&gt;
+
+&lt;h2 id=&quot;take-2-pre-creating-the-attributes-at-object-creation&quot;&gt;Take 2: Pre-creating the attributes at Object creation&lt;/h2&gt;
+
+&lt;p&gt;The best way to go about this is to pre-generate an Object with the properties and Computed Properties we need, and then re-extend our component with the pre-generated items before we &lt;code&gt;export&lt;/code&gt; it. By taking this approach, Ember will only have to do its &lt;code&gt;defineProperty&lt;/code&gt; magic once and only once.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;ember&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Our Higher Order Function, as before&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;has&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// The Component UI fields as before. &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UI_FIELDS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;userName&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Pre-generate an object with the properties and computed&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// properties that we need. &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;processedAttrs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UI_FIELDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;processedAttrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;processedAttrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;has$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;capitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Create a Component just as you normally would. &lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LoginComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// Your usual Ember component stuff in here as needed&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;debugOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;init&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;hasPassword=&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;hasPassword&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;hasUserName=&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;hasUserName&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;27&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Export the component with an extra extension of our pre&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;29&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// generated attributes and computed properties.&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;30&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LoginComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;processedAttrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;So obviously this got a little messy looking, as changes to optimize for performance usually make things. That said, the technique above could be abstracted out quite easily to wrap the Ember Component class and handle the necessary heavy lifting without all of the ceremony.  &lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;At the end of our exploration, we can see how it might be possbile to clean up and auto generate boilerplate Computed Properties. In the end things looked a litlle messy, and obviously you wouldn’t use this technique to clean up two properties. &lt;/p&gt;
+
+&lt;p&gt;That said, I feel like there’s the bones of a simple validation system here. You could build a simple form validation system on this technique with some pre-canned validators that are higher order functions along the lines of the &lt;code&gt;has&lt;/code&gt; function, for example &lt;code&gt;minLength&lt;/code&gt;, &lt;code&gt;maxLength&lt;/code&gt; and so on. Then the &lt;code&gt;UI_FIELDS&lt;/code&gt; value would be expanded to an object, and each field name would have associated keys describing the validation to use, defaults, etc. &lt;/p&gt;
+
+&lt;p&gt;It was an interesting diversion for me, and hopefuly you learned something new. &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Eternal thanks to the ever patient and helpful Alex Matchneer, Todd Smith-Salter and Kelly Sutton for their input on this article!&lt;/em&gt;&lt;/p&gt;
+</description>
+          <pubDate>Mon, 20 Jul 2015 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/an-experiment-in-refactoring-ember-properties/</link>
+          <guid isPermaLink="true">http://ember.zone/an-experiment-in-refactoring-ember-properties/</guid>
+          
+          
+          <category>ember-core</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>Announcing Centerline</title>
+          <description>&lt;p&gt;I like to design in the Browser. Sometimes I’m not quite sure if something is fully centered in the Browser window or not, so I made Centerline. Centerline
+is just a dumb bookmarklet that adds a global ‘center line’ in your Browser viewport. Here it is:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;javascript:(function()%7Bvar%20v%3D%272.1.3%27%3B%20if%20(window.jQuery%3D%3D%3Dundefined%20%7C%7C%20window.jQuery.fn.jquery%20%3C%20v)%7Bvar%20done%3Dfalse%3B%20var%20script%3Ddocument.createElement(%27script%27)%3B%20script.src%3D%27%2F%2Fajax.googleapis.com%2Fajax%2Flibs%2Fjquery%2F%27%20%2B%20v%20%2B%20%27%2Fjquery.min.js%27%3B%20script.onload%3Dscript.onreadystatechange%3Dfunction()%7Bif%20(!done%20%26%26%20(!this.readyState%20%7C%7C%20this.readyState%3D%3D%27loaded%27%20%7C%7C%20this.readyState%3D%3D%27complete%27))%7Bdone%3Dtrue%3B%20initCenterLine()%3B%7D%7D%3B%20document.getElementsByTagName(%27head%27)%5B0%5D.appendChild(script)%3B%7Delse%7BinitCenterLine()%3B%7Dfunction%20initCenterLine()%7B(window.centerLine%3Dfunction()%7B%24(%27body%27).append(%27%3Cdiv%20class%3D%22centerLineDiv%22%3E%3C%2Fdiv%3E%27)%3B%20%24(%27body%27).append(%27%3Cstyle%20type%3D%22text%2Fcss%22%3E.centerLineDiv%7Bcontent%3A%22%22%3B%20position%3A%20fixed%3B%20top%3A%200%3B%20bottom%3A%200%3B%20left%3A%2050%25%3B%20border-left%3A%202px%20dotted%20%23444%3B%20z-index%3A%2099999999%3B%7D%3C%2Fstyle%3E%27)%3B%20%24(%27body%27).append(%27%3Cstyle%20type%3D%22text%2Fcss%22%3E.container%7Bborder-left%3A%201px%20solid%20red%3B%20border-right%3A%201px%20solid%20red%3B%7D%3C%2Fstyle%3E%27)%3B%7D)()%3B%7D%7D)()%3B&quot;&gt;CenterLine&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Just drag it onto your bookmark bar, and when you need that center line, click the hell out of it. Check it out:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/centerline.png&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To remove, just refresh the page.&lt;/p&gt;
+</description>
+          <pubDate>Thu, 19 Mar 2015 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/announcing-centerline</link>
+          <guid isPermaLink="true">http://ember.zone/announcing-centerline</guid>
+          
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>A 50,000 foot overview of the Ember.js Run Loop</title>
+          <description>&lt;p&gt;The Ember Zone HQ is currently being assailed by the remnants of the Super Typhoon Vongfong. Look at that thing (image courtesy of &lt;a href=&quot;https://twitter.com/astro_reid&quot;&gt;Reid Weisman&lt;/a&gt;, Astronaut on the ISS), with its whirling loop of chaos in the middle, the eye, which is apparently 80KM wide. The eye is calm, surrounded by the most intense and fastest winds, with the speeds decreasing the further you are from the eye. Ember has its own whirling pseudo-loop of controlled chaos. Let’s look at the strangely named Ember Run Loop.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;At the core of Ember beats the heart of an Accountant. An Accountant who sits at a large desk with six inboxes on it, and the inboxes are always processed in the same order. Items in a given inbox are processed in full before moving onto the next inbox. Sometimes processing a particular inbox will cause items to be added to a previous inbox, and the whole process immediately starts again from the first (highest priority) inbox with unprocessed items in it. This whole routine is performed in order that Ember can take advantage of batches of like things, coalesce them together, and minimize the amount of subsequent work that might otherwise need to be done. This is one of the core features of Ember that makes it fast, even without HTMLBars.&lt;/p&gt;
+
+&lt;h2 id=&quot;ember8217s-six-inboxes&quot;&gt;Ember’s six inboxes&lt;/h2&gt;
+
+&lt;p&gt;We can have Ember show us its secret inboxes, or more correctly &lt;strong&gt;queues&lt;/strong&gt;, at the developer console:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; Ember.run.queues
+[&quot;sync&quot;, &quot;actions&quot;, &quot;routerTransitions&quot;, &quot;render&quot;, &quot;afterRender&quot;, &quot;destroy&quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;the-sync-queue&quot;&gt;The Sync Queue&lt;/h3&gt;
+
+&lt;p&gt;This is the queue that settles all binding updates, and has the highest priority. You’re almost never likely to schedule something in here yourself. This is the place of the fast winds that surround the calm eye of Ember’s hurricane.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-actions-queue&quot;&gt;The Actions Queue&lt;/h3&gt;
+
+&lt;p&gt;This queue contains things that should be processed after all of the binding updates have been synchronized and before any Views are rendered. This is the general workhorse queue in Ember, and is the place where any Promises will get sent to. Any call to &lt;code&gt;Ember.run&lt;/code&gt; will place the item in this queue.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-router-transitions-queue&quot;&gt;The Router Transitions Queue&lt;/h3&gt;
+
+&lt;p&gt;Anything in your Ember Application that signals a Transition should happen will end up in here. You’re almost never likely to schedule something in here yourself.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-render-queue&quot;&gt;The Render Queue&lt;/h3&gt;
+
+&lt;p&gt;This queue contains items that cause changes in the DOM, and is mostly fed from items that were processed in the Actions queue. You’re almost never likely to schedule something in here yourself.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-afterrender-queue&quot;&gt;The AfterRender Queue&lt;/h3&gt;
+
+&lt;p&gt;Sometimes you might need to update a DOM element that is created as part of processing an item that would have rendered in the Render queue. You would use the &lt;code&gt;Ember.run.schedule(&#39;afterRender&#39;, function() { ... })&lt;/code&gt; call to schedule your function to be run in this queue, after Ember has rendered all of its DOM changes. This is probably the queue you’ll deal with the most, as you use it to help schedule jQuery plugins attaching to DOM elements, for example.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-destroy-queue&quot;&gt;The Destroy Queue&lt;/h3&gt;
+
+&lt;p&gt;The Destroy queue is pretty much as it sounds – the queue where things that should be destroyed (Views that are no longer shown, etc) are placed, and processed last, and has the lowest priority. You’re almost never likely to schedule something in here yourself, either. At this level, we’re at the slow moving winds that dump fat rain drops onto small islands.&lt;/p&gt;
+
+&lt;h2 id=&quot;scheduling-things-on-the-queues&quot;&gt;Scheduling things on the Queues&lt;/h2&gt;
+
+&lt;p&gt;The two main methods you’ll probably need to use are &lt;code&gt;Ember.run.next&lt;/code&gt; and &lt;code&gt;Ember.run.schedule&lt;/code&gt;. The &lt;code&gt;next&lt;/code&gt; function is used to schedule something to happen in a completely new run loop, that will happen some time after (you don’t know when) the current run loop has cleared. The &lt;code&gt;schedule&lt;/code&gt; function is for when you want to schedule something to be processed in the current run loop, on a particular queue. If you’re certain that the thing you want to schedule should only be scheduled once, then use &lt;code&gt;scheduleOnce&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A lot of common advice is to use &lt;code&gt;Ember.run.schedule&lt;/code&gt; and the &lt;code&gt;afterRender&lt;/code&gt; queue inside places like &lt;code&gt;didInsertElement&lt;/code&gt; when handling jQuery plugins and so on, and it is almost always the correct default. That said, I’ve had instances where scheduling a jQuery plugin hook inside the current run loop’s &lt;code&gt;afterRender&lt;/code&gt; queue just wouldn’t work, and indeed needed to be scheduled in the next run loop using &lt;code&gt;next&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;When you use &lt;code&gt;next&lt;/code&gt;, because it schedules the item for the next run loop, which will run an indeterminate amount of time after the current run loop, you may encounter CSS issues with sudden flashes, or document re-flowing. This is usually an indicator you should be using &lt;code&gt;scheduleOnce&lt;/code&gt; on the &lt;code&gt;afterRender&lt;/code&gt; queue.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-to-day-use-of-the-ember-runloop&quot;&gt;Day to day use of the Ember Runloop&lt;/h2&gt;
+
+&lt;p&gt;Chances are you’ll never need to directly invoke placement of a function on any of the Run Loop’s queues, but the most common scenario where you might need to is the &lt;code&gt;afterRender&lt;/code&gt; queue because you want to manipulate a DOM element that Ember has rendered as part of a &lt;code&gt;View&lt;/code&gt; or &lt;code&gt;Component&lt;/code&gt;. Usually, you’ll be doing this because you wish to use some jQuery provided effect or third party component.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;The Ember Run Loop is a powerful mechanism that allows Ember to minimize the work it needs to do to keep bindings up to date, propagate changes, and reduce the amount of DOM manipulations that need to happen. Hopefully this article has given you the 20% of the information you’ll need for 80% of the time.&lt;/p&gt;
+
+&lt;p&gt;For the other 20% of the time, you can also look at the following excellent resources for more information:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/eoinkelly/ember-runloop-handbook&quot;&gt;The Ember Run Loop handbook&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://talks.erikbryn.com/backburner.js-and-the-ember-run-loop/&quot;&gt;Backburner.js and the Ember Run Loop by Erik Bryn&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://alexmatchneer.com/blog/2013/01/12/everything-you-never-wanted-to-know-about-the-ember-run-loop/&quot;&gt;Everything You Never Wanted to Know About the Ember Run Loop&lt;/a&gt;&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 16 Oct 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/a-50000-foot-overview-of-the-ember-js-run-loop/</link>
+          <guid isPermaLink="true">http://ember.zone/a-50000-foot-overview-of-the-ember-js-run-loop/</guid>
+          
+          
+          <category>ember-core</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>A Simple Auto Expanding Textarea Component</title>
+          <description>&lt;p&gt;Greetings! The nights are drawing in pretty quickly here, and it’s also additionally pretty dark in the morning due to the mountain I live next to and the added darkness is making it pretty difficult to maintain my early morning routines. A short and sweet post this week about how to extend the built-in Ember.js Textarea View so that it auto expands to contain the text inside it, but first a short interlude into a recent poll I ran on Ember.js usage:&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The results can be seen here: &lt;a href=&quot;http://strawpoll.me/2695391/r&quot;&gt;http://strawpoll.me/2695391/r&lt;/a&gt;. Admittedly, it’s an extremely small sample size, but I was shocked to see Rails in the minority. It’s good to see Ember-CLI leading the pack, as it’s a great project – and the results overall make me feel more comfortable about writing more Ember-CLI related posts in the near future. On to today’s post…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When we need a &lt;code&gt;Textarea&lt;/code&gt; in one of our Templates, we can simply use the &lt;code&gt;textarea&lt;/code&gt; helper like so:&lt;/p&gt;
+
+&lt;p&gt;And that will render a basic text area bound to the &lt;code&gt;notes&lt;/code&gt; property. But it will be a static &lt;code&gt;textarea&lt;/code&gt; that does not accommodate content that is larger than its style will permit without scroll bars. What if we wanted the &lt;code&gt;textarea&lt;/code&gt; to automatically grow vertically as more text is entered, without resorting to any external jQuery plugins?&lt;/p&gt;
+
+&lt;p&gt;First of all, we create a new &lt;code&gt;Component&lt;/code&gt; that &lt;code&gt;extends&lt;/code&gt; the Ember &lt;code&gt;TextArea&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AutoExpandingTextAreaComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TextArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;snip&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If we just left the new &lt;code&gt;AutoExpandingTextAreaComponent&lt;/code&gt; as is above, we could use it in any template with `` and its behaviour would be exactly the same as the default &lt;code&gt;textarea&lt;/code&gt;. So far, so obvious.&lt;/p&gt;
+
+&lt;p&gt;The trick here for us, is that we want the &lt;code&gt;textarea&lt;/code&gt; to be aware of any keypresses, and change its size accordingly. We’ll use the &lt;code&gt;didInsertElement&lt;/code&gt; hook to attach an event listener for &lt;code&gt;keypress&lt;/code&gt;es on the text area:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AutoExpandingTextAreaComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TextArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;didInsertElement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// Focus the text area&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// Listen for keypress events and recalculate the height of the text area.&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;keypress&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;borderTopWidth&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;borderBottomWidth&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;outerHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;           &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// didInsertElement&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We’re careful to make sure that the jQuery event listener runs inside an &lt;code&gt;Ember.run.next&lt;/code&gt; in order to make sure it happens after Ember has propagated all property updates and settled it’s internal book-keeping on the Runloop.&lt;/p&gt;
+
+&lt;p&gt;Lastly, we want to make sure we tear down the event listener when the element is destroyed, by using the &lt;code&gt;willDestroyElement&lt;/code&gt; hook:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AutoExpandingTextAreaComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TextArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;didInsertElement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;keypress&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;borderTopWidth&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;borderBottomWidth&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textArea&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;outerHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;           &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;willDestroyElement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;keypress&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s a working example:&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;jsbin-embed&quot; href=&quot;http://emberjs.jsbin.com/saxoqokaniha/1/embed?js,output&quot;&gt;Ember Starter Kit&lt;/a&gt;&lt;script src=&quot;http://static.jsbin.com/js/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Ember makes it pretty easy to extend the primitives it ships with, using the built in lifecycle hooks. In this example we took the stock &lt;code&gt;Ember.TextArea&lt;/code&gt; view and extended it as a new component that has new behaviour on its appearance.&lt;/p&gt;
+</description>
+          <pubDate>Thu, 09 Oct 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/a-simple-auto-expanding-textarea-component/</link>
+          <guid isPermaLink="true">http://ember.zone/a-simple-auto-expanding-textarea-component/</guid>
+          
+          
+          <category>uncategorized</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>How Ember.js Finds Stuff</title>
+          <description>&lt;p&gt;There are several small satellite Islands that surround the main Island that I live on, and believe it or not seem to be fairly reasonably populated. The one depicted in the photo above reputedly has a retired Doctor living on it, who owns a small cannon which he fires off while dressed in full sea-captain regalia. I’ve definitely heard the cannon, but never seen the Doctor with my own eyes…yet. I am curious as to how these folks receive their mail, though. What would their address be? Well, this led me to think about how Ember finds the things it needs.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Following on from my previous article about &lt;a href=&quot;http://ember.zone/beginning-to-understand-the-ember-js-container/&quot;&gt;Beginning to understand the Ember.js Container&lt;/a&gt;, I used a metaphor of a ‘concierge’ that was able to look things up when needed. Today I’m going to look at that Concierge and see how it is that they do their job.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-return-of-the-concierge-metaphor&quot;&gt;The Return of the Concierge (metaphor)&lt;/h2&gt;
+
+&lt;p&gt;In Ember, the Concierge is the person responsible for taking the requested name that we want to look up, in this case let’s say ‘controller:index’, and translating that an actual object that we can use. In Ember land, this person is called the &lt;code&gt;DefaultResolver&lt;/code&gt; and its only purpose is to provide that necessary lookup and translation service of string based names to real things.&lt;/p&gt;
+
+&lt;p&gt;It’s worth noting that there are actually two completely different Resolvers kicking around at the moment: one that ships with stock Ember, the &lt;code&gt;DefaultResolver&lt;/code&gt;, and the other is Stefan Penner’s &lt;a href=&quot;https://github.com/stefanpenner/ember-resolver&quot;&gt;ember-resolver&lt;/a&gt; project which is the foundation of how Ember-CLI performs its module based magic. We’re only going to look at Ember’s stock Resolver today.&lt;/p&gt;
+
+&lt;p&gt;Previously we saw that we could register an object to be found at a particular ‘address’ using the following syntax inside an &lt;a href=&quot;http://ember.zone/ember-application-initializers/&quot;&gt;Initializer&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;App.register(&#39;services:session&#39;, App.Session);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This creates a link between the string ‘services:session’ and our &lt;code&gt;App.Session&lt;/code&gt; object. When we or Ember needs to perform a lookup on the &lt;code&gt;Container&lt;/code&gt; for an object, the &lt;code&gt;Container&lt;/code&gt; is internally going to use the &lt;code&gt;DefaultResolver&lt;/code&gt; to do the reverse lookup of the &lt;code&gt;string&lt;/code&gt; name we supply to get the actual object.&lt;/p&gt;
+
+&lt;h2 id=&quot;finding-things-not-in-the-container&quot;&gt;Finding things not in the Container&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;Container&lt;/code&gt; isn’t used to store everything in Ember. Templates, for example, live in the &lt;code&gt;Ember.TEMPLATES&lt;/code&gt; variable, which isn’t stored inside the &lt;code&gt;Container&lt;/code&gt;. This is where the &lt;code&gt;DefaultResolver&lt;/code&gt; steps in again to help locate what Ember needs.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;DefaultResolver&lt;/code&gt; has several methods for looking up &lt;code&gt;Routes&lt;/code&gt;, &lt;code&gt;Models&lt;/code&gt;, &lt;code&gt;Helpers&lt;/code&gt;, &lt;code&gt;Templates&lt;/code&gt;, &lt;code&gt;Controllers&lt;/code&gt; and &lt;code&gt;Views&lt;/code&gt;, and all of them can be overridden. It is through the &lt;code&gt;DefaultResolver&lt;/code&gt; that the &lt;code&gt;Container&lt;/code&gt; is able to provide a unified lookup service to the rest of the system.&lt;/p&gt;
+
+&lt;p&gt;Let’s say you wanted to have all of your Modal dialog templates located under a &lt;code&gt;/modals&lt;/code&gt; subdirectory of &lt;code&gt;/templates&lt;/code&gt;. If you try to do that without overriding the &lt;code&gt;DefaultResolver&lt;/code&gt;‘s basic implementation of how Templates are looked up in &lt;code&gt;Ember.TEMPLATES&lt;/code&gt;, Ember won’t be able to find the modal templates. Here’s how you could provide your own implementation that looks to see if a requested template ends in the word ‘modal’, and if it does, add the &lt;code&gt;/modals&lt;/code&gt; prefix to the lookup path:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;Resolver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DefaultResolver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;resolveTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parsedName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;       &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;modalSuffix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;modal&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;       &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;templateName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parsedName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// If the template ends in &amp;#39;modal&amp;#39; then we alter the lookup path.&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;templateName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;indexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;modalSuffix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;templateName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;modalSuffix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TEMPLATES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;modals/&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;templateName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// Call the default implementation for all the other templates.&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parsedName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In the above example, we’ve replaced the stock Resolver that ships with Ember without our own, which extends the basic &lt;code&gt;DefaultResolver&lt;/code&gt; and overrides the &lt;code&gt;resolveTemplate&lt;/code&gt; hook to implement the Modal template lookup functionality we need. Maybe you’d also like to override how a Modal’s &lt;code&gt;Controller&lt;/code&gt;s are also looked up to match the same folder convention. It’s possible using this technique.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;DefaultResolver&lt;/code&gt; does a good job and is a main workhorse in Ember. Knowing what it does and how to tweak it as necessary can be very useful for establishing some of your own conventions, but use it with care.&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 02 Oct 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/how-ember-js-finds-stuff/</link>
+          <guid isPermaLink="true">http://ember.zone/how-ember-js-finds-stuff/</guid>
+          
+          
+          <category>ember infrastructure</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>Ember Works Best When You Tell Instead Of Ask</title>
+          <description>&lt;p&gt;Welcome to another note from the Ember Zone. This week on the Island we’ve had a couple of days of really torrential rain, and sunsets like the one above. On one hand this is good because it replenishes the reservoir that we all get our drinking water from. On the other hand it shakes and knocks down all of the leaves from the trees that were ready to fall, which admittedly does create a pretty colourful carpet everywhere. The wind, to the rain, to the leaves, to my driveway. Nature’s binding system at work.&lt;/p&gt;
+
+&lt;p&gt;This started me thinking about how Ember really excels when you take advantage of the fact that the optimal state of things when using Ember is to Tell, don’t Ask.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;‘Tell don’t Ask’ is a common software heuristic. The distinction is that procedural code ask lots of questions about what it should do next, whereas Object Oriented code relies on telling other objects what to do at the right time. It’s a subtle, but powerful inversion of obvious thinking.&lt;/p&gt;
+
+&lt;p&gt;One of the most powerful aspects of Ember is that it has this concept baked in from the ground up in the form of the Bindings system.&lt;/p&gt;
+
+&lt;p&gt;From &lt;a href=&quot;http://emberjs.com/guides/object-model/bindings/&quot;&gt;the guides&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A binding creates a link between two properties such that when one changes, the other one is updated to the new value automatically.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;By virtue of creating a Binding, we are allowing the bound object to automatically tell interested parties when something has changed, they don’t have to ask by repeatedly polling, or relying on a custom event system.&lt;/p&gt;
+
+&lt;p&gt;Any time you are reaching into another object to query the state of some property, you should re-write it as a Binding and take advantage of ‘Tell, don’t ask’. For example, instead of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Assuming the controller has `someController` in its `needs`.
+this.get(&#39;controllers.someController.someProperty&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a Computed Property using the &lt;code&gt;alias&lt;/code&gt; macro on the object that needs to know the information like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;someProperty: Ember.computed.alias(&#39;controllers.someController.someProperty&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first example involves ‘asking’, and you might think that the second example also involves asking, because you’re setting the binding in the object that needs to know what’s going on. Turn that thinking around! When &lt;code&gt;someController.someProperty&lt;/code&gt; changes, our own &lt;code&gt;someProperty&lt;/code&gt; will change in kind. It’s implicitly told what to do via the Bindings system.&lt;/p&gt;
+
+&lt;p&gt;We can now create a new property based on our own bound property to further enhance the local state:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;criticalCondition: function() {
+  return this.get(&#39;someProperty&#39;) &amp;gt; 80;
+}.property(&#39;someProperty&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Update: This was an Observer before, but @locks pointed out it should be a Property because it doesn’t contain any behaviour, and rightly so. Thanks!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once again, &lt;code&gt;criticalCondition&lt;/code&gt; will automatically update when the bound property all the way over in &lt;code&gt;controllers.someController.someProperty&lt;/code&gt; changes, and we won’t have to do a damn thing.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Ember’s Bindings and Computed Properties system is probably the most powerful thing in the entire framework. It allows for the same experience you might get when editing a spreadsheet – change the value in cell A2, and a bunch of other cells update – in your daily programming.&lt;/p&gt;
+
+&lt;p&gt;In short, whenever you feel yourself writing a long property path chain in a &lt;code&gt;get&lt;/code&gt;, flip it around to use the Bindings system with something like a Computed proeprty.&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 25 Sep 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/ember-works-best-when-you-tell-instead-of-ask/</link>
+          <guid isPermaLink="true">http://ember.zone/ember-works-best-when-you-tell-instead-of-ask/</guid>
+          
+          
+          <category>uncategorized</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>Routeless Ember.js Controllers</title>
+          <description>&lt;p&gt;The leaves are falling from the trees around the Island. Fall, or as I still like to call it, Autumn, is here. The temperature is getting a little cooler now, and the nights are drawing in, so pull up close for this tale of the Ghostly Routeless Controller.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;The beginning view of Controllers in Ember.js is that they are instantiated and setup by the corresponding Route. And while this is somewhat true, it’s not the only way to use Controllers.&lt;/p&gt;
+
+&lt;p&gt;Let’s look at how we can use a &lt;code&gt;Controller&lt;/code&gt; without a &lt;code&gt;Route&lt;/code&gt;, and some of the techniques using the &lt;code&gt;Container&lt;/code&gt; described in the &lt;a href=&quot;http://ember.zone/beginning-to-understand-the-ember-js-container/&quot;&gt;previous article&lt;/a&gt; to model a &lt;a href=&quot;http://en.wikipedia.org/wiki/Davy_Jones&#39;_Locker&quot;&gt;Davey Jones’ Locker&lt;/a&gt; and display a list of Lost Souls in our App.&lt;/p&gt;
+
+&lt;p&gt;We’re going to need four things to implement this feature:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A &lt;code&gt;Controller&lt;/code&gt; to represent our collection of Lost Souls.&lt;/li&gt;
+  &lt;li&gt;An &lt;code&gt;Initializer&lt;/code&gt; to inject the Controller into the other primitives we wish to have access to the Lost Soul in.&lt;/li&gt;
+  &lt;li&gt;A &lt;code&gt;Template&lt;/code&gt; to render the pathetic contents of the Locker.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-controller&quot;&gt;The Controller&lt;/h2&gt;
+
+&lt;p&gt;Let’s look at the &lt;code&gt;Controller&lt;/code&gt; first.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DaveyJonesLockerController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ArrayController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;addSoul&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;       &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;person&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;         &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;A sad individual&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// Insert the &amp;#39;model&amp;#39; at the head of the Array&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;insertAt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;emptyLocker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We’re declaring an &lt;code&gt;ArrayController&lt;/code&gt; because our &lt;code&gt;DaveyJonesLockerController&lt;/code&gt; is going to hold a collection of Lost Souls. The core action is &lt;code&gt;addSoul&lt;/code&gt;, which has the following tasks:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Construct a synthetic Model which stores the Lost Souls. I’m calling it synthetic because it isn’t backed by Ember Data or any other persistence library.&lt;/li&gt;
+  &lt;li&gt;Insert the new model at the head of the ArrayController.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, we declare an action called &lt;code&gt;emptyLocker&lt;/code&gt; for handling when Davey is tired of these pathetic lost souls whining all the time.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-initializer&quot;&gt;The Initializer&lt;/h2&gt;
+
+&lt;p&gt;But at this point, Ember won’t know about our &lt;code&gt;DaveyJonesLockerController&lt;/code&gt;, and no &lt;code&gt;Route&lt;/code&gt; we have defined will set it up. For that, we need an &lt;code&gt;Initializer&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;daveyJonesLocker&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;inject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;route&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;locker&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;controller:davey-jones-locker&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Again, it’s very, almost childishly, simple. We use the &lt;code&gt;Initializer&lt;/code&gt; and the convenience method &lt;code&gt;inject&lt;/code&gt; available on the &lt;code&gt;application&lt;/code&gt; variable to inject into any routes in the &lt;code&gt;Container&lt;/code&gt; an instance of our &lt;code&gt;DaveyJonesLockerController&lt;/code&gt;, and make it available from the &lt;code&gt;locker&lt;/code&gt; property. As an aside, we could also have injected into any &lt;code&gt;Controller&lt;/code&gt; like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;application.inject(&#39;controller&#39;, &#39;locker&#39;, &#39;controller:davey-jones-locker&#39;);&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And Controllers would also subsequently have an &lt;code&gt;locker&lt;/code&gt; property they could access.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-template&quot;&gt;The Template&lt;/h2&gt;
+
+&lt;p&gt;Next, we build our &lt;code&gt;Template&lt;/code&gt; that will be used with the &lt;code&gt;DaveyJonesLockerController&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addSoul&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;#39;}}&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Add soul&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; {{#if length}}
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;soul-list&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     {{#each person in model}}
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;       &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;{{person.name}}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;     {{/each}}
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt;   &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;flush-locker&amp;#39;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;emptyLocker&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;#39;}}&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Empty Locker&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;9&lt;/span&gt; {{/if}}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In this &lt;code&gt;Template&lt;/code&gt;, we’re saying if &lt;code&gt;length&lt;/code&gt; isn’t a truthy value (in this case greater than zero, i.e. we have Lost Souls), then don’t display anything. Well, where does &lt;code&gt;length&lt;/code&gt; come from? In this case &lt;code&gt;length&lt;/code&gt; is found as a property on &lt;code&gt;ArrayController&lt;/code&gt; and returns the underlying length of the &lt;code&gt;Array&lt;/code&gt; the Controller is wrapping. The &lt;code&gt;Template&lt;/code&gt; is said to be ‘proxying’ the property lookup onto the ArrayController.&lt;/p&gt;
+
+&lt;p&gt;Next, we simply iterate on the &lt;code&gt;model&lt;/code&gt; that the &lt;code&gt;ArrayController&lt;/code&gt; represents and display the appropriate HTML for each Lost Soul.&lt;/p&gt;
+
+&lt;p&gt;Lastly, in our main Application Template, we need to use the &lt;code&gt;render&lt;/code&gt; &lt;a href=&quot;http://emberjs.com/guides/templates/rendering-with-helpers/#toc_comparison-table&quot;&gt;helper&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;This tells Ember to fire up the &lt;code&gt;DaveyJonesLockerController&lt;/code&gt; and when rendering the Application &lt;code&gt;Template&lt;/code&gt;, render the output of the &lt;code&gt;DaveyJonesLockerController&lt;/code&gt; here.&lt;/p&gt;
+
+&lt;p&gt;Here’s the complete example:&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;jsbin-embed&quot; href=&quot;http://emberjs.jsbin.com/fubocuniquno/4/embed?output&quot;&gt;Ember Starter Kit&lt;/a&gt;&lt;script src=&quot;http://static.jsbin.com/js/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;adding-souls-from-elsewhere&quot;&gt;Adding souls from elsewhere&lt;/h2&gt;
+
+&lt;p&gt;Here’s how you might add souls to the locker from, say, an action in the Index template. We know from our Initializer that we injected a &lt;code&gt;locker&lt;/code&gt; property that gives us access to our &lt;code&gt;DaveyJonesLockerController&lt;/code&gt; onto all &lt;code&gt;Routes&lt;/code&gt;. First, in the &lt;code&gt;IndexRoute&lt;/code&gt;, we’ll capture the &lt;code&gt;addSoul&lt;/code&gt; action from a button in the template:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;IndexRoute&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;       &lt;span class=&quot;nx&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;         &lt;span class=&quot;nx&quot;&gt;addSoul&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;           &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;locker&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;addSoul&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;         &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Next…well, that’s it! You’ve just added a soul from another template into the &lt;code&gt;DaveyJonesLockerController&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;We’ve created a &lt;code&gt;Controller&lt;/code&gt; that isn’t attached to any &lt;code&gt;Route&lt;/code&gt;, and we’re using it with a simple pseudo-model that isn’t used anywhere else in the Application other than to provide global functionality that our Application needs.&lt;/p&gt;
+
+&lt;p&gt;In the example above, we have injected the &lt;code&gt;DaveyJonesLocker&lt;/code&gt; Controller into all Routes – so from any Route we could add new souls to the locker by accessing the &lt;code&gt;locker&lt;/code&gt; property and calling &lt;code&gt;addSoul&lt;/code&gt; on it like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;this.get(&#39;locker&#39;).sendAction(&#39;addSoul&#39;);&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Since this is just an example, we just raise the action &lt;code&gt;addSoul&lt;/code&gt; from the Template displayed for &lt;code&gt;DaveyJonesLockerController&lt;/code&gt; by the call to the &lt;code&gt;render&lt;/code&gt; helper, but it could also be a method call.&lt;/p&gt;
+
+&lt;p&gt;Any time you have data, that still needs behaviour around it, but that doesn’t fit into the grander Routing structure of your Application, this technique is your friend. You could consider it as “Global” data, or as I like to think of it, more along the lines of a super lightweight service.&lt;/p&gt;
+
+&lt;p&gt;Happy coding!&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 18 Sep 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/routeless-ember-js-controllers/</link>
+          <guid isPermaLink="true">http://ember.zone/routeless-ember-js-controllers/</guid>
+          
+          
+          <category>controllers</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>Beginning to understand the Ember.js Container</title>
+          <description>&lt;p&gt;I love Libraries. I’ve always loved them. Vast storehouses of knowledge, and thanks to the &lt;a href=&quot;http://en.wikipedia.org/wiki/Dewey_Decimal_Classification&quot;&gt;Dewey Decimal Classification&lt;/a&gt;, storehouses where things can very easily be found. Here on the Island, we have a tiny library and thanks to the convention used to store the books, I will be able to find the same book here on the Island or in Vancouver using the same lookup system, in the same locations. It is the original convention over configuration, as previously libraries would order their books based on the order of acquisition meaning the same book would be hard to find in different libraries.&lt;/p&gt;
+
+&lt;p&gt;When we built web apps back in the Old World, it was easy to not have to think about our objects because the Page request-response cycle meant that mostly everything we relied on – controllers, views etc – was thrown away and rebuilt on the server from scratch with every request.&lt;/p&gt;
+
+&lt;p&gt;With client side apps, we’ve done away with the traditional request-response cycle, so the constructs we need to have a working app, those controllers, views, models and whathave you, need a home because they’re not going anywhere. They need a home in the client, with an address, where they can be looked up and told ‘Hey. It’s time to do your thing again’ and they’ll still have whatever state they need to complete their task.&lt;/p&gt;
+
+&lt;p&gt;This is the core reason behind the existence of the Ember.js Container.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Ember will do a lot of auto-generation of things in your App. Where should it place these newly created objects? How are other objects within the system meant to be able to find these new objects? The the first part of the answer is, you guessed it, the Container! The second part of the answer is: a consistent namespacing scheme.&lt;/p&gt;
+
+&lt;h2 id=&quot;commence-tenuous-condo-building-analogy&quot;&gt;Commence tenuous Condo Building Analogy&lt;/h2&gt;
+
+&lt;p&gt;Think about the Container as a Condo building. A very special Condo building. Controllers live in the Penthouse. Other things live in the Condo, but lets focus on Controllers for now.&lt;/p&gt;
+
+&lt;p&gt;When a new Controller moves in, the concierge says: “Oh hey, you’re a Controller. You live in the Penthouse and your new address is ‘controller:new_controller’”. A bunch of other Controllers move in that day, and each get similar addresses. This addressing scheme is a convention, and is consistent. All Controllers get an address starting ‘controller:’.&lt;/p&gt;
+
+&lt;p&gt;Anyone looking for a Controller simply has to know the addressing convention, and the Concierge can tell them where to find it.&lt;/p&gt;
+
+&lt;p&gt;Ok, I agree this analogy is a bit of a stretch &lt;img src=&quot;http://ember.zone/wp-includes/images/smilies/icon_smile.gif&quot; alt=&quot;:)&quot; class=&quot;wp-smiley&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;But essentially, the two things you need to know about the Container are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It’s a place where long lived objects are placed so they can be looked up later, and the exact same instance is returned every time (unless you configure it otherwise, but we’ll get to that later)&lt;/li&gt;
+  &lt;li&gt;It uses a consistent namespace based naming scheme to allow things in the container to be discoverable.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;putting-things-in-the-container&quot;&gt;Putting things in the Container&lt;/h2&gt;
+
+&lt;p&gt;In Ember, it is verboten to look up the Application container by hand. You can (currently) easily access the Container by simply using the &lt;code&gt;__container__&lt;/code&gt; variable on your main Application object. But you shouldn’t do this.&lt;/p&gt;
+
+&lt;p&gt;Instead, you should be able to reference &lt;code&gt;this.container&lt;/code&gt; on whatever object you’re currently in &lt;strong&gt;&lt;em&gt;that has come from the Container&lt;/em&gt;&lt;/strong&gt; – typically Controllers, Views and the like. This works because when something is put in the Container, the Container itself adds a variable to the thing being added called &lt;code&gt;container&lt;/code&gt;. Magic, eh?&lt;/p&gt;
+
+&lt;p&gt;There’s a shortcut method on your Ember Application called &lt;code&gt;register&lt;/code&gt; that allows you to place something in the container at a given address. For example, given a Controller called &lt;code&gt;Session&lt;/code&gt; that isn’t loaded by any particular Route:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;App.register(&#39;services:session&#39;, App.Session);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Has now placed the Controller in the Container at the address ‘services:session’. This particular case sounds like something that should be done at application boot, which makes it a perfect candidate for an &lt;a href=&quot;http://ember.zone/ember-application-initializers/&quot;&gt;Application Initializer&lt;/a&gt;, which is even easier as one of the two parameters passed into an Initializer is the application, making the above code become&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;application.register(&#39;services:session&#39;, App.Session);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;looking-things-up-in-the-container&quot;&gt;Looking things up in the Container&lt;/h2&gt;
+
+&lt;p&gt;Ok, so you’ve made an Initializer, injected your &lt;code&gt;Session&lt;/code&gt; controller into the container, now what? Well, wherever you need to use the &lt;code&gt;Session&lt;/code&gt; object you could look it up like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var session = this.container.lookup(&#39;services:session&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And that will work. It’s literally all you need to do. But there’s a better way.&lt;/p&gt;
+
+&lt;h2 id=&quot;dependency-injection--all-the-kids-are-doing-it&quot;&gt;Dependency Injection – all the Kids are doing it&lt;/h2&gt;
+
+&lt;p&gt;Back in your Initializer, just after you register the &lt;code&gt;Session&lt;/code&gt; object, you have an opportunity to &lt;strong&gt;inject&lt;/strong&gt; that object into other objects in the container. You’d do it, like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;container.injection(&#39;controller&#39;, &#39;session&#39;, &#39;services:session&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Whoa, now! What’s all this?&lt;/p&gt;
+
+&lt;p&gt;Well, the first parameter is the type of object you want to inject the &lt;code&gt;Session&lt;/code&gt; instance into. It’s &lt;code&gt;controller&lt;/code&gt; because we want to make this &lt;code&gt;Session&lt;/code&gt; object available in all other Controllers.&lt;/p&gt;
+
+&lt;p&gt;The second parameter is the variable name that the Container will create in each of the targeted objects to inject into. So in this case, it’s going to creates a &lt;code&gt;session&lt;/code&gt; variable on every Controller in the Container.&lt;/p&gt;
+
+&lt;p&gt;The third parameter is the address of the actual thing we want to inject, in this case it’s &lt;code&gt;services:session&lt;/code&gt; because that’s the address we used to register our &lt;code&gt;Session&lt;/code&gt; object earlier.&lt;/p&gt;
+
+&lt;p&gt;And with all of that, the Container will create a &lt;code&gt;sesssion&lt;/code&gt; variable on every Controller in the Container, that has a reference to the &lt;code&gt;Sesssion&lt;/code&gt; instance.&lt;/p&gt;
+
+&lt;p&gt;Now, in any controller you can say:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;this.get(&#39;session&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And get that instance to the Session controller you registered, and operate on it as you would any other container.&lt;/p&gt;
+
+&lt;p&gt;If, for some reason, you didn’t want the same instance of the &lt;code&gt;Session&lt;/code&gt; object each time you looked it up – otherwise known as a &lt;strong&gt;singleton instance&lt;/strong&gt;, when you registered the object with the container, you can pass an optional parameter like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;application.register(&#39;services:session&#39;, App.Session, {singleton: false} );
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And this will tell the Container to create a new &lt;code&gt;Session&lt;/code&gt; instance every time it is looked up.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;The Container is the keystone of your entire Ember Application. Without it, life would be very difficult indeed, as we as developers would have to manually do the bookkeeping necessary for where any objects we need have to be. Ember uses the Container to do all of this for us, and for itself.&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 11 Sep 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/beginning-to-understand-the-ember-js-container/</link>
+          <guid isPermaLink="true">http://ember.zone/beginning-to-understand-the-ember-js-container/</guid>
+          
+          <category>core</category>
+          
+          
+          <category>the container</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>A Graceful Image Loading Component</title>
+          <description>&lt;p&gt;Fall is definitely on its way out here in the Pacific North West. And that means lots of wood has to be chopped for Winter, so you’ll understand and bear with me if this week’s article is a little short gem that I’ve used on several occasions now.&lt;/p&gt;
+
+&lt;p&gt;There are times when you might be loading a large image, that for whatever reason hasn’t been resized for displaying properly – topographical maps, sonar scans, aerial imagery or what have you, and you want a better experience for your users than having to watch the image slowly load. I’m going to show you how with a little CSS and DOM magic, you can have a slow loading image fade in when it is fully loaded.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;There’s an absolutely fantastic article by The Barrel gang called &lt;a href=&quot;http://www.barrelny.com/blog/taking-control-of-imageloading/&quot;&gt;Taking Control of Image Loading&lt;/a&gt; – I highly recommend you read it as it’s first technique is the basis for what I am about to show you. All credit for the CSS technique goes to them.&lt;/p&gt;
+
+&lt;p&gt;Essentially, we wait for the browser to fire off a ‘load’ DOM event on the image when it is fully loaded. When this event occurs, we use it to attach a &lt;code&gt;loaded&lt;/code&gt; CSS class to the Ember Component containing &lt;code&gt;div&lt;/code&gt;. Then with some simple CSS, we can toggle from the image in question having an opacity of 0 to an opacity of 1, aided with some nice CSS 3 transitions to perform the fading. Perhaps a demo, Sir/Madame? Voila!&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;jsbin-embed&quot; href=&quot;http://emberjs.jsbin.com/paponuminuso/1/embed?output&quot;&gt;Ember Starter Kit&lt;/a&gt;&lt;script src=&quot;http://static.jsbin.com/js/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, hopefully above you saw a nice little spinning pie, before a lovely image of the Ember Zone mobile Headquarters appeared. If you hover on the JSBin above, and click the ‘Run with JS’ button a few times, you should be able to repeat the effect.&lt;/p&gt;
+
+&lt;p&gt;So, what would such an Ember Component look like? Here you go:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ImageLoaderComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;classNames&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;img_wrapper&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;classNameBindings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;loaded&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;loaded&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;handleLoad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;view&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;// Use jQuery&amp;#39;s `one` to ensure the handler is remove afterwards&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;img&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;load&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// Wrap in an Ember.run to stop Ember from guessing what to do:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// http://emberjs.com/guides/understanding-ember/run-loop/#toc_what-happens-if-i-forget-to-start-a-run-loop-in-an-async-handler&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;       &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;         &lt;span class=&quot;nx&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;loaded&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;didInsertElement&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We’ve been able to accomplish this effect in 12 lines of code. &lt;strong&gt;This&lt;/strong&gt; is the Ember Zone. I was able to read the Barrel article, and directly translate it into an Ember Component without having to look anything up in the Ember guides – the concept translated directly into code that I thought should work, and it did.&lt;/p&gt;
+
+&lt;p&gt;The most interesting part of the above code snippet is where we use a function provided as a prototype extension of &lt;code&gt;Function.prototype&lt;/code&gt; by Ember.js called &lt;code&gt;on&lt;/code&gt; to signify that the &lt;code&gt;handleLoad&lt;/code&gt; function should be run when the &lt;code&gt;didInsertElement&lt;/code&gt; event occurs. This is a useful technique to stay clear of writing a giant monolithic &lt;code&gt;didInsertElement&lt;/code&gt; function and instead have cohesive functions that trigger on the correct event.&lt;/p&gt;
+
+&lt;p&gt;One thing that could be a bit confusing is the unfortunate naming collision between jQuery’s &lt;code&gt;on&lt;/code&gt; method – which is used to attach event handlers to event types, and Ember’s own &lt;code&gt;on&lt;/code&gt; Function prototype extension which although it has a similar function is not the same, and can only listen for Ember events as far as I can see. Hopefully someone will correct me!&lt;/p&gt;
+
+&lt;p&gt;Then we use &lt;code&gt;bind&lt;/code&gt; to &lt;code&gt;Function.prototype&lt;/code&gt; that allows you to keep the context of &lt;code&gt;this&lt;/code&gt; in the method used as callback allowing us to avoid having to do any &lt;code&gt;var _this = this&#39;&lt;/code&gt; hoopla.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;You now have a neat little Component that will show images in a nice way, enhancing the default experience provided by the browser to something a little bit better. And hopefully you learned something about Ember’s &lt;code&gt;on&lt;/code&gt; extension, and the &lt;code&gt;bind&lt;/code&gt; extension present in Javascript.&lt;/p&gt;
+
+&lt;h3 id=&quot;update&quot;&gt;Update&lt;/h3&gt;
+
+&lt;p&gt;Thanks to Pat O’Callaghan for pointing out in the comments that I was still using the old jQuery &lt;code&gt;bind&lt;/code&gt; method for attaching event handlers, so I’ve updated the article. Thanks, Pat!&lt;/p&gt;
+
+&lt;h3 id=&quot;update-2&quot;&gt;Update 2&lt;/h3&gt;
+
+&lt;p&gt;More updates! Thanks to @mixonic for reaching out to point out there’s some reliability issues with the image &lt;code&gt;load&lt;/code&gt; event in browsers – stay tuned for a complete overhaul of this component later!&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 04 Sep 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/a-graceful-image-loading-component/</link>
+          <guid isPermaLink="true">http://ember.zone/a-graceful-image-loading-component/</guid>
+          
+          
+          <category>components</category>
+          
+          <category>uncategorized</category>
+          
+        </item>
+      
+    
+      
+        <item>
+          <title>The Confusion Around Ember Views and Components</title>
+          <description>&lt;p&gt;The island that I live on has a year-round population of around 3,000 folks. It’s a pretty tight knit community. We have our own special online forum, looking like it’s been running since the Internet began, where Islanders will post useful information, community updates, garage sales announcements and the like. However, it’s very much a case of being in the right place at the right time. If you don’t log on to the island forum for a couple of days, you could easily miss that the local Cafe is holding a free all-day pie tasting. And that’s a total bummer.&lt;/p&gt;
+
+&lt;p&gt;The Ember community is still a bit like this. You have to be in the right place at the right time to receive some new wisdom about how things work. This is especially true for the shift that happened with Views and Components.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;views-vs-components&quot;&gt;Views vs Components&lt;/h2&gt;
+
+&lt;p&gt;When I first started getting involved with Ember on a regular basis, Views were the only option. Components weren’t even a twinkle in Tomhuda Katzdale’s eye. So, you wrote lots of Views. The thing about Views is that they have implicit access to the current context, so you can easily reference properties on your Controller. When Components came along, I thought ‘great!’ and agreed it was a fabulous way to write re-usable, self contained components in your app, but noted that Components are completely isolated from the current context – you have to pass everything in that you might need. So far, so good.&lt;/p&gt;
+
+&lt;p&gt;Somewhere along the way, I noticed that the community had gone &lt;a href=&quot;http://www.urbandictionary.com/define.php?term=ham&amp;amp;defid=2992211&quot;&gt;HAM&lt;/a&gt; on using Components all the time, in almost every circumstance. To me this seemed crazy! Views have their place, Components have their place. I was curious as to how this shift had come about.&lt;/p&gt;
+
+&lt;h2 id=&quot;digging-up-the-truth&quot;&gt;Digging up the truth&lt;/h2&gt;
+
+&lt;p&gt;Googling, I found &lt;a href=&quot;http://stackoverflow.com/questions/18593424/views-vs-components-in-ember-js&quot;&gt;this StackOverflow&lt;/a&gt; question on the difference between Components and Views, and when to use each. One answer &lt;a href=&quot;http://stackoverflow.com/a/23798881&quot;&gt;in particular&lt;/a&gt; was advocating basically forgetting about Views and that Tomhuda Katzdale had officially advocated this position:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;According to a training video that was recorded on August 2013, Yehuda Kats and Tom Dale (Ember Core Team Members) told the audience to not use views unless you’re a framework developer. They’ve made lots of enhancements to Handlebars and introduced Components, so views are no longer necessary. Views are used internally to power things like  and .&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And yet the official Guides still had references like:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Views in Ember.js are typically only created for the following reasons:&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;When you need sophisticated handling of user events&lt;/li&gt;
+    &lt;li&gt;When you want to create a re-usable component&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So I decided to do some investigation. The StackOverflow user mentioned ‘video training’ – the only video training I was aware of was the official Tilde introductory course for sale at &lt;a href=&quot;https://teamgaslight.com/training/courses/4&quot;&gt;Gaslight&lt;/a&gt;. As it would happen, I had bought this previously and hadn’t had time to get through it fully. I did some digging.&lt;/p&gt;
+
+&lt;p&gt;Eventually I found the section in the Gaslight video training: 10.2 Components Q&amp;amp;A @ 26:15 mark&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/Screen-Shot-2014-08-27-at-9.04.52-PM-1024x912.png&quot; alt=&quot;Tom Dale&quot; width=&quot;300&quot; height=&quot;267&quot; class=&quot;alignnone size-medium wp-image-78&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Tom Dale: There was a general question about Handlebars, and probably some of you have gone through older Ember app examples and probably seen a lot of View classes. Basically don’t use Views is my answer. Since those examples were written we’ve added a lot more features to Handlerbars [..] we’ve added Components, [..] in general I would say Views are not something that we would expect most developers to be writing… they’re more of an internal book-keeping object at this point. You should use Components.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Then at 30m:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/Screen-Shot-2014-08-27-at-9.10.54-PM.png&quot; alt=&quot;Yehuda Katz&quot; width=&quot;300&quot; height=&quot;179&quot; class=&quot;alignnone size-medium wp-image-79&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Yehuda Katz: View is basically an internal implementation detail that is the root class of things like #if, outlets, components…you could use a View but then you’re a Framework developer. You should instead use one of the things that we have built for you that uses View and the thing that is closest to View but still has better semantics is Component.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So you see, you had to be in the right place, at the right time. I can’t find this positioning reflected anywhere in the Guides (please let me know if you can!).&lt;/p&gt;
+
+&lt;p&gt;Incidentally, here’s a handy table that Yehuda drew in the video:&lt;/p&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &amp;nbsp;
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      controller
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      scope
+    &lt;/td&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+    &lt;td&gt;
+      render
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      own
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      isolated
+    &lt;/td&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+    &lt;td&gt;
+      partial
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      parent
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      parent
+    &lt;/td&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+    &lt;td&gt;
+      component
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      none
+    &lt;/td&gt;
+
+    &lt;td&gt;
+      isolated
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;so&quot;&gt;So?&lt;/h2&gt;
+
+&lt;p&gt;Yehuda and Tom seemed to have given out a very vital piece of information in the training video, that’s gotten lost. This happens from time to time: I just discovered that the way I’ve been defining Fixtures in Ember Data is a lie thanks to a Ember Zone reader’s comment on the previous post, where the real definition is covered in a Github Issue.&lt;/p&gt;
+
+&lt;p&gt;I also think a lot of developers are favouring Components because it’s Ember’s reflection of the new hot thing – Web Components – but without fully understanding the tradeoffs involved.&lt;/p&gt;
+
+&lt;p&gt;Personally, I think unless the answer to ‘Am I going to re-use this elsewhere in my App’ is yes, I’ll still use a View purely to avoid the unnecessary ceremony involved in setting up everything a Component might need. I also think it’s still semantically clearer.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Here’s what I say:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Views – use ‘em when the thing isn’t going to be re-used elsewhere, and avoid un-necessary setup ceremony.&lt;/li&gt;
+  &lt;li&gt;Components – use ‘em when the thing is truly re-useable.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Perhaps one side benefit of ‘everything is a Component’ is easier testing as the Component testing story is very good in Ember now, but I haven’t delved deep enough into this yet to be able to say for sure. That might be one reason to always use Components.&lt;/p&gt;
+
+</description>
+          <pubDate>Thu, 28 Aug 2014 00:00:00 -0700</pubDate>
+          <link>http://ember.zone/the-confusion-around-ember-views-and-components/</link>
+          <guid isPermaLink="true">http://ember.zone/the-confusion-around-ember-views-and-components/</guid>
+          
+          
+          <category>ember view layer</category>
+          
+        </item>
+      
+    
+  </channel>
+</rss>

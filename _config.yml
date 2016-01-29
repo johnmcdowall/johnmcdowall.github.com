@@ -1,6 +1,38 @@
-markdown: rdiscount
-pygments: true
-permalink: /posts/:title
-auto: true
-rdiscount:
-  extensions: [smart]
+# Site settings
+title: John <strong>McDowall</strong>
+email: your-email@domain.com
+description: > # this means to ignore newlines until "baseurl:"
+  An infrequently updated journal.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://ember.zone" # the base hostname & protocol for your site
+twitter_username: mrmcdowall
+github_username:  johnmcdowall
+
+# Build settings
+markdown: kramdown
+
+gems:
+  - jekyll-sitemap
+exclude:
+  - "README.md"
+  - "CHANGELOG.md"
+  - "CNAME"
+  - "Gemfile"
+  - "Gemfile.lock"
+permalink: :title
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      cover_image:  /images/header.jpg
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      cover_image:  /images/header.jpg
+

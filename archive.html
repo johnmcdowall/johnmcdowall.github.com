@@ -1,16 +1,21 @@
 ---
-layout: layout
-title: "Archive"
+title: Archive
+permalink: "archive/index.html"
 ---
-
-<section>
-  <h2>The complete Archives:</h2>
-  <ul id='archive'>
-    {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-      <date>{{ post.date | date: "%B %e, %Y" }}</date>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<div class="page-archive">
+{% for post in site.posts %}
+{% unless post.draft %}
+  {% assign post_month_year = post.date | date: "%B %Y" %}
+  {% assign newer_post_month_year = post.next.date | date: "%B %Y" %}
+  {% if post_month_year != newer_post_month_year %}
+    <h3 class="section-header-archive">
+      {{ post_month_year }}
+    </h3>
+  {% endif %}
+  <p>
+    <a href="{{ post.url | prepend:site.baseurl}}" class="post-title-archive">{{ post.title }}</a>
+    <small class="text-muted pull-right">{{ post.date | date_to_string }}</small>
+  </p>
+  {% endunless %}
+{% endfor %}
+</div>

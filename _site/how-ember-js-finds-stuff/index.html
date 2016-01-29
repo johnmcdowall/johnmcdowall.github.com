@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>   <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <link rel="alternate" type="application/rss+xml" title="John McDowall" href="http://ember.zone/feed.xml">
+    <link rel="canonical" href="http://ember.zone/how-ember-js-finds-stuff/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>How Ember.js Finds Stuff | John McDowall</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Additions to <head> tags go here. -->
+
+  </head>
+  <body>
+  
+    <div class="navbar navbar-inverse navbar-static-top">
+  
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="/" class="navbar-brand">John <strong>McDowall</strong></a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <div class="row bio">
+  <div class='container'>
+    <div class="col-sm-12 col-md-offset-3 col-md-6">
+      <img src='/images/john_mcdowall.png' class='text-center' width=90 height=90 alt='John McDowall'>
+      This is the journal of John McDowall, a veteran freelance programmer, musician, photographer and designer. He writes and works remotely from a wooden house on a small island off the coast of Vancouver, Canada. <br/><br/>
+    </div>
+  </div>
+</div>
+<li><a href="/archive">Archive</a></li>
+<!-- <li>&#38;bull;</li> -->
+<!-- <li><a href='/hire&#45;me'>Hire John</a> -->
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        
+          <div class="col-sm-12">
+            <div class='container'>
+              <div class='col-sm-12'>
+                <div class="post-header">
+  <h1 class="post-title-main">How Ember.js Finds Stuff</h1>
+  
+<div>
+  <p class="text-muted">02 Oct 2014</p>
+</div>
+
+</div>
+<div class="post-content">
+  <div id="toc"></div>
+  <p>There are several small satellite Islands that surround the main Island that I live on, and believe it or not seem to be fairly reasonably populated. The one depicted in the photo above reputedly has a retired Doctor living on it, who owns a small cannon which he fires off while dressed in full sea-captain regalia. I’ve definitely heard the cannon, but never seen the Doctor with my own eyes…yet. I am curious as to how these folks receive their mail, though. What would their address be? Well, this led me to think about how Ember finds the things it needs.</p>
+
+<!--more-->
+
+<p>Following on from my previous article about <a href="http://ember.zone/beginning-to-understand-the-ember-js-container/">Beginning to understand the Ember.js Container</a>, I used a metaphor of a ‘concierge’ that was able to look things up when needed. Today I’m going to look at that Concierge and see how it is that they do their job.</p>
+
+<h2 id="the-return-of-the-concierge-metaphor">The Return of the Concierge (metaphor)</h2>
+
+<p>In Ember, the Concierge is the person responsible for taking the requested name that we want to look up, in this case let’s say ‘controller:index’, and translating that an actual object that we can use. In Ember land, this person is called the <code>DefaultResolver</code> and its only purpose is to provide that necessary lookup and translation service of string based names to real things.</p>
+
+<p>It’s worth noting that there are actually two completely different Resolvers kicking around at the moment: one that ships with stock Ember, the <code>DefaultResolver</code>, and the other is Stefan Penner’s <a href="https://github.com/stefanpenner/ember-resolver">ember-resolver</a> project which is the foundation of how Ember-CLI performs its module based magic. We’re only going to look at Ember’s stock Resolver today.</p>
+
+<p>Previously we saw that we could register an object to be found at a particular ‘address’ using the following syntax inside an <a href="http://ember.zone/ember-application-initializers/">Initializer</a>:</p>
+
+<pre><code>App.register('services:session', App.Session);
+</code></pre>
+
+<p>This creates a link between the string ‘services:session’ and our <code>App.Session</code> object. When we or Ember needs to perform a lookup on the <code>Container</code> for an object, the <code>Container</code> is internally going to use the <code>DefaultResolver</code> to do the reverse lookup of the <code>string</code> name we supply to get the actual object.</p>
+
+<h2 id="finding-things-not-in-the-container">Finding things not in the Container</h2>
+
+<p>The <code>Container</code> isn’t used to store everything in Ember. Templates, for example, live in the <code>Ember.TEMPLATES</code> variable, which isn’t stored inside the <code>Container</code>. This is where the <code>DefaultResolver</code> steps in again to help locate what Ember needs.</p>
+
+<p>The <code>DefaultResolver</code> has several methods for looking up <code>Routes</code>, <code>Models</code>, <code>Helpers</code>, <code>Templates</code>, <code>Controllers</code> and <code>Views</code>, and all of them can be overridden. It is through the <code>DefaultResolver</code> that the <code>Container</code> is able to provide a unified lookup service to the rest of the system.</p>
+
+<p>Let’s say you wanted to have all of your Modal dialog templates located under a <code>/modals</code> subdirectory of <code>/templates</code>. If you try to do that without overriding the <code>DefaultResolver</code>‘s basic implementation of how Templates are looked up in <code>Ember.TEMPLATES</code>, Ember won’t be able to find the modal templates. Here’s how you could provide your own implementation that looks to see if a requested template ends in the word ‘modal’, and if it does, add the <code>/modals</code> prefix to the lookup path:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="lineno"> 1</span> <span class="nb">window</span><span class="p">.</span><span class="nx">App</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Application</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span>
+<span class="lineno"> 2</span>   <span class="nx">Resolver</span><span class="o">:</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">DefaultResolver</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+<span class="lineno"> 3</span>     <span class="nx">resolveTemplate</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">parsedName</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno"> 4</span>       <span class="kd">var</span> <span class="nx">modalSuffix</span> <span class="o">=</span> <span class="s1">&#39;modal&#39;</span><span class="p">;</span>
+<span class="lineno"> 5</span>       <span class="kd">var</span> <span class="nx">templateName</span> <span class="o">=</span> <span class="nx">parsedName</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span>       <span class="c1">// If the template ends in &#39;modal&#39; then we alter the lookup path.</span>
+<span class="lineno"> 8</span>       <span class="k">if</span><span class="p">(</span> <span class="nx">templateName</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">modalSuffix</span><span class="p">,</span> <span class="nx">templateName</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">modalSuffix</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">){</span>
+<span class="lineno"> 9</span>         <span class="k">return</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">TEMPLATES</span><span class="p">[</span><span class="s1">&#39;modals/&#39;</span><span class="o">+</span><span class="nx">templateName</span><span class="p">];</span>
+<span class="lineno">10</span>       <span class="p">}</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span>       <span class="c1">// Call the default implementation for all the other templates.</span>
+<span class="lineno">13</span>       <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_super</span><span class="p">(</span><span class="nx">parsedName</span><span class="p">);</span>
+<span class="lineno">14</span>   <span class="p">})</span>
+<span class="lineno">15</span> 
+<span class="lineno">16</span> <span class="p">)</span></code></pre></div>
+
+<p>In the above example, we’ve replaced the stock Resolver that ships with Ember without our own, which extends the basic <code>DefaultResolver</code> and overrides the <code>resolveTemplate</code> hook to implement the Modal template lookup functionality we need. Maybe you’d also like to override how a Modal’s <code>Controller</code>s are also looked up to match the same folder convention. It’s possible using this technique.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>The <code>DefaultResolver</code> does a good job and is a main workhorse in Ember. Knowing what it does and how to tweak it as necessary can be very useful for establishing some of your own conventions, but use it with care.</p>
+
+
+  <div class='fork'>
+    <img src='/images/gh.png'/>
+    <span><strong>If you see something, say something!</strong> If you see a mistake, or have an improvement, please open a <a href="https://github.com/emberzone/emberzone.github.io">Pull Request</a> and you'll get full attribution, <i>and my undying thanks!</i></span>
+  </div>
+</div>
+<div class="post-footer">
+  <div class='row'>
+  <div class='col-md-12 text-center post-ctas'>
+    <p class='lead'>Have something else in mind?</p>
+    <ul class='list-unstyled'>
+      <li><a class='text-center' href='https://github.com/emberzone/emberzone.github.io'>See something wrong? Open a PR!</a></li>
+      <li><a class='text-center' href='/hire-me'>Want to talk about a project I can work on?</a></li>
+      <li><a class='text-center' href='mailto:john@mcdowall.info'>Have a suggestion for a blog post?</a></li>
+    </ul>
+  </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'emberzone'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#toc').toc({ showSpeed: 0 });
+});
+</script>
+
+
+</div>
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          <footer>
+  &copy;2016 John McDowall &amp; The Ember Zone.
+</footer>
+        </div>
+      </div>
+    </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <!-- Place your <script> tags here. -->
+
+<!-- Example: Twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65299998-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+// https://github.com/ghiculescu/jekyll-table-of-contents
+(function($){
+  $.fn.toc = function(options) {
+    var defaults = {
+      noBackToTopLinks: false,
+      title: '<i>Jump to...</i>',
+      minimumHeaders: 3,
+      headers: 'h1, h2, h3, h4, h5, h6',
+      listType: 'ol', // values: [ol|ul]
+      showEffect: 'show', // values: [show|slideDown|fadeIn|none]
+      showSpeed: 'slow' // set to 0 to deactivate effect
+    },
+    settings = $.extend(defaults, options);
+
+    function fixedEncodeURIComponent (str) {
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return '%' + c.charCodeAt(0).toString(16);
+      });
+    }
+
+    var headers = $(settings.headers).filter(function() {
+      // get all headers with an ID
+      var previousSiblingName = $(this).prev().attr( "name" );
+      if (!this.id && previousSiblingName) {
+        this.id = $(this).attr( "id", previousSiblingName.replace(/\./g, "-") );
+      }
+      return this.id;
+    }), output = $(this);
+    if (!headers.length || headers.length < settings.minimumHeaders || !output.length) {
+      return;
+    }
+
+    if (0 === settings.showSpeed) {
+      settings.showEffect = 'none';
+    }
+
+    var render = {
+      show: function() { output.hide().html(html).show(settings.showSpeed); },
+      slideDown: function() { output.hide().html(html).slideDown(settings.showSpeed); },
+      fadeIn: function() { output.hide().html(html).fadeIn(settings.showSpeed); },
+      none: function() { output.html(html); }
+    };
+
+    var get_level = function(ele) { return parseInt(ele.nodeName.replace("H", ""), 10); }
+    var highest_level = headers.map(function(_, ele) { return get_level(ele); }).get().sort()[0];
+    var return_to_top = '<i class="icon-arrow-up back-to-top"> </i>';
+
+    var level = get_level(headers[0]),
+      this_level,
+      html = settings.title + " <"+settings.listType+">";
+    headers.on('click', function() {
+      if (!settings.noBackToTopLinks) {
+        window.location.hash = this.id;
+      }
+    })
+    .addClass('clickable-header')
+    .each(function(_, header) {
+      this_level = get_level(header);
+      if (!settings.noBackToTopLinks && this_level === highest_level) {
+        $(header).addClass('top-level-header').after(return_to_top);
+      }
+      if (this_level === level) // same level as before; same indenting
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      else if (this_level <= level){ // higher level than before; end parent ol
+        for(i = this_level; i < level; i++) {
+          html += "</li></"+settings.listType+">"
+        }
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      }
+      else if (this_level > level) { // lower level than before; expand the previous to contain a ol
+        for(i = this_level; i > level; i--) {
+          html += "<"+settings.listType+"><li>"
+        }
+        html += "<a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      }
+      level = this_level; // update for the next one
+    });
+    html += "</"+settings.listType+">";
+    if (!settings.noBackToTopLinks) {
+      $(document).on('click', '.back-to-top', function() {
+        $(window).scrollTop(0);
+        window.location.hash = '';
+      });
+    }
+
+    render[settings.showEffect]();
+  };
+})(jQuery);
+</script>
+
+
+  </body>
+</html>

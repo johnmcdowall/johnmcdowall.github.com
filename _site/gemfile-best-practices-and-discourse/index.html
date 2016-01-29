@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>   <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <link rel="alternate" type="application/rss+xml" title="John McDowall" href="http://ember.zone/feed.xml">
+    <link rel="canonical" href="http://ember.zone/gemfile-best-practices-and-discourse">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>Gemfile Best Practices &amp; Discourse | John McDowall</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Additions to <head> tags go here. -->
+
+  </head>
+  <body>
+  
+    <div class="navbar navbar-inverse navbar-static-top">
+  
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="/" class="navbar-brand">John <strong>McDowall</strong></a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <div class="row bio">
+  <div class='container'>
+    <div class="col-sm-12 col-md-offset-3 col-md-6">
+      <img src='/images/john_mcdowall.png' class='text-center' width=90 height=90 alt='John McDowall'>
+      This is the journal of John McDowall, a veteran freelance programmer, musician, photographer and designer. He writes and works remotely from a wooden house on a small island off the coast of Vancouver, Canada. <br/><br/>
+    </div>
+  </div>
+</div>
+<li><a href="/archive">Archive</a></li>
+<!-- <li>&#38;bull;</li> -->
+<!-- <li><a href='/hire&#45;me'>Hire John</a> -->
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        
+          <div class="col-sm-12">
+            <div class='container'>
+              <div class='col-sm-12'>
+                <div class="post-header">
+  <h1 class="post-title-main">Gemfile Best Practices &amp; Discourse</h1>
+  
+<div>
+  <p class="text-muted">10 Feb 2013</p>
+</div>
+
+</div>
+<div class="post-content">
+  <div id="toc"></div>
+  <p>This weekend I <a href="https://github.com/discourse/discourse/pull/93">did some Boy Scouting</a> on the newly released <a href="https://github.com/discourse/discourse">Discourse project</a>. The <a href="http://www.hans-eric.com/2010/07/26/the-boy-scout-rule/">Boy Scout Rule</a> says:</p>
+
+<blockquote>
+  <p>You should always leave the campground cleaner than you found it.</p>
+</blockquote>
+
+<p>Discourse is a Rails project, which means it has a nice fat, juicy Gemfile listing all of its dependencies. </p>
+
+<p>The Gemfile tends to be the first thing I look at in an unfamiliar Rails project in order to get a quick mental overview of what makes up the application and if it’s using any custom forks or private libraries. </p>
+
+<p>Over the years, I’ve come to form a set of best practices for the general organization of Gemfiles that I think are very useful when on-boarding new developers and keeping order in your Gemfile. </p>
+
+<ol>
+  <li>Consistent use of Ruby hash syntax. Use either the old hashrocket or the new Ruby 1.9 syntax, but not both. </li>
+  <li>Consistent use of a single quoted delimiter. Use either apostrophes or quotation marks, but not both.</li>
+  <li>No commented Gem references. If it’s commented out, it shouldn’t be there. </li>
+  <li>Comments relating to a Gem are on the same line as the gem statement, not above. </li>
+  <li>Group gems that are sourced from Git repos at the top. Chances are they are referencing pre-versions that will become general release and you can change the reference to be part of the General project group later.</li>
+  <li>Group gems that are sourced from a project path after Git repo sourced Gems. These are probably gems that you might make public and thus reference in the general project gem group later.</li>
+  <li>Group all of the General project gems together (consider using the <code>:default</code> group).</li>
+  <li>Group all of the Production project gems together after the General gems.</li>
+  <li>Group all of the Asset gems after the Production group.</li>
+  <li>Group all of the Test related gems after the Asset gems. </li>
+  <li>Group all of the Development related gems after the Test gems. </li>
+  <li>Within all Gem groups, sort the references by Alphabetical order.</li>
+  <li>When adding new gems, maintain the alphabetical ordering within the groups.</li>
+</ol>
+
+<p>These guidelines produce a Gemfile which is logical and ordered: no little clumps of Gems related to the main project here and there. The alphabetical ordering within the groups increases scanability to see if a Gem has already been included. </p>
+
+<p>Here’s my Discourse Gemfile changes:</p>
+
+<script src="https://gist.github.com/johnmcdowall/4751169.js"></script>
+
+
+  <div class='fork'>
+    <img src='/images/gh.png'/>
+    <span><strong>If you see something, say something!</strong> If you see a mistake, or have an improvement, please open a <a href="https://github.com/emberzone/emberzone.github.io">Pull Request</a> and you'll get full attribution, <i>and my undying thanks!</i></span>
+  </div>
+</div>
+<div class="post-footer">
+  <div class='row'>
+  <div class='col-md-12 text-center post-ctas'>
+    <p class='lead'>Have something else in mind?</p>
+    <ul class='list-unstyled'>
+      <li><a class='text-center' href='https://github.com/emberzone/emberzone.github.io'>See something wrong? Open a PR!</a></li>
+      <li><a class='text-center' href='/hire-me'>Want to talk about a project I can work on?</a></li>
+      <li><a class='text-center' href='mailto:john@mcdowall.info'>Have a suggestion for a blog post?</a></li>
+    </ul>
+  </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'emberzone'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#toc').toc({ showSpeed: 0 });
+});
+</script>
+
+
+</div>
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          <footer>
+  &copy;2016 John McDowall &amp; The Ember Zone.
+</footer>
+        </div>
+      </div>
+    </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <!-- Place your <script> tags here. -->
+
+<!-- Example: Twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65299998-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+// https://github.com/ghiculescu/jekyll-table-of-contents
+(function($){
+  $.fn.toc = function(options) {
+    var defaults = {
+      noBackToTopLinks: false,
+      title: '<i>Jump to...</i>',
+      minimumHeaders: 3,
+      headers: 'h1, h2, h3, h4, h5, h6',
+      listType: 'ol', // values: [ol|ul]
+      showEffect: 'show', // values: [show|slideDown|fadeIn|none]
+      showSpeed: 'slow' // set to 0 to deactivate effect
+    },
+    settings = $.extend(defaults, options);
+
+    function fixedEncodeURIComponent (str) {
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return '%' + c.charCodeAt(0).toString(16);
+      });
+    }
+
+    var headers = $(settings.headers).filter(function() {
+      // get all headers with an ID
+      var previousSiblingName = $(this).prev().attr( "name" );
+      if (!this.id && previousSiblingName) {
+        this.id = $(this).attr( "id", previousSiblingName.replace(/\./g, "-") );
+      }
+      return this.id;
+    }), output = $(this);
+    if (!headers.length || headers.length < settings.minimumHeaders || !output.length) {
+      return;
+    }
+
+    if (0 === settings.showSpeed) {
+      settings.showEffect = 'none';
+    }
+
+    var render = {
+      show: function() { output.hide().html(html).show(settings.showSpeed); },
+      slideDown: function() { output.hide().html(html).slideDown(settings.showSpeed); },
+      fadeIn: function() { output.hide().html(html).fadeIn(settings.showSpeed); },
+      none: function() { output.html(html); }
+    };
+
+    var get_level = function(ele) { return parseInt(ele.nodeName.replace("H", ""), 10); }
+    var highest_level = headers.map(function(_, ele) { return get_level(ele); }).get().sort()[0];
+    var return_to_top = '<i class="icon-arrow-up back-to-top"> </i>';
+
+    var level = get_level(headers[0]),
+      this_level,
+      html = settings.title + " <"+settings.listType+">";
+    headers.on('click', function() {
+      if (!settings.noBackToTopLinks) {
+        window.location.hash = this.id;
+      }
+    })
+    .addClass('clickable-header')
+    .each(function(_, header) {
+      this_level = get_level(header);
+      if (!settings.noBackToTopLinks && this_level === highest_level) {
+        $(header).addClass('top-level-header').after(return_to_top);
+      }
+      if (this_level === level) // same level as before; same indenting
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      else if (this_level <= level){ // higher level than before; end parent ol
+        for(i = this_level; i < level; i++) {
+          html += "</li></"+settings.listType+">"
+        }
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      }
+      else if (this_level > level) { // lower level than before; expand the previous to contain a ol
+        for(i = this_level; i > level; i--) {
+          html += "<"+settings.listType+"><li>"
+        }
+        html += "<a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      }
+      level = this_level; // update for the next one
+    });
+    html += "</"+settings.listType+">";
+    if (!settings.noBackToTopLinks) {
+      $(document).on('click', '.back-to-top', function() {
+        $(window).scrollTop(0);
+        window.location.hash = '';
+      });
+    }
+
+    render[settings.showEffect]();
+  };
+})(jQuery);
+</script>
+
+
+  </body>
+</html>

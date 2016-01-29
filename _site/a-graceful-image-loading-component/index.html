@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>   <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <link rel="alternate" type="application/rss+xml" title="John McDowall" href="http://ember.zone/feed.xml">
+    <link rel="canonical" href="http://ember.zone/a-graceful-image-loading-component/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>A Graceful Image Loading Component | John McDowall</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Additions to <head> tags go here. -->
+
+  </head>
+  <body>
+  
+    <div class="navbar navbar-inverse navbar-static-top">
+  
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="/" class="navbar-brand">John <strong>McDowall</strong></a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <div class="row bio">
+  <div class='container'>
+    <div class="col-sm-12 col-md-offset-3 col-md-6">
+      <img src='/images/john_mcdowall.png' class='text-center' width=90 height=90 alt='John McDowall'>
+      This is the journal of John McDowall, a veteran freelance programmer, musician, photographer and designer. He writes and works remotely from a wooden house on a small island off the coast of Vancouver, Canada. <br/><br/>
+    </div>
+  </div>
+</div>
+<li><a href="/archive">Archive</a></li>
+<!-- <li>&#38;bull;</li> -->
+<!-- <li><a href='/hire&#45;me'>Hire John</a> -->
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        
+          <div class="col-sm-12">
+            <div class='container'>
+              <div class='col-sm-12'>
+                <div class="post-header">
+  <h1 class="post-title-main">A Graceful Image Loading Component</h1>
+  
+<div>
+  <p class="text-muted">04 Sep 2014</p>
+</div>
+
+</div>
+<div class="post-content">
+  <div id="toc"></div>
+  <p>Fall is definitely on its way out here in the Pacific North West. And that means lots of wood has to be chopped for Winter, so you’ll understand and bear with me if this week’s article is a little short gem that I’ve used on several occasions now.</p>
+
+<p>There are times when you might be loading a large image, that for whatever reason hasn’t been resized for displaying properly – topographical maps, sonar scans, aerial imagery or what have you, and you want a better experience for your users than having to watch the image slowly load. I’m going to show you how with a little CSS and DOM magic, you can have a slow loading image fade in when it is fully loaded.</p>
+
+<!--more-->
+
+<p>There’s an absolutely fantastic article by The Barrel gang called <a href="http://www.barrelny.com/blog/taking-control-of-imageloading/">Taking Control of Image Loading</a> – I highly recommend you read it as it’s first technique is the basis for what I am about to show you. All credit for the CSS technique goes to them.</p>
+
+<p>Essentially, we wait for the browser to fire off a ‘load’ DOM event on the image when it is fully loaded. When this event occurs, we use it to attach a <code>loaded</code> CSS class to the Ember Component containing <code>div</code>. Then with some simple CSS, we can toggle from the image in question having an opacity of 0 to an opacity of 1, aided with some nice CSS 3 transitions to perform the fading. Perhaps a demo, Sir/Madame? Voila!</p>
+
+<p><a class="jsbin-embed" href="http://emberjs.jsbin.com/paponuminuso/1/embed?output">Ember Starter Kit</a><script src="http://static.jsbin.com/js/embed.js"></script></p>
+
+<p>Now, hopefully above you saw a nice little spinning pie, before a lovely image of the Ember Zone mobile Headquarters appeared. If you hover on the JSBin above, and click the ‘Run with JS’ button a few times, you should be able to repeat the effect.</p>
+
+<p>So, what would such an Ember Component look like? Here you go:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="lineno"> 1</span> <span class="nx">App</span><span class="p">.</span><span class="nx">ImageLoaderComponent</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Component</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+<span class="lineno"> 2</span>   <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="lineno"> 3</span>   <span class="nx">classNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;img_wrapper&#39;</span><span class="p">],</span>
+<span class="lineno"> 4</span>   <span class="nx">classNameBindings</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;loaded&#39;</span><span class="p">],</span>
+<span class="lineno"> 5</span>   <span class="nx">loaded</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span>   <span class="nx">handleLoad</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno"> 8</span>     <span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span>     <span class="c1">// Use jQuery&#39;s `one` to ensure the handler is remove afterwards</span>
+<span class="lineno">11</span>     <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">().</span><span class="nx">children</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">).</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno">12</span>       <span class="c1">// Wrap in an Ember.run to stop Ember from guessing what to do:</span>
+<span class="lineno">13</span>       <span class="c1">// http://emberjs.com/guides/understanding-ember/run-loop/#toc_what-happens-if-i-forget-to-start-a-run-loop-in-an-async-handler</span>
+<span class="lineno">14</span>       <span class="nx">Ember</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="lineno">15</span>         <span class="nx">view</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;loaded&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="lineno">16</span>       <span class="p">});</span>
+<span class="lineno">17</span>     <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+<span class="lineno">18</span>   <span class="p">}.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;didInsertElement&#39;</span><span class="p">)</span>
+<span class="lineno">19</span> <span class="p">});</span></code></pre></div>
+
+<p>We’ve been able to accomplish this effect in 12 lines of code. <strong>This</strong> is the Ember Zone. I was able to read the Barrel article, and directly translate it into an Ember Component without having to look anything up in the Ember guides – the concept translated directly into code that I thought should work, and it did.</p>
+
+<p>The most interesting part of the above code snippet is where we use a function provided as a prototype extension of <code>Function.prototype</code> by Ember.js called <code>on</code> to signify that the <code>handleLoad</code> function should be run when the <code>didInsertElement</code> event occurs. This is a useful technique to stay clear of writing a giant monolithic <code>didInsertElement</code> function and instead have cohesive functions that trigger on the correct event.</p>
+
+<p>One thing that could be a bit confusing is the unfortunate naming collision between jQuery’s <code>on</code> method – which is used to attach event handlers to event types, and Ember’s own <code>on</code> Function prototype extension which although it has a similar function is not the same, and can only listen for Ember events as far as I can see. Hopefully someone will correct me!</p>
+
+<p>Then we use <code>bind</code> to <code>Function.prototype</code> that allows you to keep the context of <code>this</code> in the method used as callback allowing us to avoid having to do any <code>var _this = this'</code> hoopla.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>You now have a neat little Component that will show images in a nice way, enhancing the default experience provided by the browser to something a little bit better. And hopefully you learned something about Ember’s <code>on</code> extension, and the <code>bind</code> extension present in Javascript.</p>
+
+<h3 id="update">Update</h3>
+
+<p>Thanks to Pat O’Callaghan for pointing out in the comments that I was still using the old jQuery <code>bind</code> method for attaching event handlers, so I’ve updated the article. Thanks, Pat!</p>
+
+<h3 id="update-2">Update 2</h3>
+
+<p>More updates! Thanks to @mixonic for reaching out to point out there’s some reliability issues with the image <code>load</code> event in browsers – stay tuned for a complete overhaul of this component later!</p>
+
+
+  <div class='fork'>
+    <img src='/images/gh.png'/>
+    <span><strong>If you see something, say something!</strong> If you see a mistake, or have an improvement, please open a <a href="https://github.com/emberzone/emberzone.github.io">Pull Request</a> and you'll get full attribution, <i>and my undying thanks!</i></span>
+  </div>
+</div>
+<div class="post-footer">
+  <div class='row'>
+  <div class='col-md-12 text-center post-ctas'>
+    <p class='lead'>Have something else in mind?</p>
+    <ul class='list-unstyled'>
+      <li><a class='text-center' href='https://github.com/emberzone/emberzone.github.io'>See something wrong? Open a PR!</a></li>
+      <li><a class='text-center' href='/hire-me'>Want to talk about a project I can work on?</a></li>
+      <li><a class='text-center' href='mailto:john@mcdowall.info'>Have a suggestion for a blog post?</a></li>
+    </ul>
+  </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'emberzone'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#toc').toc({ showSpeed: 0 });
+});
+</script>
+
+
+</div>
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          <footer>
+  &copy;2016 John McDowall &amp; The Ember Zone.
+</footer>
+        </div>
+      </div>
+    </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <!-- Place your <script> tags here. -->
+
+<!-- Example: Twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65299998-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+// https://github.com/ghiculescu/jekyll-table-of-contents
+(function($){
+  $.fn.toc = function(options) {
+    var defaults = {
+      noBackToTopLinks: false,
+      title: '<i>Jump to...</i>',
+      minimumHeaders: 3,
+      headers: 'h1, h2, h3, h4, h5, h6',
+      listType: 'ol', // values: [ol|ul]
+      showEffect: 'show', // values: [show|slideDown|fadeIn|none]
+      showSpeed: 'slow' // set to 0 to deactivate effect
+    },
+    settings = $.extend(defaults, options);
+
+    function fixedEncodeURIComponent (str) {
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return '%' + c.charCodeAt(0).toString(16);
+      });
+    }
+
+    var headers = $(settings.headers).filter(function() {
+      // get all headers with an ID
+      var previousSiblingName = $(this).prev().attr( "name" );
+      if (!this.id && previousSiblingName) {
+        this.id = $(this).attr( "id", previousSiblingName.replace(/\./g, "-") );
+      }
+      return this.id;
+    }), output = $(this);
+    if (!headers.length || headers.length < settings.minimumHeaders || !output.length) {
+      return;
+    }
+
+    if (0 === settings.showSpeed) {
+      settings.showEffect = 'none';
+    }
+
+    var render = {
+      show: function() { output.hide().html(html).show(settings.showSpeed); },
+      slideDown: function() { output.hide().html(html).slideDown(settings.showSpeed); },
+      fadeIn: function() { output.hide().html(html).fadeIn(settings.showSpeed); },
+      none: function() { output.html(html); }
+    };
+
+    var get_level = function(ele) { return parseInt(ele.nodeName.replace("H", ""), 10); }
+    var highest_level = headers.map(function(_, ele) { return get_level(ele); }).get().sort()[0];
+    var return_to_top = '<i class="icon-arrow-up back-to-top"> </i>';
+
+    var level = get_level(headers[0]),
+      this_level,
+      html = settings.title + " <"+settings.listType+">";
+    headers.on('click', function() {
+      if (!settings.noBackToTopLinks) {
+        window.location.hash = this.id;
+      }
+    })
+    .addClass('clickable-header')
+    .each(function(_, header) {
+      this_level = get_level(header);
+      if (!settings.noBackToTopLinks && this_level === highest_level) {
+        $(header).addClass('top-level-header').after(return_to_top);
+      }
+      if (this_level === level) // same level as before; same indenting
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      else if (this_level <= level){ // higher level than before; end parent ol
+        for(i = this_level; i < level; i++) {
+          html += "</li></"+settings.listType+">"
+        }
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      }
+      else if (this_level > level) { // lower level than before; expand the previous to contain a ol
+        for(i = this_level; i > level; i--) {
+          html += "<"+settings.listType+"><li>"
+        }
+        html += "<a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+      }
+      level = this_level; // update for the next one
+    });
+    html += "</"+settings.listType+">";
+    if (!settings.noBackToTopLinks) {
+      $(document).on('click', '.back-to-top', function() {
+        $(window).scrollTop(0);
+        window.location.hash = '';
+      });
+    }
+
+    render[settings.showEffect]();
+  };
+})(jQuery);
+</script>
+
+
+  </body>
+</html>
