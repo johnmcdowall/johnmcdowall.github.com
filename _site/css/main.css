@@ -5878,7 +5878,9 @@ code {
   text-decoration: underline; }
 
 .top-level-header {
-  display: inline; }
+  display: inline-block;
+  margin-bottom: 0;
+  margin-top: 2em; }
 
 .back-to-top {
   margin-left: 5px;
@@ -5899,5 +5901,6 @@ code {
     height: 64px; }
 
 .post-ctas {
+  padding-top: 2em;
   border: 1px solid #efefef;
   background-color: #fcfcfc; }
